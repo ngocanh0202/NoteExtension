@@ -24657,7 +24657,6 @@ var loadEnv = /*#__PURE__*/function () {
   };
 }();
 await loadEnv();
-console.log(configEnv.APIKEY);
 var firebaseConfig = {
   apiKey: configEnv.APIKEY,
   authDomain: configEnv.AUTHDOMAIN,
@@ -24675,101 +24674,65 @@ tinymce.init({
   selector: '#editor',
   plugins: ['codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'],
   toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-  tinycomments_mode: 'embedded',
-  ai_request: function ai_request(request, respondWith) {
-    return respondWith.string(function () {
-      return Promise.reject('See docs to implement AI Assistant');
-    });
-  }
+  tinycomments_mode: 'embedded'
 });
 
 // CRUD
 var listItem = [];
 var listItemTemp = [];
 var isClickNewButton = true;
+var currentNoteId = null;
 var createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
 var searchInput = document.querySelector('#search');
 var containerWords = document.querySelector('.container-word');
 var btnCloseModal = document.querySelector('#btn-close-modal');
 var btnOpenModal = document.querySelector('#btn-open-modal');
 var loadingOverlay = document.querySelector('#loadingOverlay');
-var backUpdata = function backUpdata() {
-  localStorage.setItem('NotesBackups', JSON.stringify(listItem));
-};
-createOrUpdateNoteForm.addEventListener('submit', /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-    var id, Note, example, docRef;
+var btnDelete = document.querySelector('#btn-delete-confirm');
+var btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
+var btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
+var createNote = document.querySelector('#createNote');
+createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
+btnCloseModal.addEventListener('click', handleReset);
+searchInput.addEventListener('input', handleInputSearch);
+containerWords.addEventListener('click', handleContainerEventClick);
+createNote.addEventListener('click', function (e) {
+  if (e.target !== e.currentTarget) {
+    e.stopPropagation();
+    return;
+  }
+  handleReset();
+});
+function handleReset() {
+  isClickNewButton = true;
+  currentNoteId = null;
+  createOrUpdateNoteForm.reset();
+}
+var loadData = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          e.preventDefault();
-          id = isClickNewButton ? '' : e.target.id.value;
-          Note = e.target.Note.value;
-          example = tinymce.get('editor').getContent();
-          loadingOverlay.style.display = '';
-          _context2.prev = 5;
-          if (!(id == '' || id == null || id == undefined)) {
-            _context2.next = 16;
-            break;
-          }
-          console.log("Create");
-          _context2.next = 10;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "Notes"), {
-            Note: Note,
-            example: example,
-            timestamp: new Date()
+          containerWords.innerHTML = '';
+          listItem.sort(function (a, b) {
+            return b.timestamp - a.timestamp;
           });
-        case 10:
-          docRef = _context2.sent;
-          renderNotes();
-          createOrUpdateNoteForm.reset();
-          console.log("Document written with ID: ", docRef.id);
-          _context2.next = 21;
-          break;
-        case 16:
-          console.log("update");
-          _context2.next = 19;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(id)), {
-            Note: Note,
-            example: example,
-            timestamp: new Date()
+          listItem.forEach(function (item) {
+            containerWords.innerHTML += "\n        <div class=\"card\">\n          <div class=\"card-body\">\n            <div class=\"card-title d-flex align-items-center justify-content-between\">\n              <h5 >".concat(item.Note, "</h5>\n              <div class=\"btn-group\">\n                  <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                    <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n                  </button>\n                  <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                      <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n                  </button>\n                </div>\n            </div>\n            <p class=\"card-text\">").concat(item.example, "</p>\n          </div>\n        </div>\n      ");
           });
-        case 19:
-          renderNotes();
-          createOrUpdateNoteForm.reset();
-        case 21:
-          btnCloseModal.click();
-          isClickNewButton = true;
-          _context2.next = 31;
-          break;
-        case 25:
-          _context2.prev = 25;
-          _context2.t0 = _context2["catch"](5);
-          console.error("Error adding document: ", _context2.t0);
-          listItemTemp = listItemTemp.push({
-            Note: Note,
-            example: example,
-            timestamp: new Date()
-          });
-          listItem = _toConsumableArray(listItemTemp);
-          backUpdata();
-        case 31:
-          _context2.prev = 31;
-          loadingOverlay.style.display = 'none';
-          return _context2.finish(31);
-        case 34:
+        case 3:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[5, 25, 31, 34]]);
+    }, _callee2);
   }));
-  return function (_x) {
+  return function loadData() {
     return _ref2.apply(this, arguments);
   };
-}());
-btnCloseModal.addEventListener('click', function () {
-  createOrUpdateNoteForm.reset();
-});
+}();
+var backUpdata = function backUpdata() {
+  localStorage.setItem('NotesBackups', JSON.stringify(listItem));
+};
 var renderNotes = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
     var querySnapshot;
@@ -24819,25 +24782,107 @@ var renderNotes = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
-renderNotes();
-var loadData = function loadData() {
-  containerWords.innerHTML = '';
-  listItem.forEach(function (item) {
-    containerWords.innerHTML += "\n      <div class=\"card\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between\">\n            <h5 >".concat(item.Note, "</h5>\n            <div class=\"btn-group\">\n                <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                  <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n                </button>\n                <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                    <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n                </button>\n              </div>\n          </div>\n          <p class=\"card-text\">").concat(item.example, "</p>\n        </div>\n      </div>\n    ");
-  });
-};
-searchInput.addEventListener('input', function (e) {
+await renderNotes();
+function handleSubmit(_x) {
+  return _handleSubmit.apply(this, arguments);
+}
+function _handleSubmit() {
+  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6(e) {
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          e.preventDefault();
+          e.stopPropagation();
+          _context6.next = 4;
+          return handleUpsertNote(e, currentNoteId);
+        case 4:
+        case "end":
+          return _context6.stop();
+      }
+    }, _callee6);
+  }));
+  return _handleSubmit.apply(this, arguments);
+}
+;
+function handleUpsertNote(_x2, _x3) {
+  return _handleUpsertNote.apply(this, arguments);
+}
+function _handleUpsertNote() {
+  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7(e, idNote) {
+    var id, Note, example, data;
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
+        case 0:
+          console.log(idNote);
+          id = idNote;
+          Note = e.target.Note.value;
+          example = tinymce.get('editor').getContent();
+          loadingOverlay.style.display = '';
+          data = {
+            Note: Note,
+            example: example,
+            timestamp: new Date()
+          };
+          console.log(data);
+          _context7.prev = 7;
+          if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
+            _context7.next = 13;
+            break;
+          }
+          _context7.next = 11;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "Notes"), data);
+        case 11:
+          _context7.next = 15;
+          break;
+        case 13:
+          _context7.next = 15;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(id)), data);
+        case 15:
+          _context7.next = 17;
+          return renderNotes();
+        case 17:
+          _context7.next = 25;
+          break;
+        case 19:
+          _context7.prev = 19;
+          _context7.t0 = _context7["catch"](7);
+          console.error("Error adding document: ", _context7.t0);
+          listItemTemp = listItemTemp.push({
+            Note: Note,
+            example: example,
+            timestamp: new Date()
+          });
+          listItem = _toConsumableArray(listItemTemp);
+          backUpdata();
+        case 25:
+          _context7.prev = 25;
+          loadingOverlay.style.display = 'none';
+          btnCloseModal.click();
+          return _context7.finish(25);
+        case 29:
+        case "end":
+          return _context7.stop();
+      }
+    }, _callee7, null, [[7, 19, 25, 29]]);
+  }));
+  return _handleUpsertNote.apply(this, arguments);
+}
+function handleInputSearch(e) {
   var value = e.target.value.toLowerCase();
   listItem = listItemTemp.filter(function (item) {
     return item.Note.toLowerCase().includes(value);
   });
   loadData();
-});
-containerWords.addEventListener('click', /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-    var id, NoteId, Note, _NoteId;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+}
+;
+function handleContainerEventClick(_x4) {
+  return _handleContainerEventClick.apply(this, arguments);
+}
+function _handleContainerEventClick() {
+  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8(e) {
+    var id, NoteId, Note;
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) switch (_context8.prev = _context8.next) {
         case 0:
           id = e.target.id;
           if (id.includes('edit')) {
@@ -24845,59 +24890,82 @@ containerWords.addEventListener('click', /*#__PURE__*/function () {
             Note = listItem.find(function (item) {
               return item.id === NoteId;
             });
-            document.querySelector('#doc-id').value = NoteId;
             document.querySelector('#Note').value = Note.Note;
             tinymce.get('editor').setContent(Note.example);
             isClickNewButton = false;
+            currentNoteId = NoteId;
             btnOpenModal.click();
           }
-          if (!id.includes('delete')) {
-            _context4.next = 7;
+          if (id.includes('delete')) {
+            currentNoteId = id.split('-')[1];
+            isClickNewButton = true;
+            btnModalConfirm.click();
+            btnDelete.addEventListener('click', _handleDeleteNote);
+          }
+        case 3:
+        case "end":
+          return _context8.stop();
+      }
+    }, _callee8);
+  }));
+  return _handleContainerEventClick.apply(this, arguments);
+}
+var _handleDeleteNote = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          if (!currentNoteId) {
+            _context4.next = 5;
             break;
           }
-          _NoteId = id.split('-')[1];
-          console.log(_NoteId);
-          _context4.next = 7;
-          return deleteNote(_NoteId);
-        case 7:
+          _context4.next = 3;
+          return deleteNote(currentNoteId);
+        case 3:
+          currentNoteId = null;
+          btnDelete.removeEventListener('click', _handleDeleteNote);
+        case 5:
         case "end":
           return _context4.stop();
       }
     }, _callee4);
   }));
-  return function (_x2) {
+  return function handleDeleteNote() {
     return _ref4.apply(this, arguments);
   };
-}());
+}();
 var deleteNote = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(NoteId) {
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) switch (_context5.prev = _context5.next) {
         case 0:
           _context5.prev = 0;
+          console.log(NoteId);
           loadingOverlay.style.display = '';
-          _context5.next = 4;
+          _context5.next = 5;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(NoteId)));
-        case 4:
-          document.querySelector('#doc-id').value = "";
-          renderNotes();
-          _context5.next = 11;
+        case 5:
+          _context5.next = 7;
+          return renderNotes();
+        case 7:
+          _context5.next = 12;
           break;
-        case 8:
-          _context5.prev = 8;
+        case 9:
+          _context5.prev = 9;
           _context5.t0 = _context5["catch"](0);
           console.error("Error removing document: ", _context5.t0);
-        case 11:
-          _context5.prev = 11;
+        case 12:
+          _context5.prev = 12;
           loadingOverlay.style.display = 'none';
-          return _context5.finish(11);
-        case 14:
+          btnModalConfirmClose.click();
+          return _context5.finish(12);
+        case 16:
         case "end":
           return _context5.stop();
       }
-    }, _callee5, null, [[0, 8, 11, 14]]);
+    }, _callee5, null, [[0, 9, 12, 16]]);
   }));
-  return function deleteNote(_x3) {
+  return function deleteNote(_x5) {
     return _ref5.apply(this, arguments);
   };
 }();

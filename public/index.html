@@ -45,6 +45,7 @@
         </div>
        
         <footer>
+            <!-- loading screen -->
             <div class="loading-overlay" id="loadingOverlay" style="display: none;">
                 <div class="spinner-grow text-primary" role="status">
                     <span class="sr-only"></span>
@@ -71,6 +72,7 @@
                     <span class="sr-only"></span>
                 </div>
             </div>
+            <!-- Upserd form -->
             <div class="modal fade" id="createNote" aria-hidden="true" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
@@ -90,6 +92,21 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Upsert</button>
                         </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- confirm delete -->
+            <a class="d-none" id="btn-open-modal-confirm" data-bs-toggle="modal" href="#confirmDeleteModal" role="button">+</a>
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmDeleteModalTitle">Are you are delete this notes?</h5>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-close-modal-confirm" aria-label="Close">Close</button>
+                      <button type="button" class="btn btn-danger" id="btn-delete-confirm">Yes</button>
                     </div>
                   </div>
                 </div>
