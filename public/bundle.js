@@ -24612,6 +24612,56 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+// Initialize TinyMCE
+var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
+  tinymce.init({
+    selector: '#editor',
+    plugins: ['codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    skin: isDarkTheme ? 'oxide-dark' : 'oxide',
+    setup: function setup(editor) {
+      editor.on('init', function () {
+        editor.getBody().style.backgroundColor = isDarkTheme ? '#343a40' : '#ffffff';
+        editor.getBody().style.color = isDarkTheme ? '#ffffff' : '#000000';
+      });
+    }
+  });
+};
+
+// change theme
+var themeSwitcher = document.getElementById('theme-switcher');
+var darkTheme = localStorage.getItem('dark-theme') === 'true';
+themeSwitcher.addEventListener('click', function () {
+  var img = themeSwitcher.querySelector('img');
+  if (darkTheme) {
+    document.body.classList.remove('dark-theme');
+    document.body.classList.add('light-theme');
+    img.src = '/icons/brightness-high-fill.svg';
+  } else {
+    document.body.classList.remove('light-theme');
+    document.body.classList.add('dark-theme');
+    img.src = '/icons/moon-fill.svg';
+  }
+  tinymce.remove();
+  console.log(darkTheme);
+  darkTheme = !darkTheme;
+  localStorage.setItem('dark-theme', darkTheme);
+  applyTinyMCETheme(darkTheme);
+});
+function initTheme() {
+  var img = themeSwitcher.querySelector('img');
+  if (darkTheme) {
+    document.body.classList.add('dark-theme');
+    img.src = '/icons/moon-fill.svg';
+  } else {
+    document.body.classList.add('light-theme');
+    img.src = '/icons/brightness-high-fill.svg';
+  }
+  applyTinyMCETheme(darkTheme);
+}
+initTheme();
+
 // Initialize Cloud Firestore through Firebase
 var configEnv = {};
 var loadEnv = /*#__PURE__*/function () {
@@ -24668,14 +24718,6 @@ var firebaseConfig = {
 var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
 var analytics = (0,firebase_analytics__WEBPACK_IMPORTED_MODULE_1__.getAnalytics)(app);
 var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);
-
-// Initialize TinyMCE
-tinymce.init({
-  selector: '#editor',
-  plugins: ['codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'],
-  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-  tinycomments_mode: 'embedded'
-});
 
 // CRUD
 var listItem = [];

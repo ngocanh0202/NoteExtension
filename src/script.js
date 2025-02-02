@@ -2,6 +2,63 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "firebase/firestore";
 
+
+// Initialize TinyMCE
+const applyTinyMCETheme = (isDarkTheme) => {
+  tinymce.init({
+    selector: '#editor',
+    plugins: [
+      'codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    skin: isDarkTheme ? 'oxide-dark' : 'oxide',
+    setup: (editor) => {
+      editor.on('init', () => {
+        editor.getBody().style.backgroundColor = isDarkTheme ? '#343a40' : '#ffffff';
+        editor.getBody().style.color = isDarkTheme ? '#ffffff' : '#000000';
+      });
+    }
+  });
+};
+
+// change theme
+const themeSwitcher = document.getElementById('theme-switcher');
+let darkTheme = localStorage.getItem('dark-theme') === 'true';
+themeSwitcher.addEventListener('click', () => {
+    const img = themeSwitcher.querySelector('img');
+    if(darkTheme)
+    {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        img.src = '/icons/brightness-high-fill.svg';
+    }
+    else
+    {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        img.src = '/icons/moon-fill.svg';
+    }
+    tinymce.remove(); 
+    console.log(darkTheme);
+    darkTheme = !darkTheme;
+    localStorage.setItem('dark-theme', darkTheme);
+    applyTinyMCETheme(darkTheme);
+});
+
+function initTheme() {
+    const img = themeSwitcher.querySelector('img');
+    if (darkTheme) {
+        document.body.classList.add('dark-theme');
+        img.src = '/icons/moon-fill.svg';
+    } else {
+        document.body.classList.add('light-theme');
+        img.src = '/icons/brightness-high-fill.svg';
+    }
+    applyTinyMCETheme(darkTheme);
+}
+initTheme()
+
 // Initialize Cloud Firestore through Firebase
 let configEnv = {};
 
@@ -35,16 +92,6 @@ await loadEnv();
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
-
-  // Initialize TinyMCE
-  tinymce.init({
-    selector: '#editor',
-    plugins: [
-      'codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'
-    ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded'
-  });
 
   // CRUD
   var listItem = [];
