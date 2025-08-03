@@ -40,7 +40,6 @@ themeSwitcher.addEventListener('click', () => {
         img.src = '/icons/moon-fill.svg';
     }
     tinymce.remove(); 
-    console.log(darkTheme);
     darkTheme = !darkTheme;
     localStorage.setItem('dark-theme', darkTheme);
     applyTinyMCETheme(darkTheme);
@@ -64,30 +63,45 @@ let configEnv = {};
 
 const loadEnv = async () => {
   try {
-    const response = await fetch('../env');
+    const response = await fetch('/env');
     const text = await response.text();
     const env = {};
     text.split('\n').forEach(line => {
-      const [key, value] = line.split('=');
-      if (key && value) {
-        env[key.trim()] = value.trim().replace(/"/g, '');
+      const trimmedLine = line.trim();
+      if (trimmedLine && !trimmedLine.startsWith('#')) {
+        const [key, ...valueParts] = trimmedLine.split('=');
+        if (key && valueParts.length > 0) {
+          const value = valueParts.join('=').trim().replace(/^["']|["']$/g, '');
+          env[key.trim()] = value;
+        }
       }
     });
     configEnv = env;
+    console.log("Environment loaded:", env);
   } catch (error) {
     console.error('Error loading .env file:', error);
   }
 };
 
 await loadEnv();
-  const firebaseConfig = {
-    apiKey: configEnv.APIKEY,
-    authDomain: configEnv.AUTHDOMAIN,
-    projectId: configEnv.PROJECTID,
-    storageBucket: configEnv.STORAGEBUCKET,
-    messagingSenderId: configEnv.MESSAGINGSENDERID,
-    appId: configEnv.APPID
-  };
+
+// Validate that all required environment variables are loaded
+const requiredEnvVars = ['APIKEY', 'AUTHDOMAIN', 'PROJECTID', 'STORAGEBUCKET', 'MESSAGINGSENDERID', 'APPID'];
+const missingVars = requiredEnvVars.filter(varName => !configEnv[varName]);
+
+if (missingVars.length > 0) {
+  console.error('Missing required environment variables:', missingVars);
+  throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+}
+
+const firebaseConfig = {
+  apiKey: configEnv.APIKEY,
+  authDomain: configEnv.AUTHDOMAIN,
+  projectId: configEnv.PROJECTID,
+  storageBucket: configEnv.STORAGEBUCKET,
+  messagingSenderId: configEnv.MESSAGINGSENDERID,
+  appId: configEnv.APPID
+};
 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
@@ -193,7 +207,6 @@ await loadEnv();
   };
 
   async function handleUpsertNote(e,idNote) {
-    console.log(idNote);
     const id = idNote;
     const Note = e.target.Note.value;
     const example = tinymce.get('editor').getContent();
@@ -204,7 +217,6 @@ await loadEnv();
       timestamp: new Date()
     }
 
-    console.log(data);
 
     try {
       if ((id == '' || id == null || id == undefined) && isClickNewButton) {
@@ -263,7 +275,6 @@ await loadEnv();
 
   const deleteNote = async (NoteId) => {
     try {
-      console.log(NoteId);
       loadingOverlay.style.display = '';
       await deleteDoc(doc(db, `Notes/${NoteId}`));
       await renderNotes();
