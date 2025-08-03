@@ -77,7 +77,6 @@ const loadEnv = async () => {
       }
     });
     configEnv = env;
-    console.log("Environment loaded:", env);
   } catch (error) {
     console.error('Error loading .env file:', error);
   }
@@ -242,9 +241,20 @@ const firebaseConfig = {
 
   function handleInputSearch(e) {
     const value = e.target.value.toLowerCase();
-    listItem = listItemTemp.filter(item => item.Note.toLowerCase().includes(value));
+    listItem = listItemTemp.filter(item =>
+      item.Note.toLowerCase().includes(value) ||
+      stripHtmlAdvanced(item.example.toLowerCase()).includes(value)
+    );
     loadData();
-  };
+  }
+  
+  function stripHtmlAdvanced(html) {
+    return html
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  
 
   async function handleContainerEventClick(e) {
     const id = e.target.id;
