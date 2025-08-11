@@ -24611,6 +24611,49 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+// Initialize aler
+var alertWarning = document.querySelector('#alert-warning');
+var alertInfo = document.querySelector('#alert-info');
+var alertDanger = document.querySelector('#alert-danger');
+var Alert = {
+  WARNING: "alertWarning",
+  INFO: "alertInfo",
+  DANGER: "alertDanger"
+};
+var DurationLength = {
+  SHORT: 1000,
+  MEDIUM: 2000,
+  LONG: 3000
+};
+var currentAlert = null;
+function handleAlert(type, message, duration) {
+  if (currentAlert) {
+    clearTimeout(currentAlert);
+    alertWarning.classList.remove('in');
+    alertInfo.classList.remove('in');
+    alertDanger.classList.remove('in');
+  }
+  switch (type) {
+    case Alert.WARNING:
+      alertWarning.textContent = message;
+      alertWarning.classList.add('in');
+      break;
+    case Alert.INFO:
+      alertInfo.textContent = message;
+      alertInfo.classList.add('in');
+      break;
+    case Alert.DANGER:
+      alertDanger.textContent = message;
+      alertDanger.classList.add('in');
+      break;
+  }
+  currentAlert = setTimeout(function () {
+    alertWarning.classList.remove('in');
+    alertInfo.classList.remove('in');
+    alertDanger.classList.remove('in');
+    currentAlert = null;
+  }, duration);
+}
 // Initialize TinyMCE
 var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
   tinymce.init({
@@ -24642,6 +24685,7 @@ themeSwitcher.addEventListener('click', function () {
     document.body.classList.add('dark-theme');
     img.src = '/icons/moon-fill.svg';
   }
+  changeIconCustomTheme(!darkTheme);
   tinymce.remove();
   darkTheme = !darkTheme;
   localStorage.setItem('dark-theme', darkTheme);
@@ -24657,6 +24701,33 @@ function initTheme() {
     img.src = '/icons/brightness-high-fill.svg';
   }
   applyTinyMCETheme(darkTheme);
+}
+function changeIconCustomTheme(darkTheme) {
+  if (darkTheme) {
+    document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
+      el.src = '/icons/copy-icon-light.svg';
+    });
+    document.querySelectorAll('[id^="pinIcon-"]').forEach(function (el) {
+      var isPinned = el.src.includes('pinned');
+      el.src = isPinned ? '/icons/pinned-icon-yellow.svg' : '/icons/pin-white.svg';
+    });
+    document.querySelectorAll('[id^="readMore-"]').forEach(function (el) {
+      el.classList.add('text-white');
+      el.classList.remove('text-dark');
+    });
+  } else {
+    document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
+      el.src = '/icons/copy.svg';
+    });
+    document.querySelectorAll('[id^="pinIcon-"]').forEach(function (el) {
+      var isPinned = el.src.includes('pinned');
+      el.src = isPinned ? '/icons/pinned.svg' : '/icons/pin.svg';
+    });
+    document.querySelectorAll('[id^="readMore-"]').forEach(function (el) {
+      el.classList.add('text-dark');
+      el.classList.remove('text-white');
+    });
+  }
 }
 initTheme();
 
@@ -24697,7 +24768,7 @@ var loadEnv = /*#__PURE__*/function () {
         case 12:
           _context.prev = 12;
           _context.t0 = _context["catch"](0);
-          console.error('Error loading .env file:', _context.t0);
+          handleAlert(Alert.DANGER, 'Error loading .env file', DurationLength.LONG);
         case 15:
         case "end":
           return _context.stop();
@@ -24716,7 +24787,7 @@ var missingVars = requiredEnvVars.filter(function (varName) {
   return !configEnv[varName];
 });
 if (missingVars.length > 0) {
-  console.error('Missing required environment variables:', missingVars);
+  handleAlert(Alert.DANGER, "Missing required environment variables: ".concat(missingVars.join(', ')), DurationLength.LONG);
   throw new Error("Missing required environment variables: ".concat(missingVars.join(', ')));
 }
 var firebaseConfig = {
@@ -24739,17 +24810,19 @@ var currentNoteId = null;
 var createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
 var searchInput = document.querySelector('#search');
 var containerWords = document.querySelector('.container-word');
+var loadingOverlay = document.querySelector('#loadingOverlay');
+var createNote = document.querySelector('#createNote');
 var btnCloseModal = document.querySelector('#btn-close-modal');
 var btnOpenModal = document.querySelector('#btn-open-modal');
-var loadingOverlay = document.querySelector('#loadingOverlay');
 var btnDelete = document.querySelector('#btn-delete-confirm');
 var btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
 var btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
-var createNote = document.querySelector('#createNote');
+var scrollToTopBtn = document.querySelector('#scrollToTopBtn');
 createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
 btnCloseModal.addEventListener('click', handleReset);
 searchInput.addEventListener('input', handleInputSearch);
 containerWords.addEventListener('click', handleContainerEventClick);
+scrollToTopBtn.addEventListener('click', scrollToTop);
 createNote.addEventListener('click', function (e) {
   if (e.target !== e.currentTarget) {
     e.stopPropagation();
@@ -24764,17 +24837,28 @@ function handleReset() {
 }
 var loadData = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var exampleWrappers;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           containerWords.innerHTML = '';
           listItem.sort(function (a, b) {
+            if (a.isPinned && !b.isPinned) return -1;
+            if (!a.isPinned && b.isPinned) return 1;
             return b.timestamp - a.timestamp;
           });
           listItem.forEach(function (item) {
-            containerWords.innerHTML += "\n        <div class=\"card\">\n          <div class=\"card-body\">\n            <div class=\"card-title d-flex align-items-center justify-content-between\">\n              <h5 >".concat(item.Note, "</h5>\n              <div class=\"btn-group\">\n                  <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                    <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n                  </button>\n                  <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                      <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n                  </button>\n                </div>\n            </div>\n            <p class=\"card-text\">").concat(item.example, "</p>\n          </div>\n        </div>\n      ");
+            containerWords.innerHTML += "\n      <div class=\"card\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <p class=\"card-text font-monospace fst-italic small mb-0\">\n              ").concat(item.timestamp.toDate().toLocaleString(), "\n            </p>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
           });
-        case 3:
+          changeIconCustomTheme(darkTheme);
+          exampleWrappers = document.querySelectorAll('.example-wrapper');
+          exampleWrappers.forEach(function (exampleDiv) {
+            var readMoreBtn = exampleDiv.nextElementSibling;
+            if (exampleDiv.scrollHeight > 350) {
+              readMoreBtn.style.display = "inline-block";
+            }
+          });
+        case 6:
         case "end":
           return _context2.stop();
       }
@@ -24808,6 +24892,8 @@ var renderNotes = /*#__PURE__*/function () {
               id: doc.id,
               Note: data.Note,
               example: data.example,
+              isPinned: data === null || data === void 0 ? void 0 : data.isPinned,
+              otherExample: stripHtmlAdvanced(data.example),
               timestamp: data.timestamp
             });
           });
@@ -24819,7 +24905,7 @@ var renderNotes = /*#__PURE__*/function () {
         case 14:
           _context3.prev = 14;
           _context3.t0 = _context3["catch"](3);
-          console.error("Error getting documents", _context3.t0);
+          handleAlert(Alert.DANGER, "Error getting documents: " + _context3.t0.message, DurationLength.LONG);
           listItemTemp = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
           listItem = _toConsumableArray(listItemTemp);
         case 19:
@@ -24893,12 +24979,13 @@ function _handleUpsertNote() {
           _context7.next = 15;
           return renderNotes();
         case 15:
-          _context7.next = 23;
+          handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
+          _context7.next = 24;
           break;
-        case 17:
-          _context7.prev = 17;
+        case 18:
+          _context7.prev = 18;
           _context7.t0 = _context7["catch"](5);
-          console.error("Error adding document: ", _context7.t0);
+          handleAlert(Alert.DANGER, "Error adding document: " + _context7.t0.message, DurationLength.LONG);
           listItemTemp = listItemTemp.push({
             Note: Note,
             example: example,
@@ -24906,35 +24993,48 @@ function _handleUpsertNote() {
           });
           listItem = _toConsumableArray(listItemTemp);
           backUpdata();
-        case 23:
-          _context7.prev = 23;
+        case 24:
+          _context7.prev = 24;
           loadingOverlay.style.display = 'none';
           btnCloseModal.click();
-          return _context7.finish(23);
-        case 27:
+          return _context7.finish(24);
+        case 28:
         case "end":
           return _context7.stop();
       }
-    }, _callee7, null, [[5, 17, 23, 27]]);
+    }, _callee7, null, [[5, 18, 24, 28]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }
 function handleInputSearch(e) {
   var value = e.target.value.toLowerCase();
   listItem = listItemTemp.filter(function (item) {
-    return item.Note.toLowerCase().includes(value) || stripHtmlAdvanced(item.example.toLowerCase()).includes(value);
+    return item.Note.toLowerCase().includes(value) || item.otherExample.toLowerCase().includes(value);
   });
   loadData();
 }
 function stripHtmlAdvanced(html) {
-  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  html = html.replace(/<\s*br\s*\/?>/gi, '\n').replace(/<\/p\s*>/gi, '\n');
+  var temp = document.createElement("div");
+  temp.innerHTML = html;
+  var text = temp.textContent || temp.innerText || "";
+  var lines = text.split(/\n+/).map(function (line) {
+    line = line.trim();
+    if (line && !/[.!?…]$/.test(line)) {
+      line += '.';
+    }
+    return line;
+  });
+  return lines.filter(function (l) {
+    return l;
+  }).join('\n');
 }
 function handleContainerEventClick(_x4) {
   return _handleContainerEventClick.apply(this, arguments);
 }
 function _handleContainerEventClick() {
   _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8(e) {
-    var id, NoteId, Note;
+    var id, NoteId, Note, _NoteId, _NoteId2, _Note, isPinned, _NoteId3, exampleWrapper, readMoreButton;
     return _regeneratorRuntime().wrap(function _callee8$(_context8) {
       while (1) switch (_context8.prev = _context8.next) {
         case 0:
@@ -24956,13 +25056,74 @@ function _handleContainerEventClick() {
             btnModalConfirm.click();
             btnDelete.addEventListener('click', _handleDeleteNote);
           }
-        case 3:
+          if (id.includes('copy')) {
+            _NoteId = id.split('-')[1];
+            onClickCopy(_NoteId);
+          }
+          if (!id.includes('pin')) {
+            _context8.next = 26;
+            break;
+          }
+          _NoteId2 = id.split('-')[1];
+          _Note = listItem.find(function (item) {
+            return item.id === _NoteId2;
+          });
+          _Note.isPinned = !_Note.isPinned;
+          isPinned = _Note.isPinned;
+          _context8.prev = 9;
+          loadingOverlay.style.display = '';
+          _context8.next = 13;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(_NoteId2)), {
+            isPinned: _Note.isPinned
+          });
+        case 13:
+          handleAlert(Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), DurationLength.SHORT);
+          console.log(listItem);
+          loadData();
+          _context8.next = 22;
+          break;
+        case 18:
+          _context8.prev = 18;
+          _context8.t0 = _context8["catch"](9);
+          console.error(_context8.t0);
+          handleAlert(Alert.DANGER, "Error pinning note: " + _context8.t0.message, DurationLength.LONG);
+        case 22:
+          _context8.prev = 22;
+          backUpdata();
+          loadingOverlay.style.display = 'none';
+          return _context8.finish(22);
+        case 26:
+          if (id.includes('readMore')) {
+            _NoteId3 = id.split('-')[1];
+            exampleWrapper = document.querySelector("#example-".concat(_NoteId3));
+            readMoreButton = document.querySelector("#readMore-".concat(_NoteId3));
+            exampleWrapper.classList.toggle("expanded");
+            if (exampleWrapper.classList.contains("expanded")) {
+              readMoreButton.textContent = 'less...';
+            } else {
+              readMoreButton.textContent = 'more...';
+              // scroll to readMoreButton
+              readMoreButton.scrollIntoView({
+                behavior: 'smooth'
+              });
+            }
+          }
+        case 27:
         case "end":
           return _context8.stop();
       }
-    }, _callee8);
+    }, _callee8, null, [[9, 18, 22, 26]]);
   }));
   return _handleContainerEventClick.apply(this, arguments);
+}
+function onClickCopy(id) {
+  var item = listItem.find(function (item) {
+    return item.id === id;
+  });
+  handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
+  console.log(item.otherExample);
+  console.log(item.example);
+  navigator.clipboard.writeText(item.otherExample);
 }
 var _handleDeleteNote = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
@@ -25001,27 +25162,34 @@ var deleteNote = /*#__PURE__*/function () {
           _context5.next = 6;
           return renderNotes();
         case 6:
-          _context5.next = 11;
+          handleAlert(Alert.WARNING, "Note removed successfully", DurationLength.MEDIUM);
+          _context5.next = 12;
           break;
-        case 8:
-          _context5.prev = 8;
+        case 9:
+          _context5.prev = 9;
           _context5.t0 = _context5["catch"](0);
-          console.error("Error removing document: ", _context5.t0);
-        case 11:
-          _context5.prev = 11;
+          handleAlert(Alert.DANGER, "Error removing document: " + _context5.t0.message, DurationLength.LONG);
+        case 12:
+          _context5.prev = 12;
           loadingOverlay.style.display = 'none';
           btnModalConfirmClose.click();
-          return _context5.finish(11);
-        case 15:
+          return _context5.finish(12);
+        case 16:
         case "end":
           return _context5.stop();
       }
-    }, _callee5, null, [[0, 8, 11, 15]]);
+    }, _callee5, null, [[0, 9, 12, 16]]);
   }));
   return function deleteNote(_x5) {
     return _ref5.apply(this, arguments);
   };
 }();
+function scrollToTop() {
+  containerWords.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 

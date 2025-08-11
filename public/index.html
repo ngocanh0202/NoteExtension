@@ -26,6 +26,27 @@
             z-index: 9999;
             gap: 10px;
         }
+        .fade-custom {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .fade-custom.in {
+            opacity: 1;
+            visibility: visible;
+        }
+        .fade-custom.out {
+            opacity: 0;
+            visibility: visible;
+        }
+        .example-wrapper {
+            max-height: 350px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .example-wrapper.expanded {
+            max-height: none;
+        }
     </style>
 </head>
 <body>
@@ -46,7 +67,7 @@
             <div class="container-word my-2" style="max-height: 400px; overflow-y: scroll;">
             </div>  
         </div>
-       
+        
         <footer>
             <!-- loading screen -->
             <div class="loading-overlay" id="loadingOverlay" style="display: none;">
@@ -114,6 +135,24 @@
                   </div>
                 </div>
             </div>
+            <!-- alert -->
+            <div class="alert alert-warning fade-custom position-fixed top-0 start-50 translate-middle-x" role="alert" id="alert-warning">
+                <strong>Warning!</strong> You have unsaved changes.
+            </div>
+            <div class="alert alert-info fade-custom position-fixed top-0 start-50 translate-middle-x" role="alert" id="alert-info">
+                <strong>Info!</strong> Your changes have been saved.
+            </div>
+            <div class="alert alert-danger fade-custom position-fixed top-0 start-50 translate-middle-x" role="alert" id="alert-danger">
+                <strong>Error!</strong> There was a problem saving your changes.
+            </div>
+            <!-- button scroll top -->
+            <button 
+                id="scrollToTopBtn" 
+                class="btn btn-primary position-fixed bottom-0 end-0 m-3" 
+                title="Go to top"
+                >
+                <img src="/icons/arrow.svg" alt="Scroll to top">
+            </button>   
         </footer>
     </div>
 </body>
