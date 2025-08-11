@@ -24821,6 +24821,7 @@ createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
 btnCloseModal.addEventListener('click', handleReset);
 searchInput.addEventListener('input', handleInputSearch);
 containerWords.addEventListener('click', handleContainerEventClick);
+containerWords.addEventListener('scroll', handleContainerScroll);
 scrollToTopBtn.addEventListener('click', scrollToTop);
 createNote.addEventListener('click', function (e) {
   if (e.target !== e.currentTarget) {
@@ -25180,6 +25181,13 @@ var deleteNote = /*#__PURE__*/function () {
     return _ref5.apply(this, arguments);
   };
 }();
+function handleContainerScroll() {
+  if (containerWords.scrollTop > 100) {
+    scrollToTopBtn.style.display = 'block';
+  } else {
+    scrollToTopBtn.style.display = 'none';
+  }
+}
 function scrollToTop() {
   containerWords.scrollTo({
     top: 0,

@@ -203,7 +203,9 @@ const firebaseConfig = {
   btnCloseModal.addEventListener('click', handleReset);
   searchInput.addEventListener('input', handleInputSearch);
   containerWords.addEventListener('click', handleContainerEventClick);
+  containerWords.addEventListener('scroll', handleContainerScroll);
   scrollToTopBtn.addEventListener('click', scrollToTop);
+
   createNote.addEventListener('click', (e)=>{
     if (e.target !== e.currentTarget) {
       e.stopPropagation();
@@ -460,6 +462,14 @@ const firebaseConfig = {
       btnModalConfirmClose.click();
     }
   };
+
+  function handleContainerScroll(){
+    if(containerWords.scrollTop > 100) {
+      scrollToTopBtn.style.display = 'block';
+    } else {
+      scrollToTopBtn.style.display = 'none';
+    }
+  }
 
   function scrollToTop() {
     containerWords.scrollTo({
