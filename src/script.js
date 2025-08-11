@@ -229,7 +229,7 @@ const firebaseConfig = {
 
     listItem.forEach(item => {
       containerWords.innerHTML += `
-      <div class="card">
+      <div class="card m-2">
         <div class="card-body">
           <div class="card-title d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
