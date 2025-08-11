@@ -87,8 +87,8 @@ For production, update your Firestore security rules:
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /notes/{noteId} {
-      allow read, write: if request.auth != null;
+    match /{document=**} {
+      allow read, write: if true;
     }
   }
 }
