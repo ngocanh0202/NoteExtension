@@ -24752,13 +24752,13 @@ var loadEnv = /*#__PURE__*/function () {
           text.split('\n').forEach(function (line) {
             var trimmedLine = line.trim();
             if (trimmedLine && !trimmedLine.startsWith('#')) {
-              var _trimmedLine$split = trimmedLine.split('='),
+              var _trimmedLine$split = trimmedLine.split(':'),
                 _trimmedLine$split2 = _toArray(_trimmedLine$split),
                 key = _trimmedLine$split2[0],
                 valueParts = _trimmedLine$split2.slice(1);
               if (key && valueParts.length > 0) {
-                var value = valueParts.join('=').trim().replace(/^["']|["']$/g, '');
-                env[key.trim()] = value;
+                var value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+                env[key.trim().toUpperCase()] = value;
               }
             }
           });
@@ -24799,7 +24799,6 @@ var firebaseConfig = {
   appId: configEnv.APPID
 };
 var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
-var analytics = (0,firebase_analytics__WEBPACK_IMPORTED_MODULE_1__.getAnalytics)(app);
 var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);
 
 // CRUD
@@ -25061,7 +25060,7 @@ function _handleContainerEventClick() {
             onClickCopy(_NoteId);
           }
           if (!id.includes('pin')) {
-            _context8.next = 26;
+            _context8.next = 25;
             break;
           }
           _NoteId2 = id.split('-')[1];
@@ -25078,21 +25077,20 @@ function _handleContainerEventClick() {
           });
         case 13:
           handleAlert(Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), DurationLength.SHORT);
-          console.log(listItem);
           loadData();
-          _context8.next = 22;
+          _context8.next = 21;
           break;
-        case 18:
-          _context8.prev = 18;
+        case 17:
+          _context8.prev = 17;
           _context8.t0 = _context8["catch"](9);
           console.error(_context8.t0);
           handleAlert(Alert.DANGER, "Error pinning note: " + _context8.t0.message, DurationLength.LONG);
-        case 22:
-          _context8.prev = 22;
+        case 21:
+          _context8.prev = 21;
           backUpdata();
           loadingOverlay.style.display = 'none';
-          return _context8.finish(22);
-        case 26:
+          return _context8.finish(21);
+        case 25:
           if (id.includes('readMore')) {
             _NoteId3 = id.split('-')[1];
             exampleWrapper = document.querySelector("#example-".concat(_NoteId3));
@@ -25108,11 +25106,11 @@ function _handleContainerEventClick() {
               });
             }
           }
-        case 27:
+        case 26:
         case "end":
           return _context8.stop();
       }
-    }, _callee8, null, [[9, 18, 22, 26]]);
+    }, _callee8, null, [[9, 17, 21, 25]]);
   }));
   return _handleContainerEventClick.apply(this, arguments);
 }
@@ -25121,8 +25119,6 @@ function onClickCopy(id) {
     return item.id === id;
   });
   handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-  console.log(item.otherExample);
-  console.log(item.example);
   navigator.clipboard.writeText(item.otherExample);
 }
 var _handleDeleteNote = /*#__PURE__*/function () {

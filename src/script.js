@@ -145,10 +145,10 @@ const loadEnv = async () => {
     text.split('\n').forEach(line => {
       const trimmedLine = line.trim();
       if (trimmedLine && !trimmedLine.startsWith('#')) {
-        const [key, ...valueParts] = trimmedLine.split('=');
+        const [key, ...valueParts] = trimmedLine.split(':');
         if (key && valueParts.length > 0) {
-          const value = valueParts.join('=').trim().replace(/^["']|["']$/g, '');
-          env[key.trim()] = value;
+          const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+          env[key.trim().toUpperCase()] = value;
         }
       }
     });
@@ -179,7 +179,6 @@ const firebaseConfig = {
 };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
   const db = getFirestore(app);
 
   // CRUD
@@ -409,7 +408,6 @@ const firebaseConfig = {
         loadingOverlay.style.display = '';
         await updateDoc(doc(db, `Notes/${NoteId}`), { isPinned: Note.isPinned });
         handleAlert(Alert.INFO, `Note ${isPinned ? 'pinned' : 'unpinned'} successfully`, DurationLength.SHORT);
-        console.log(listItem);
         loadData();
       }catch(e){
         console.error(e);
@@ -438,8 +436,6 @@ const firebaseConfig = {
   function onClickCopy(id){
     const item = listItem.find(item => item.id === id);
     handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-    console.log(item.otherExample);
-    console.log(item.example);
     navigator.clipboard.writeText(item.otherExample);
   }
 
