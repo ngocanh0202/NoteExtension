@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, deleteApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "firebase/firestore";
 
@@ -135,51 +135,124 @@ function changeIconCustomTheme(darkTheme) {
 initTheme()
 
 // Initialize Cloud Firestore through Firebase
+const envVariables = document.querySelector('#env-variables');
+const btnSaveEnv = document.querySelector('#btn-save-env');
+const btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
+const btnBackEnv = document.querySelector('#btn-back-confirm');
+const btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
+envVariables.value = localStorage.getItem('envVariables') || '';
+btnBackEnv.addEventListener('click', async () => {
+  try{
+    await resetFirebaseApp();
+    envVariables.value = '';
+    localStorage.removeItem('envVariables');
+    btnCloseModalEnv.click();
+    handleAlert(Alert.WARNING, "Firebase reset successfully", DurationLength.SHORT);
+    btnCloseBackModalEnv.click();
+  }catch(e){
+    handleAlert(Alert.DANGER, `Failed to reset Firebase: ${e.message}`, DurationLength.LONG);
+  }
+});
 let configEnv = {};
+let firebaseConfig = {};
+var app = null;
+var db = null;
 
 const loadEnv = async () => {
   try {
     const response = await fetch('/env');
     const text = await response.text();
-    const env = {};
-    text.split('\n').forEach(line => {
-      const trimmedLine = line.trim();
-      if (trimmedLine && !trimmedLine.startsWith('#')) {
-        const [key, ...valueParts] = trimmedLine.split(':');
-        if (key && valueParts.length > 0) {
-          const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
-          env[key.trim().toUpperCase()] = value;
-        }
-      }
-    });
-    configEnv = env;
+    configEnv = handleTextEnv(text, false);
   } catch (error) {
-    handleAlert(Alert.DANGER, 'Error loading .env file', DurationLength.LONG);
+    throw new Error('Error loading .env file: ' + error.message);
   }
 };
 
-await loadEnv();
-
-// Validate that all required environment variables are loaded
-const requiredEnvVars = ['APIKEY', 'AUTHDOMAIN', 'PROJECTID', 'STORAGEBUCKET', 'MESSAGINGSENDERID', 'APPID'];
-const missingVars = requiredEnvVars.filter(varName => !configEnv[varName]);
-
-if (missingVars.length > 0) {
-  handleAlert(Alert.DANGER, `Missing required environment variables: ${missingVars.join(', ')}`, DurationLength.LONG);
-  throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+function setupFirebase(){
+  firebaseConfig = {
+    apiKey: configEnv.APIKEY,
+    authDomain: configEnv.AUTHDOMAIN,
+    projectId: configEnv.PROJECTID,
+    storageBucket: configEnv.STORAGEBUCKET,
+    messagingSenderId: configEnv.MESSAGINGSENDERID,
+    appId: configEnv.APPID
+  };
+  app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
 }
 
-const firebaseConfig = {
-  apiKey: configEnv.APIKEY,
-  authDomain: configEnv.AUTHDOMAIN,
-  projectId: configEnv.PROJECTID,
-  storageBucket: configEnv.STORAGEBUCKET,
-  messagingSenderId: configEnv.MESSAGINGSENDERID,
-  appId: configEnv.APPID
-};
+function handleTextEnv(envText, isComma){
+  let env = {};
+  const delimiter = isComma ? ',' : '\n';
+  envText.split(delimiter).forEach(line => {
+    const trimmedLine = line.trim();
+    if (trimmedLine && !trimmedLine.startsWith('#')) {
+      const [key, ...valueParts] = trimmedLine.split(':');
+      if (key && valueParts.length > 0) {
+        const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+        env[key.trim().toUpperCase()] = value;
+      }
+    }
+  });
+  return env;
+}
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+// Validate that all required environment variables are loaded
+function validateEnvVars() {
+  const requiredEnvVars = ['APIKEY', 'AUTHDOMAIN', 'PROJECTID', 'STORAGEBUCKET', 'MESSAGINGSENDERID', 'APPID'];
+  const missingVars = requiredEnvVars.filter(varName => !configEnv[varName]);
+
+  if (missingVars.length > 0) {
+    throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+  }
+}
+function validateFirebaseSetup() {
+  if (!app || !db) {
+    throw new Error('Firebase is not properly initialized');
+  }
+}
+
+async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
+  try {
+    if (app) {
+      await deleteApp(app);
+      app = null;
+      db = null;
+    }
+    
+    if (newConfig) {
+      configEnv = newConfig;
+    } else {
+      await loadEnv();
+    }
+    
+    validateEnvVars();
+    setupFirebase();
+    validateFirebaseSetup();
+    
+    if (!isLoadInitWeb) {
+      await renderNotes();
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function initFirebase(){
+  try {
+    if (envVariables.value && envVariables.value.trim()) {
+      await resetFirebaseApp(handleTextEnv(envVariables.value, true), true);
+    } else {
+      await resetFirebaseApp(null, true);
+    }
+  } catch (error) {
+    handleAlert(Alert.DANGER, error.message, DurationLength.LONG);
+  }
+}
+
+await initFirebase();
 
   // CRUD
   var listItem = [];
@@ -199,12 +272,15 @@ const firebaseConfig = {
   const btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
   const scrollToTopBtn = document.querySelector('#scrollToTopBtn');
 
+  
   createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
   btnCloseModal.addEventListener('click', handleReset);
   searchInput.addEventListener('input', handleInputSearch);
   containerWords.addEventListener('click', handleContainerEventClick);
   containerWords.addEventListener('scroll', handleContainerScroll);
   scrollToTopBtn.addEventListener('click', scrollToTop);
+  btnSaveEnv.addEventListener('click', handleLoadEnv)
+
 
   createNote.addEventListener('click', (e)=>{
     if (e.target !== e.currentTarget) {
@@ -412,7 +488,6 @@ const firebaseConfig = {
         handleAlert(Alert.INFO, `Note ${isPinned ? 'pinned' : 'unpinned'} successfully`, DurationLength.SHORT);
         loadData();
       }catch(e){
-        console.error(e);
         handleAlert(Alert.DANGER, "Error pinning note: " + e.message, DurationLength.LONG);
       }
       finally {
@@ -426,7 +501,7 @@ const firebaseConfig = {
       const readMoreButton = document.querySelector(`#readMore-${NoteId}`);
       exampleWrapper.classList.toggle("expanded");
       if (exampleWrapper.classList.contains("expanded")) {
-        readMoreButton.textContent = 'less...';
+        readMoreButton.textContent = 'less';
       } else {
         readMoreButton.textContent = 'more...';
         // scroll to readMoreButton
@@ -476,4 +551,29 @@ const firebaseConfig = {
       top: 0,
       behavior: 'smooth'
     });
+  }
+
+  async function handleLoadEnv(){
+    loadingOverlay.style.display = 'block';
+    const envText = envVariables.value.trim();
+    if (!envText) {
+      handleAlert(Alert.WARNING, "Please enter environment variables", DurationLength.SHORT);
+      loadingOverlay.style.display = 'none';
+      return;
+    }
+
+    try {
+      const env = handleTextEnv(envText, true);
+      const success = await resetFirebaseApp(env);
+      
+      if (success) {
+        btnCloseModalEnv.click();
+        localStorage.setItem('envVariables', envText);
+        handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
+      }
+    } catch (error) {
+      handleAlert(Alert.DANGER, `Failed to update configuration: ${error.message}`, DurationLength.LONG);
+    } finally {
+      loadingOverlay.style.display = 'none';
+    }
   }

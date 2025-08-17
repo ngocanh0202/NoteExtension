@@ -55,8 +55,11 @@
             <div class="text-end my-2">
                 <i class="bi bi-trash"></i>
                 <a class="btn btn-primary rounded-circle" id="btn-open-modal" data-bs-toggle="modal" href="#createNote" role="button">+</a>
-                <button class="btn btn-primary" id="theme-switcher">
+                <button class="btn btn-primary rounded-circle" id="theme-switcher">
                     <img src="/icons/brightness-high-fill.svg" alt="">
+                </button>
+                <button class="btn btn-primary rounded-circle" id="setting-env" data-bs-toggle="modal" href="#settingEnv" role="button">
+                    <img src="/icons/setting.svg" alt="">
                 </button>
             </div>
             
@@ -120,6 +123,28 @@
                   </div>
                 </div>
             </div>
+            <!-- setting env -->
+            <div class="modal fade" id="settingEnv" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Setting Environment Variables</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn-close-modal-setting" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="form-control" id="env-variables" rows="10" placeholder="Enter environment variables... 
+apiKey: &quot;your_api_key_here&quot;,
+authDomain: &quot;your_project.firebaseapp.com&quot;,
+projectId: &quot;your_project_id&quot;,
+storageBucket: &quot;our_project.appspot.com&quot;,
+messagingSenderId: &quot;123456789&quot;,
+appId: &quot;1:123456789:web:abcdef123456&quot;,"></textarea>
+                        <button type="button" class="btn btn-primary mt-2" id="btn-save-env">Save</button>
+                        <a class="btn btn-warning mt-2" id="btn-open-modal-confirm-env" data-bs-toggle="modal" href="#confirmBackEnvModal" role="button">Back</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
             <!-- confirm delete -->
             <a class="d-none" id="btn-open-modal-confirm" data-bs-toggle="modal" href="#confirmDeleteModal" role="button">+</a>
             <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle" aria-hidden="true">
@@ -135,14 +160,28 @@
                   </div>
                 </div>
             </div>
+            <!-- confirm back env -->
+            <div class="modal fade" id="confirmBackEnvModal" tabindex="-1" role="dialog" aria-labelledby="confirmBackEnvModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmBackEnvModalTitle">Are you sure you want to go back?</h5>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-close-back-modal-confirm" aria-label="Close">Close</button>
+                      <button type="button" class="btn btn-danger" id="btn-back-confirm">Yes</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
             <!-- alert -->
-            <div class="alert alert-warning fade-custom position-fixed top-0 start-50 translate-middle-x" role="alert" id="alert-warning">
+            <div class="alert alert-warning fade-custom position-fixed top-0 start-50 translate-middle-x" style="z-index: 10000000;" role="alert" id="alert-warning">
                 <strong>Warning!</strong> You have unsaved changes.
             </div>
-            <div class="alert alert-info fade-custom position-fixed top-0 start-50 translate-middle-x" role="alert" id="alert-info">
+            <div class="alert alert-info fade-custom position-fixed top-0 start-50 translate-middle-x" style="z-index: 10000000;" role="alert" id="alert-info">
                 <strong>Info!</strong> Your changes have been saved.
             </div>
-            <div class="alert alert-danger fade-custom position-fixed top-0 start-50 translate-middle-x" role="alert" id="alert-danger">
+            <div class="alert alert-danger fade-custom position-fixed top-0 start-50 translate-middle-x" style="z-index: 10000000;" role="alert" id="alert-danger">
                 <strong>Error!</strong> There was a problem saving your changes.
             </div>
             <!-- button scroll top -->
