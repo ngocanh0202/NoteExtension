@@ -24594,19 +24594,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
 /* harmony import */ var firebase_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/analytics */ "./node_modules/firebase/analytics/dist/esm/index.esm.js");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _toArray(r) { return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -24620,6 +24623,7 @@ var Alert = {
   INFO: "alertInfo",
   DANGER: "alertDanger"
 };
+var COLOR = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
 var DurationLength = {
   SHORT: 1000,
   MEDIUM: 2000,
@@ -24737,19 +24741,20 @@ var btnSaveEnv = document.querySelector('#btn-save-env');
 var btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
 var btnBackEnv = document.querySelector('#btn-back-confirm');
 var btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
-envVariables.value = localStorage.getItem('envVariables') || '';
+var dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
+envVariables.value = dataEnv[0] || '';
 btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
   return _regeneratorRuntime().wrap(function _callee$(_context) {
     while (1) switch (_context.prev = _context.next) {
       case 0:
         _context.prev = 0;
-        _context.next = 3;
+        switchCheckChecked.checked = false;
+        _context.next = 4;
         return resetFirebaseApp();
-      case 3:
+      case 4:
         envVariables.value = '';
-        localStorage.removeItem('envVariables');
         btnCloseModalEnv.click();
-        handleAlert(Alert.WARNING, "Firebase reset successfully", DurationLength.SHORT);
+        handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
         btnCloseBackModalEnv.click();
         _context.next = 13;
         break;
@@ -24782,7 +24787,7 @@ var loadEnv = /*#__PURE__*/function () {
           return response.text();
         case 6:
           text = _context2.sent;
-          configEnv = handleTextEnv(text, false);
+          configEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(text, false);
           _context2.next = 13;
           break;
         case 10:
@@ -24811,35 +24816,8 @@ function setupFirebase() {
   app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
   db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);
 }
-function handleTextEnv(envText, isComma) {
-  var env = {};
-  var delimiter = isComma ? ',' : '\n';
-  envText.split(delimiter).forEach(function (line) {
-    var trimmedLine = line.trim();
-    if (trimmedLine && !trimmedLine.startsWith('#')) {
-      var _trimmedLine$split = trimmedLine.split(':'),
-        _trimmedLine$split2 = _toArray(_trimmedLine$split),
-        key = _trimmedLine$split2[0],
-        valueParts = _trimmedLine$split2.slice(1);
-      if (key && valueParts.length > 0) {
-        var value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
-        env[key.trim().toUpperCase()] = value;
-      }
-    }
-  });
-  return env;
-}
 
 // Validate that all required environment variables are loaded
-function validateEnvVars() {
-  var requiredEnvVars = ['APIKEY', 'AUTHDOMAIN', 'PROJECTID', 'STORAGEBUCKET', 'MESSAGINGSENDERID', 'APPID'];
-  var missingVars = requiredEnvVars.filter(function (varName) {
-    return !configEnv[varName];
-  });
-  if (missingVars.length > 0) {
-    throw new Error("Missing required environment variables: ".concat(missingVars.join(', ')));
-  }
-}
 function validateFirebaseSetup() {
   if (!app || !db) {
     throw new Error('Firebase is not properly initialized');
@@ -24849,57 +24827,86 @@ function resetFirebaseApp() {
   return _resetFirebaseApp.apply(this, arguments);
 }
 function _resetFirebaseApp() {
-  _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+  _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
     var newConfig,
       isLoadInitWeb,
-      _args7 = arguments;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
+      existingEnvData,
+      isExisted,
+      result,
+      _args8 = arguments;
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) switch (_context8.prev = _context8.next) {
         case 0:
-          newConfig = _args7.length > 0 && _args7[0] !== undefined ? _args7[0] : null;
-          isLoadInitWeb = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : false;
-          _context7.prev = 2;
+          newConfig = _args8.length > 0 && _args8[0] !== undefined ? _args8[0] : null;
+          isLoadInitWeb = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : false;
+          _context8.prev = 2;
+          categoryPageSize = 5;
           if (!app) {
-            _context7.next = 8;
+            _context8.next = 9;
             break;
           }
-          _context7.next = 6;
+          _context8.next = 7;
           return (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.deleteApp)(app);
-        case 6:
+        case 7:
           app = null;
           db = null;
-        case 8:
+        case 9:
           if (!newConfig) {
-            _context7.next = 12;
+            _context8.next = 13;
             break;
           }
           configEnv = newConfig;
-          _context7.next = 14;
+          _context8.next = 15;
           break;
-        case 12:
-          _context7.next = 14;
+        case 13:
+          _context8.next = 15;
           return loadEnv();
-        case 14:
-          validateEnvVars();
+        case 15:
+          dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
+          existingEnvData = dataEnv.find(function (item) {
+            var _handleTextEnv;
+            return ((_handleTextEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(item, true)) === null || _handleTextEnv === void 0 ? void 0 : _handleTextEnv.APIKEY) === configEnv.APIKEY;
+          });
+          isExisted = !!existingEnvData;
+          console.log("isExisted", isExisted);
+          if (!isExisted) {
+            result = Object.entries(configEnv).map(function (_ref8) {
+              var _ref9 = _slicedToArray(_ref8, 2),
+                key = _ref9[0],
+                value = _ref9[1];
+              return "  ".concat(key, ": \"").concat(value, "\",");
+            }).join("\n");
+            dataEnv.unshift(result);
+            localStorage.setItem('envVariables', JSON.stringify(dataEnv));
+          } else {
+            dataEnv = dataEnv.filter(function (item) {
+              var _handleTextEnv2;
+              return ((_handleTextEnv2 = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(item, true)) === null || _handleTextEnv2 === void 0 ? void 0 : _handleTextEnv2.APIKEY) !== configEnv.APIKEY;
+            });
+            dataEnv.unshift(existingEnvData);
+            localStorage.setItem('envVariables', JSON.stringify(dataEnv));
+          }
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.validateEnvVars)(configEnv);
           setupFirebase();
           validateFirebaseSetup();
           if (isLoadInitWeb) {
-            _context7.next = 20;
+            _context8.next = 26;
             break;
           }
-          _context7.next = 20;
+          _context8.next = 26;
           return renderNotes();
-        case 20:
-          return _context7.abrupt("return", true);
-        case 23:
-          _context7.prev = 23;
-          _context7.t0 = _context7["catch"](2);
-          throw _context7.t0;
         case 26:
+          handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
+          return _context8.abrupt("return", true);
+        case 30:
+          _context8.prev = 30;
+          _context8.t0 = _context8["catch"](2);
+          throw _context8.t0;
+        case 33:
         case "end":
-          return _context7.stop();
+          return _context8.stop();
       }
-    }, _callee7, null, [[2, 23]]);
+    }, _callee8, null, [[2, 30]]);
   }));
   return _resetFirebaseApp.apply(this, arguments);
 }
@@ -24907,35 +24914,35 @@ function initFirebase() {
   return _initFirebase.apply(this, arguments);
 }
 function _initFirebase() {
-  _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
-      while (1) switch (_context8.prev = _context8.next) {
+  _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+      while (1) switch (_context9.prev = _context9.next) {
         case 0:
-          _context8.prev = 0;
+          _context9.prev = 0;
           if (!(envVariables.value && envVariables.value.trim())) {
-            _context8.next = 6;
+            _context9.next = 6;
             break;
           }
-          _context8.next = 4;
-          return resetFirebaseApp(handleTextEnv(envVariables.value, true), true);
+          _context9.next = 4;
+          return resetFirebaseApp((0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(envVariables.value, true), true);
         case 4:
-          _context8.next = 8;
+          _context9.next = 8;
           break;
         case 6:
-          _context8.next = 8;
+          _context9.next = 8;
           return resetFirebaseApp(null, true);
         case 8:
-          _context8.next = 13;
+          _context9.next = 13;
           break;
         case 10:
-          _context8.prev = 10;
-          _context8.t0 = _context8["catch"](0);
-          handleAlert(Alert.DANGER, _context8.t0.message, DurationLength.LONG);
+          _context9.prev = 10;
+          _context9.t0 = _context9["catch"](0);
+          handleAlert(Alert.DANGER, _context9.t0.message, DurationLength.LONG);
         case 13:
         case "end":
-          return _context8.stop();
+          return _context9.stop();
       }
-    }, _callee8, null, [[0, 10]]);
+    }, _callee9, null, [[0, 10]]);
   }));
   return _initFirebase.apply(this, arguments);
 }
@@ -24944,8 +24951,11 @@ await initFirebase();
 // CRUD
 var listItem = [];
 var listItemTemp = [];
+var listCategories = [];
 var isClickNewButton = true;
 var currentNoteId = null;
+var currentCategorySelected = null;
+var categoryPageSize = 5;
 var createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
 var searchInput = document.querySelector('#search');
 var containerWords = document.querySelector('.container-word');
@@ -24957,6 +24967,22 @@ var btnDelete = document.querySelector('#btn-delete-confirm');
 var btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
 var btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
 var scrollToTopBtn = document.querySelector('#scrollToTopBtn');
+var btnRefresh = document.getElementById("btn-refresh");
+var switchCheckChecked = document.getElementById("switchCheckChecked");
+var categoriesListItemDom = document.getElementById("categoriesList");
+var containerCategory = document.querySelector('.container-category');
+btnRefresh.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+  return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+    while (1) switch (_context3.prev = _context3.next) {
+      case 0:
+        _context3.next = 2;
+        return renderNotes();
+      case 2:
+      case "end":
+        return _context3.stop();
+    }
+  }, _callee3);
+})));
 createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
 btnCloseModal.addEventListener('click', handleReset);
 searchInput.addEventListener('input', handleInputSearch);
@@ -24964,6 +24990,7 @@ containerWords.addEventListener('click', handleContainerEventClick);
 containerWords.addEventListener('scroll', handleContainerScroll);
 scrollToTopBtn.addEventListener('click', scrollToTop);
 btnSaveEnv.addEventListener('click', handleLoadEnv);
+containerCategory.addEventListener('click', handleClickInContainer);
 createNote.addEventListener('click', function (e) {
   if (e.target !== e.currentTarget) {
     e.stopPropagation();
@@ -24976,20 +25003,45 @@ function handleReset() {
   currentNoteId = null;
   createOrUpdateNoteForm.reset();
 }
+function LoadCategory() {
+  categoriesListItemDom.innerHTML = '';
+  containerCategory.innerHTML = '';
+  if (listCategories.length > 0) {
+    var badges = '';
+    for (var i = 0; i < categoryPageSize && i < listCategories.length; i++) {
+      var category = listCategories[i];
+      categoriesListItemDom.innerHTML += "<option value=\"".concat(category, "\">").concat(category, "</option>");
+      var colorClass = COLOR[i % COLOR.length];
+      var isSelected = currentCategorySelected === category ? 'selected' : '';
+      badges += "\n          <span class=\"badge rounded-pill bg-".concat(colorClass, " me-1 mb-2 button-click-category user-select-none ").concat(isSelected, "\">").concat(category, "</span>\n        ");
+    }
+    if (categoryPageSize < listCategories.length) {
+      badges += "\n          <span class=\"badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark\">...</span>\n        ";
+    }
+    containerCategory.innerHTML = badges;
+  }
+}
 var loadData = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
     var exampleWrappers;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
           containerWords.innerHTML = '';
           listItem.sort(function (a, b) {
+            if (currentCategorySelected) {
+              var aMatchesCategory = a.category === currentCategorySelected;
+              var bMatchesCategory = b.category === currentCategorySelected;
+              if (aMatchesCategory && !bMatchesCategory) return -1;
+              if (!aMatchesCategory && bMatchesCategory) return 1;
+            }
             if (a.isPinned && !b.isPinned) return -1;
             if (!a.isPinned && b.isPinned) return 1;
             return b.timestamp - a.timestamp;
           });
+          LoadCategory();
           listItem.forEach(function (item) {
-            containerWords.innerHTML += "\n      <div class=\"card m-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <p class=\"card-text font-monospace fst-italic small mb-0\">\n              ").concat(item.timestamp.toDate().toLocaleString(), "\n            </p>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
+            containerWords.innerHTML += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <p class=\"card-text font-monospace fst-italic small mb-0\">\n              ").concat(item.timestamp.toDate().toLocaleString(), "\n            </p>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
           });
           changeIconCustomTheme(darkTheme);
           exampleWrappers = document.querySelectorAll('.example-wrapper');
@@ -24999,34 +25051,34 @@ var loadData = /*#__PURE__*/function () {
               readMoreBtn.style.display = "inline-block";
             }
           });
-        case 6:
+        case 7:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return function loadData() {
-    return _ref3.apply(this, arguments);
+    return _ref4.apply(this, arguments);
   };
 }();
 var backUpdata = function backUpdata() {
   localStorage.setItem('NotesBackups', JSON.stringify(listItem));
 };
 var renderNotes = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+  var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
     var querySnapshot;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
         case 0:
           containerWords.innerHTML = '';
           listItem = [];
           listItemTemp = [];
-          _context4.prev = 3;
+          _context5.prev = 3;
           loadingOverlay.style.display = '';
-          _context4.next = 7;
+          _context5.next = 7;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "Notes"));
         case 7:
-          querySnapshot = _context4.sent;
+          querySnapshot = _context5.sent;
           querySnapshot.forEach(function (doc) {
             var data = doc.data();
             listItem.push({
@@ -25034,33 +25086,39 @@ var renderNotes = /*#__PURE__*/function () {
               Note: data.Note,
               example: data.example,
               isPinned: data === null || data === void 0 ? void 0 : data.isPinned,
+              category: data === null || data === void 0 ? void 0 : data.category,
               otherExample: stripHtmlAdvanced(data.example),
               timestamp: data.timestamp
             });
           });
+          listCategories = Array.from(new Set(listItem.filter(function (item) {
+            return item === null || item === void 0 ? void 0 : item.category;
+          }).map(function (item) {
+            return item.category;
+          })));
           loadData();
           listItemTemp = _toConsumableArray(listItem);
           backUpdata();
-          _context4.next = 19;
+          _context5.next = 20;
           break;
-        case 14:
-          _context4.prev = 14;
-          _context4.t0 = _context4["catch"](3);
-          handleAlert(Alert.DANGER, "Error getting documents: " + _context4.t0.message, DurationLength.LONG);
+        case 15:
+          _context5.prev = 15;
+          _context5.t0 = _context5["catch"](3);
+          handleAlert(Alert.DANGER, "Error getting documents: " + _context5.t0.message, DurationLength.LONG);
           listItemTemp = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
           listItem = _toConsumableArray(listItemTemp);
-        case 19:
-          _context4.prev = 19;
+        case 20:
+          _context5.prev = 20;
           loadingOverlay.style.display = 'none';
-          return _context4.finish(19);
-        case 22:
+          return _context5.finish(20);
+        case 23:
         case "end":
-          return _context4.stop();
+          return _context5.stop();
       }
-    }, _callee4, null, [[3, 14, 19, 22]]);
+    }, _callee5, null, [[3, 15, 20, 23]]);
   }));
   return function renderNotes() {
-    return _ref4.apply(this, arguments);
+    return _ref5.apply(this, arguments);
   };
 }();
 await renderNotes();
@@ -25068,19 +25126,19 @@ function handleSubmit(_x) {
   return _handleSubmit.apply(this, arguments);
 }
 function _handleSubmit() {
-  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9(e) {
-    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-      while (1) switch (_context9.prev = _context9.next) {
+  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10(e) {
+    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+      while (1) switch (_context10.prev = _context10.next) {
         case 0:
           e.preventDefault();
           e.stopPropagation();
-          _context9.next = 4;
+          _context10.next = 4;
           return handleUpsertNote(e, currentNoteId);
         case 4:
         case "end":
-          return _context9.stop();
+          return _context10.stop();
       }
-    }, _callee9);
+    }, _callee10);
   }));
   return _handleSubmit.apply(this, arguments);
 }
@@ -25089,44 +25147,46 @@ function handleUpsertNote(_x2, _x3) {
   return _handleUpsertNote.apply(this, arguments);
 }
 function _handleUpsertNote() {
-  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10(e, idNote) {
-    var id, Note, example, data;
-    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-      while (1) switch (_context10.prev = _context10.next) {
+  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11(e, idNote) {
+    var id, Note, example, category, data;
+    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+      while (1) switch (_context11.prev = _context11.next) {
         case 0:
           id = idNote;
           Note = e.target.Note.value;
           example = tinymce.get('editor').getContent();
+          category = e.target.category.value.trim();
           loadingOverlay.style.display = '';
           data = {
             Note: Note,
             example: example,
-            timestamp: new Date()
+            timestamp: new Date(),
+            category: category
           };
-          _context10.prev = 5;
+          _context11.prev = 6;
           if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
-            _context10.next = 11;
+            _context11.next = 12;
             break;
           }
-          _context10.next = 9;
+          _context11.next = 10;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "Notes"), data);
-        case 9:
-          _context10.next = 13;
+        case 10:
+          _context11.next = 14;
           break;
-        case 11:
-          _context10.next = 13;
+        case 12:
+          _context11.next = 14;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(id)), data);
-        case 13:
-          _context10.next = 15;
+        case 14:
+          _context11.next = 16;
           return renderNotes();
-        case 15:
+        case 16:
           handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
-          _context10.next = 24;
+          _context11.next = 25;
           break;
-        case 18:
-          _context10.prev = 18;
-          _context10.t0 = _context10["catch"](5);
-          handleAlert(Alert.DANGER, "Error adding document: " + _context10.t0.message, DurationLength.LONG);
+        case 19:
+          _context11.prev = 19;
+          _context11.t0 = _context11["catch"](6);
+          handleAlert(Alert.DANGER, "Error adding document: " + _context11.t0.message, DurationLength.LONG);
           listItemTemp = listItemTemp.push({
             Note: Note,
             example: example,
@@ -25134,16 +25194,16 @@ function _handleUpsertNote() {
           });
           listItem = _toConsumableArray(listItemTemp);
           backUpdata();
-        case 24:
-          _context10.prev = 24;
+        case 25:
+          _context11.prev = 25;
           loadingOverlay.style.display = 'none';
           btnCloseModal.click();
-          return _context10.finish(24);
-        case 28:
+          return _context11.finish(25);
+        case 29:
         case "end":
-          return _context10.stop();
+          return _context11.stop();
       }
-    }, _callee10, null, [[5, 18, 24, 28]]);
+    }, _callee11, null, [[6, 19, 25, 29]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }
@@ -25170,39 +25230,71 @@ function stripHtmlAdvanced(html) {
     return l;
   }).join('\n');
 }
+function handleClickInContainer(e) {
+  var target = e.target;
+  if (target.matches('.button-click-category')) {
+    var clickedCategory = target.textContent.trim();
+    if (currentCategorySelected === clickedCategory) {
+      currentCategorySelected = null;
+    } else {
+      currentCategorySelected = clickedCategory;
+    }
+    loadData();
+    scrollToTopBtn.click();
+  } else if (target.matches('.button-click-category-more')) {
+    categoryPageSize += 5;
+    LoadCategory();
+  }
+}
 function handleContainerEventClick(_x4) {
   return _handleContainerEventClick.apply(this, arguments);
 }
 function _handleContainerEventClick() {
-  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11(e) {
+  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12(e) {
     var id, NoteId, Note, _NoteId, _NoteId2, _Note, isPinned, _NoteId3, exampleWrapper, readMoreButton;
-    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-      while (1) switch (_context11.prev = _context11.next) {
+    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+      while (1) switch (_context12.prev = _context12.next) {
         case 0:
           id = e.target.id;
-          if (id.includes('edit')) {
-            NoteId = id.split('-')[1];
-            Note = listItem.find(function (item) {
-              return item.id === NoteId;
-            });
-            document.querySelector('#Note').value = Note.Note;
-            tinymce.get('editor').setContent(Note.example);
-            isClickNewButton = false;
-            currentNoteId = NoteId;
-            btnOpenModal.click();
+          if (!id.includes('edit')) {
+            _context12.next = 12;
+            break;
           }
-          if (id.includes('delete')) {
-            currentNoteId = id.split('-')[1];
-            isClickNewButton = true;
-            btnModalConfirm.click();
-            btnDelete.addEventListener('click', _handleDeleteNote);
+          NoteId = id.split('-')[1];
+          Note = listItem.find(function (item) {
+            return item.id === NoteId;
+          });
+          document.querySelector('#Note').value = Note.Note;
+          tinymce.get('editor').setContent(Note.example);
+          document.querySelector('#category').value = Note.category || '';
+          isClickNewButton = false;
+          currentNoteId = NoteId;
+          btnOpenModal.click();
+          _context12.next = 47;
+          break;
+        case 12:
+          if (!id.includes('delete')) {
+            _context12.next = 19;
+            break;
           }
-          if (id.includes('copy')) {
-            _NoteId = id.split('-')[1];
-            onClickCopy(_NoteId);
+          currentNoteId = id.split('-')[1];
+          isClickNewButton = true;
+          btnModalConfirm.click();
+          btnDelete.addEventListener('click', _handleDeleteNote);
+          _context12.next = 47;
+          break;
+        case 19:
+          if (!id.includes('copy')) {
+            _context12.next = 24;
+            break;
           }
+          _NoteId = id.split('-')[1];
+          onClickCopy(_NoteId);
+          _context12.next = 47;
+          break;
+        case 24:
           if (!id.includes('pin')) {
-            _context11.next = 24;
+            _context12.next = 46;
             break;
           }
           _NoteId2 = id.split('-')[1];
@@ -25211,27 +25303,30 @@ function _handleContainerEventClick() {
           });
           _Note.isPinned = !_Note.isPinned;
           isPinned = _Note.isPinned;
-          _context11.prev = 9;
+          _context12.prev = 29;
           loadingOverlay.style.display = '';
-          _context11.next = 13;
+          _context12.next = 33;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(_NoteId2)), {
             isPinned: _Note.isPinned
           });
-        case 13:
+        case 33:
           handleAlert(Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), DurationLength.SHORT);
           loadData();
-          _context11.next = 20;
+          _context12.next = 40;
           break;
-        case 17:
-          _context11.prev = 17;
-          _context11.t0 = _context11["catch"](9);
-          handleAlert(Alert.DANGER, "Error pinning note: " + _context11.t0.message, DurationLength.LONG);
-        case 20:
-          _context11.prev = 20;
+        case 37:
+          _context12.prev = 37;
+          _context12.t0 = _context12["catch"](29);
+          handleAlert(Alert.DANGER, "Error pinning note: " + _context12.t0.message, DurationLength.LONG);
+        case 40:
+          _context12.prev = 40;
           backUpdata();
           loadingOverlay.style.display = 'none';
-          return _context11.finish(20);
-        case 24:
+          return _context12.finish(40);
+        case 44:
+          _context12.next = 47;
+          break;
+        case 46:
           if (id.includes('readMore')) {
             _NoteId3 = id.split('-')[1];
             exampleWrapper = document.querySelector("#example-".concat(_NoteId3));
@@ -25247,11 +25342,11 @@ function _handleContainerEventClick() {
               });
             }
           }
-        case 25:
+        case 47:
         case "end":
-          return _context11.stop();
+          return _context12.stop();
       }
-    }, _callee11, null, [[9, 17, 20, 24]]);
+    }, _callee12, null, [[29, 37, 40, 44]]);
   }));
   return _handleContainerEventClick.apply(this, arguments);
 }
@@ -25263,62 +25358,68 @@ function onClickCopy(id) {
   navigator.clipboard.writeText(item.otherExample);
 }
 var _handleDeleteNote = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
+  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
         case 0:
           if (!currentNoteId) {
-            _context5.next = 5;
+            _context6.next = 5;
             break;
           }
-          _context5.next = 3;
+          _context6.next = 3;
           return deleteNote(currentNoteId);
         case 3:
           currentNoteId = null;
           btnDelete.removeEventListener('click', _handleDeleteNote);
         case 5:
         case "end":
-          return _context5.stop();
+          return _context6.stop();
       }
-    }, _callee5);
+    }, _callee6);
   }));
   return function handleDeleteNote() {
-    return _ref5.apply(this, arguments);
+    return _ref6.apply(this, arguments);
   };
 }();
 var deleteNote = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6(NoteId) {
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-      while (1) switch (_context6.prev = _context6.next) {
+  var _ref7 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7(NoteId) {
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
         case 0:
-          _context6.prev = 0;
+          _context7.prev = 0;
+          if (!switchCheckChecked.checked) {
+            _context7.next = 3;
+            break;
+          }
+          return _context7.abrupt("return");
+        case 3:
           loadingOverlay.style.display = '';
-          _context6.next = 4;
+          _context7.next = 6;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(NoteId)));
-        case 4:
-          _context6.next = 6;
-          return renderNotes();
         case 6:
+          _context7.next = 8;
+          return renderNotes();
+        case 8:
           handleAlert(Alert.WARNING, "Note removed successfully", DurationLength.MEDIUM);
-          _context6.next = 12;
+          _context7.next = 14;
           break;
-        case 9:
-          _context6.prev = 9;
-          _context6.t0 = _context6["catch"](0);
-          handleAlert(Alert.DANGER, "Error removing document: " + _context6.t0.message, DurationLength.LONG);
-        case 12:
-          _context6.prev = 12;
+        case 11:
+          _context7.prev = 11;
+          _context7.t0 = _context7["catch"](0);
+          handleAlert(Alert.DANGER, "Error removing document: " + _context7.t0.message, DurationLength.LONG);
+        case 14:
+          _context7.prev = 14;
           loadingOverlay.style.display = 'none';
           btnModalConfirmClose.click();
-          return _context6.finish(12);
-        case 16:
+          return _context7.finish(14);
+        case 18:
         case "end":
-          return _context6.stop();
+          return _context7.stop();
       }
-    }, _callee6, null, [[0, 9, 12, 16]]);
+    }, _callee7, null, [[0, 11, 14, 18]]);
   }));
   return function deleteNote(_x5) {
-    return _ref6.apply(this, arguments);
+    return _ref7.apply(this, arguments);
   };
 }();
 function handleContainerScroll() {
@@ -25338,52 +25439,98 @@ function handleLoadEnv() {
   return _handleLoadEnv.apply(this, arguments);
 }
 function _handleLoadEnv() {
-  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
+  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
     var envText, env, success;
-    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-      while (1) switch (_context12.prev = _context12.next) {
+    return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+      while (1) switch (_context13.prev = _context13.next) {
         case 0:
           loadingOverlay.style.display = 'block';
           envText = envVariables.value.trim();
           if (envText) {
-            _context12.next = 6;
+            _context13.next = 6;
             break;
           }
           handleAlert(Alert.WARNING, "Please enter environment variables", DurationLength.SHORT);
           loadingOverlay.style.display = 'none';
-          return _context12.abrupt("return");
+          return _context13.abrupt("return");
         case 6:
-          _context12.prev = 6;
-          env = handleTextEnv(envText, true);
-          _context12.next = 10;
+          _context13.prev = 6;
+          env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(envText, true);
+          _context13.next = 10;
           return resetFirebaseApp(env);
         case 10:
-          success = _context12.sent;
+          success = _context13.sent;
           if (success) {
             btnCloseModalEnv.click();
-            localStorage.setItem('envVariables', envText);
-            handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
           }
-          _context12.next = 17;
+          _context13.next = 17;
           break;
         case 14:
-          _context12.prev = 14;
-          _context12.t0 = _context12["catch"](6);
-          handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context12.t0.message), DurationLength.LONG);
+          _context13.prev = 14;
+          _context13.t0 = _context13["catch"](6);
+          handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context13.t0.message), DurationLength.LONG);
         case 17:
-          _context12.prev = 17;
+          _context13.prev = 17;
           loadingOverlay.style.display = 'none';
-          return _context12.finish(17);
-        case 20:
+          switchCheckChecked.checked = false;
+          return _context13.finish(17);
+        case 21:
         case "end":
-          return _context12.stop();
+          return _context13.stop();
       }
-    }, _callee12, null, [[6, 14, 17, 20]]);
+    }, _callee13, null, [[6, 14, 17, 21]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   handleTextEnv: () => (/* binding */ handleTextEnv),
+/* harmony export */   validateEnvVars: () => (/* binding */ validateEnvVars)
+/* harmony export */ });
+function _toArray(r) { return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function handleTextEnv(envText, isComma) {
+  var env = {};
+  var delimiter = isComma ? ',' : '\n';
+  envText.split(delimiter).forEach(function (line) {
+    var trimmedLine = line.trim();
+    if (trimmedLine && !trimmedLine.startsWith('#')) {
+      var _trimmedLine$split = trimmedLine.split(':'),
+        _trimmedLine$split2 = _toArray(_trimmedLine$split),
+        key = _trimmedLine$split2[0],
+        valueParts = _trimmedLine$split2.slice(1);
+      if (key && valueParts.length > 0) {
+        var value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+        env[key.trim().toUpperCase()] = value;
+      }
+    }
+  });
+  return env;
+}
+function validateEnvVars(configEnv) {
+  var requiredEnvVars = ['APIKEY', 'AUTHDOMAIN', 'PROJECTID', 'STORAGEBUCKET', 'MESSAGINGSENDERID', 'APPID'];
+  var missingVars = requiredEnvVars.filter(function (varName) {
+    return !configEnv[varName];
+  });
+  if (missingVars.length > 0) {
+    throw new Error("Missing required environment variables: ".concat(missingVars.join(', ')));
+  }
+}
 
 /***/ }),
 

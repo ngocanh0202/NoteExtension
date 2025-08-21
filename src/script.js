@@ -1,6 +1,7 @@
 import { initializeApp, deleteApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "firebase/firestore";
+import { handleTextEnv, validateEnvVars } from "./utils.js";
 
 // Initialize aler
 const alertWarning = document.querySelector('#alert-warning');
@@ -12,6 +13,16 @@ const Alert = {
   INFO: "alertInfo",
   DANGER: "alertDanger"
 };
+
+const COLOR = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'dark'
+]
 
 const DurationLength = {
   SHORT: 1000,
@@ -140,14 +151,15 @@ const btnSaveEnv = document.querySelector('#btn-save-env');
 const btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
 const btnBackEnv = document.querySelector('#btn-back-confirm');
 const btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
-envVariables.value = localStorage.getItem('envVariables') || '';
+let dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
+envVariables.value = dataEnv[0] || '';
 btnBackEnv.addEventListener('click', async () => {
   try{
+    switchCheckChecked.checked = false;
     await resetFirebaseApp();
     envVariables.value = '';
-    localStorage.removeItem('envVariables');
     btnCloseModalEnv.click();
-    handleAlert(Alert.WARNING, "Firebase reset successfully", DurationLength.SHORT);
+    handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
     btnCloseBackModalEnv.click();
   }catch(e){
     handleAlert(Alert.DANGER, `Failed to reset Firebase: ${e.message}`, DurationLength.LONG);
@@ -181,31 +193,7 @@ function setupFirebase(){
   db = getFirestore(app);
 }
 
-function handleTextEnv(envText, isComma){
-  let env = {};
-  const delimiter = isComma ? ',' : '\n';
-  envText.split(delimiter).forEach(line => {
-    const trimmedLine = line.trim();
-    if (trimmedLine && !trimmedLine.startsWith('#')) {
-      const [key, ...valueParts] = trimmedLine.split(':');
-      if (key && valueParts.length > 0) {
-        const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
-        env[key.trim().toUpperCase()] = value;
-      }
-    }
-  });
-  return env;
-}
-
 // Validate that all required environment variables are loaded
-function validateEnvVars() {
-  const requiredEnvVars = ['APIKEY', 'AUTHDOMAIN', 'PROJECTID', 'STORAGEBUCKET', 'MESSAGINGSENDERID', 'APPID'];
-  const missingVars = requiredEnvVars.filter(varName => !configEnv[varName]);
-
-  if (missingVars.length > 0) {
-    throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
-  }
-}
 function validateFirebaseSetup() {
   if (!app || !db) {
     throw new Error('Firebase is not properly initialized');
@@ -214,6 +202,7 @@ function validateFirebaseSetup() {
 
 async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
   try {
+    categoryPageSize = 5;
     if (app) {
       await deleteApp(app);
       app = null;
@@ -225,14 +214,33 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
     } else {
       await loadEnv();
     }
-    
-    validateEnvVars();
+
+    dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
+
+    let existingEnvData = dataEnv.find(item => handleTextEnv(item, true)?.APIKEY === configEnv.APIKEY);
+    let isExisted = !!existingEnvData;
+    console.log("isExisted", isExisted);
+    if (!isExisted) {
+        let result = Object.entries(configEnv)
+          .map(([key, value]) => `  ${key}: "${value}",`)
+          .join("\n");
+        dataEnv.unshift(result);
+        localStorage.setItem('envVariables', JSON.stringify(dataEnv));
+    } else {
+        dataEnv = dataEnv.filter(item => handleTextEnv(item, true)?.APIKEY !== configEnv.APIKEY);
+        dataEnv.unshift(existingEnvData);
+        localStorage.setItem('envVariables', JSON.stringify(dataEnv));
+    }
+
+    validateEnvVars(configEnv);
     setupFirebase();
     validateFirebaseSetup();
     
     if (!isLoadInitWeb) {
       await renderNotes();
     }
+
+    handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
 
     return true;
   } catch (error) {
@@ -257,8 +265,12 @@ await initFirebase();
   // CRUD
   var listItem = [];
   var listItemTemp = [];
+  var listCategories = [];
   var isClickNewButton = true;
   let currentNoteId = null;
+  let currentCategorySelected = null;
+  let categoryPageSize = 5;
+
   const createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
   const searchInput = document.querySelector('#search');
   const containerWords = document.querySelector('.container-word');
@@ -271,8 +283,12 @@ await initFirebase();
   const btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
   const btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
   const scrollToTopBtn = document.querySelector('#scrollToTopBtn');
+  const btnRefresh = document.getElementById("btn-refresh");
+  const switchCheckChecked = document.getElementById("switchCheckChecked");
+  const categoriesListItemDom = document.getElementById("categoriesList");
+  const containerCategory = document.querySelector('.container-category');
 
-  
+  btnRefresh.addEventListener("click", async()=>{await renderNotes()});
   createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
   btnCloseModal.addEventListener('click', handleReset);
   searchInput.addEventListener('input', handleInputSearch);
@@ -280,6 +296,7 @@ await initFirebase();
   containerWords.addEventListener('scroll', handleContainerScroll);
   scrollToTopBtn.addEventListener('click', scrollToTop);
   btnSaveEnv.addEventListener('click', handleLoadEnv)
+  containerCategory.addEventListener('click', handleClickInContainer);
 
 
   createNote.addEventListener('click', (e)=>{
@@ -296,17 +313,50 @@ await initFirebase();
     createOrUpdateNoteForm.reset();
   }
 
+  function LoadCategory(){
+    categoriesListItemDom.innerHTML = '';
+    containerCategory.innerHTML = '';
+    if(listCategories.length > 0) {
+      let badges = '';
+      for (let i = 0; i < categoryPageSize && i < listCategories.length; i++) {
+        const category = listCategories[i];
+        categoriesListItemDom.innerHTML += `<option value="${category}">${category}</option>`;
+        const colorClass = COLOR[i % COLOR.length];
+        const isSelected = currentCategorySelected === category ? 'selected' : '';
+        badges += `
+          <span class="badge rounded-pill bg-${colorClass} me-1 mb-2 button-click-category user-select-none ${isSelected}">${category}</span>
+        `;
+      }
+      if(categoryPageSize < listCategories.length){
+         badges += `
+          <span class="badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark">...</span>
+        `;
+      }
+      containerCategory.innerHTML = badges;
+    }
+  }
+
   const loadData = async () => {
     containerWords.innerHTML = '';
     listItem.sort((a, b) => {
+      if (currentCategorySelected) {
+        const aMatchesCategory = a.category === currentCategorySelected;
+        const bMatchesCategory = b.category === currentCategorySelected;
+        if (aMatchesCategory && !bMatchesCategory) return -1;
+        if (!aMatchesCategory && bMatchesCategory) return 1;
+      }
+      
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
+      
       return b.timestamp - a.timestamp;
     });
 
+    LoadCategory();
+
     listItem.forEach(item => {
       containerWords.innerHTML += `
-      <div class="card m-2">
+      <div class="card mb-2">
         <div class="card-body">
           <div class="card-title d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
@@ -371,10 +421,14 @@ await initFirebase();
           Note: data.Note,
           example: data.example,
           isPinned: data?.isPinned,
+          category: data?.category,
           otherExample: stripHtmlAdvanced(data.example),
           timestamp: data.timestamp
         });
       });
+
+      listCategories = Array.from(new Set(listItem.filter(item => item?.category).map(item => item.category)));
+
       loadData();
       listItemTemp = [...listItem];
       backUpdata();
@@ -398,11 +452,13 @@ await initFirebase();
     const id = idNote;
     const Note = e.target.Note.value;
     const example = tinymce.get('editor').getContent();
+    const category = e.target.category.value.trim();
     loadingOverlay.style.display = '';
     const data = {
       Note: Note,
       example: example,
-      timestamp: new Date()
+      timestamp: new Date(),
+      category: category
     }
     try {
       if ((id == '' || id == null || id == undefined) && isClickNewButton) {
@@ -455,6 +511,23 @@ await initFirebase();
     return lines.filter(l => l).join('\n');
   }
   
+  function handleClickInContainer(e){
+    const target = e.target;
+    if(target.matches('.button-click-category')){
+      const clickedCategory = target.textContent.trim();
+      if (currentCategorySelected === clickedCategory) {
+        currentCategorySelected = null;
+      } else {
+        currentCategorySelected = clickedCategory;
+      }
+      loadData();
+      scrollToTopBtn.click();
+    }
+    else if (target.matches('.button-click-category-more')) {
+      categoryPageSize += 5;
+      LoadCategory();
+    }
+  }
 
   async function handleContainerEventClick(e) {
     const id = e.target.id;
@@ -463,21 +536,22 @@ await initFirebase();
       const Note = listItem.find(item => item.id === NoteId);
       document.querySelector('#Note').value = Note.Note;
       tinymce.get('editor').setContent(Note.example);
+      document.querySelector('#category').value = Note.category || '';
       isClickNewButton = false;
       currentNoteId = NoteId;
       btnOpenModal.click();
     }
-    if (id.includes('delete')) {
+    else if (id.includes('delete')) {
       currentNoteId = id.split('-')[1];
       isClickNewButton = true;
       btnModalConfirm.click();
       btnDelete.addEventListener('click', handleDeleteNote);
     }
-    if (id.includes('copy')) {
+    else if (id.includes('copy')) {
       const NoteId = id.split('-')[1];
       onClickCopy(NoteId);
     }
-    if (id.includes('pin')) {
+    else if (id.includes('pin')) {
       const NoteId = id.split('-')[1];
       const Note = listItem.find(item => item.id === NoteId);
       Note.isPinned = !Note.isPinned;
@@ -495,7 +569,7 @@ await initFirebase();
         loadingOverlay.style.display = 'none';
       }
     }
-    if (id.includes('readMore')) {
+    else if (id.includes('readMore')) {
       const NoteId = id.split('-')[1];
       const exampleWrapper = document.querySelector(`#example-${NoteId}`);
       const readMoreButton = document.querySelector(`#readMore-${NoteId}`);
@@ -526,6 +600,8 @@ await initFirebase();
 
   const deleteNote = async (NoteId) => {
     try {
+      if(switchCheckChecked.checked)
+        return;
       loadingOverlay.style.display = '';
       await deleteDoc(doc(db, `Notes/${NoteId}`));
       await renderNotes();
@@ -568,12 +644,11 @@ await initFirebase();
       
       if (success) {
         btnCloseModalEnv.click();
-        localStorage.setItem('envVariables', envText);
-        handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
       }
     } catch (error) {
       handleAlert(Alert.DANGER, `Failed to update configuration: ${error.message}`, DurationLength.LONG);
     } finally {
       loadingOverlay.style.display = 'none';
+      switchCheckChecked.checked = false;
     }
   }
