@@ -24749,24 +24749,25 @@ btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*
       case 0:
         _context.prev = 0;
         switchCheckChecked.checked = false;
-        _context.next = 4;
+        labelSwitch.textContent = "Notes";
+        _context.next = 5;
         return resetFirebaseApp();
-      case 4:
+      case 5:
         envVariables.value = '';
         btnCloseModalEnv.click();
         handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
         btnCloseBackModalEnv.click();
-        _context.next = 13;
+        _context.next = 14;
         break;
-      case 10:
-        _context.prev = 10;
+      case 11:
+        _context.prev = 11;
         _context.t0 = _context["catch"](0);
         handleAlert(Alert.DANGER, "Failed to reset Firebase: ".concat(_context.t0.message), DurationLength.LONG);
-      case 13:
+      case 14:
       case "end":
         return _context.stop();
     }
-  }, _callee, null, [[0, 10]]);
+  }, _callee, null, [[0, 11]]);
 })));
 var configEnv = {};
 var firebaseConfig = {};
@@ -24969,6 +24970,7 @@ var btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
 var scrollToTopBtn = document.querySelector('#scrollToTopBtn');
 var btnRefresh = document.getElementById("btn-refresh");
 var switchCheckChecked = document.getElementById("switchCheckChecked");
+var labelSwitch = document.querySelector("label[for='switchCheckChecked']");
 var categoriesListItemDom = document.getElementById("categoriesList");
 var containerCategory = document.querySelector('.container-category');
 btnRefresh.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
@@ -25209,6 +25211,8 @@ function _handleUpsertNote() {
 }
 function handleInputSearch(e) {
   var value = e.target.value.toLowerCase();
+  labelSwitch.textContent = "Notes";
+  switchCheckChecked.checked = false;
   listItem = listItemTemp.filter(function (item) {
     return item.Note.toLowerCase().includes(value) || item.otherExample.toLowerCase().includes(value);
   });

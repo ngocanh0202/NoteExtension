@@ -156,6 +156,7 @@ envVariables.value = dataEnv[0] || '';
 btnBackEnv.addEventListener('click', async () => {
   try{
     switchCheckChecked.checked = false;
+    labelSwitch.textContent = "Notes";
     await resetFirebaseApp();
     envVariables.value = '';
     btnCloseModalEnv.click();
@@ -284,6 +285,7 @@ await initFirebase();
   const scrollToTopBtn = document.querySelector('#scrollToTopBtn');
   const btnRefresh = document.getElementById("btn-refresh");
   const switchCheckChecked = document.getElementById("switchCheckChecked");
+  const labelSwitch = document.querySelector("label[for='switchCheckChecked']");
   const categoriesListItemDom = document.getElementById("categoriesList");
   const containerCategory = document.querySelector('.container-category');
 
@@ -484,6 +486,8 @@ await initFirebase();
 
   function handleInputSearch(e) {
     const value = e.target.value.toLowerCase();
+    labelSwitch.textContent = "Notes";
+    switchCheckChecked.checked = false;
     listItem = listItemTemp.filter(item =>
       item.Note.toLowerCase().includes(value) ||
       item.otherExample.toLowerCase().includes(value)

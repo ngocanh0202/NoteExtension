@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         textAreaEnvVariables.value = selectedEnv;
         btnSaveEnv.click();
         switchCheckChecked.checked = false;
+        labelSwitch.textContent = "Notes";
       }
     }
 
