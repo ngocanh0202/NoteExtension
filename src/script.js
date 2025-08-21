@@ -377,9 +377,12 @@ await initFirebase();
           </div>
 
           <div class="d-flex align-items-center justify-content-between mt-2">
-            <p class="card-text font-monospace fst-italic small mb-0">
-              ${item.timestamp.toDate().toLocaleString()}
-            </p>
+            <div class="d-flex gap-2">
+              <p class="card-text font-monospace fst-italic small mb-0">
+                ${item.timestamp.toDate().toLocaleString()}
+              </p>
+              ${item.category ? `<span class="badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary">${item.category}</span>` : ''}
+            </div>
             <button type="button" id="copy-${item.id}" class="btn btn-copy">
               <img id="copyIcon-${item.id}" src="" alt="">
             </button>
