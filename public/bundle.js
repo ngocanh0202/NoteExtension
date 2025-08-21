@@ -24862,6 +24862,16 @@ function _resetFirebaseApp() {
           _context8.next = 15;
           return loadEnv();
         case 15:
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.validateEnvVars)(configEnv);
+          setupFirebase();
+          validateFirebaseSetup();
+          if (isLoadInitWeb) {
+            _context8.next = 21;
+            break;
+          }
+          _context8.next = 21;
+          return renderNotes();
+        case 21:
           dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
           existingEnvData = dataEnv.find(function (item) {
             var _handleTextEnv;
@@ -24886,16 +24896,6 @@ function _resetFirebaseApp() {
             dataEnv.unshift(existingEnvData);
             localStorage.setItem('envVariables', JSON.stringify(dataEnv));
           }
-          (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.validateEnvVars)(configEnv);
-          setupFirebase();
-          validateFirebaseSetup();
-          if (isLoadInitWeb) {
-            _context8.next = 26;
-            break;
-          }
-          _context8.next = 26;
-          return renderNotes();
-        case 26:
           handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
           return _context8.abrupt("return", true);
         case 30:

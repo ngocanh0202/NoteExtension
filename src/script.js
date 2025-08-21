@@ -215,6 +215,14 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
       await loadEnv();
     }
 
+    validateEnvVars(configEnv);
+    setupFirebase();
+    validateFirebaseSetup();
+    
+    if (!isLoadInitWeb) {
+      await renderNotes();
+    }
+    
     dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
 
     let existingEnvData = dataEnv.find(item => handleTextEnv(item, true)?.APIKEY === configEnv.APIKEY);
@@ -231,15 +239,6 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
         dataEnv.unshift(existingEnvData);
         localStorage.setItem('envVariables', JSON.stringify(dataEnv));
     }
-
-    validateEnvVars(configEnv);
-    setupFirebase();
-    validateFirebaseSetup();
-    
-    if (!isLoadInitWeb) {
-      await renderNotes();
-    }
-
     handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
 
     return true;
