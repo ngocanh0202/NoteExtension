@@ -90,12 +90,20 @@ themeSwitcher.addEventListener('click', () => {
     {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
+        document.querySelectorAll('.card-title').forEach((el) => {
+          el.classList.remove('dark-theme');
+          el.classList.add('light-theme');
+        });
         img.src = '/icons/brightness-high-fill.svg';
     }
     else
     {
         document.body.classList.remove('light-theme');
         document.body.classList.add('dark-theme');
+        document.querySelectorAll('.card-title').forEach((el) => {
+          el.classList.remove('light-theme');
+          el.classList.add('dark-theme');
+        });
         img.src = '/icons/moon-fill.svg';
     }
     changeIconCustomTheme(!darkTheme);
@@ -359,7 +367,7 @@ await initFirebase();
       containerWords.innerHTML += `
       <div class="card mb-2">
         <div class="card-body">
-          <div class="card-title d-flex align-items-center justify-content-between">
+          <div class="card-title d-flex align-items-center justify-content-between sticky-top ${darkTheme ? 'dark-theme' : 'light-theme'}" style="z-index:1;">
             <div class="d-flex align-items-center">
               <h5 class="mb-0 me-2">${item.Note}</h5>
               <button type="button" id="pin-${item.id}" class="btn">

@@ -24683,10 +24683,18 @@ themeSwitcher.addEventListener('click', function () {
   if (darkTheme) {
     document.body.classList.remove('dark-theme');
     document.body.classList.add('light-theme');
+    document.querySelectorAll('.card-title').forEach(function (el) {
+      el.classList.remove('dark-theme');
+      el.classList.add('light-theme');
+    });
     img.src = '/icons/brightness-high-fill.svg';
   } else {
     document.body.classList.remove('light-theme');
     document.body.classList.add('dark-theme');
+    document.querySelectorAll('.card-title').forEach(function (el) {
+      el.classList.remove('light-theme');
+      el.classList.add('dark-theme');
+    });
     img.src = '/icons/moon-fill.svg';
   }
   changeIconCustomTheme(!darkTheme);
@@ -25043,7 +25051,7 @@ var loadData = /*#__PURE__*/function () {
           });
           LoadCategory();
           listItem.forEach(function (item) {
-            containerWords.innerHTML += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
+            containerWords.innerHTML += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between sticky-top ".concat(darkTheme ? 'dark-theme' : 'light-theme', "\" style=\"z-index:1;\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">").concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
           });
           changeIconCustomTheme(darkTheme);
           exampleWrappers = document.querySelectorAll('.example-wrapper');
