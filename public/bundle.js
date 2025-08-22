@@ -25098,9 +25098,9 @@ var renderNotes = /*#__PURE__*/function () {
           }).map(function (item) {
             return item.category;
           })));
-          if (listCategories.includes("unknown")) {
-            listCategories = ["unknown"].concat(_toConsumableArray(listCategories.filter(function (cat) {
-              return cat !== "unknown";
+          if (listCategories.includes(currentCategorySelected)) {
+            listCategories = [currentCategorySelected].concat(_toConsumableArray(listCategories.filter(function (cat) {
+              return cat !== currentCategorySelected;
             })));
           }
           loadData();
@@ -25184,14 +25184,15 @@ function _handleUpsertNote() {
           _context11.next = 14;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(id)), data);
         case 14:
-          _context11.next = 16;
+          currentCategorySelected = category;
+          _context11.next = 17;
           return renderNotes();
-        case 16:
+        case 17:
           handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
-          _context11.next = 25;
+          _context11.next = 26;
           break;
-        case 19:
-          _context11.prev = 19;
+        case 20:
+          _context11.prev = 20;
           _context11.t0 = _context11["catch"](6);
           handleAlert(Alert.DANGER, "Error adding document: " + _context11.t0.message, DurationLength.LONG);
           listItemTemp = listItemTemp.push({
@@ -25201,16 +25202,16 @@ function _handleUpsertNote() {
           });
           listItem = _toConsumableArray(listItemTemp);
           backUpdata();
-        case 25:
-          _context11.prev = 25;
+        case 26:
+          _context11.prev = 26;
           loadingOverlay.style.display = 'none';
           btnCloseModal.click();
-          return _context11.finish(25);
-        case 29:
+          return _context11.finish(26);
+        case 30:
         case "end":
           return _context11.stop();
       }
-    }, _callee11, null, [[6, 19, 25, 29]]);
+    }, _callee11, null, [[6, 20, 26, 30]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }

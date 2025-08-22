@@ -432,8 +432,8 @@ await initFirebase();
       });
 
       listCategories = Array.from(new Set(listItem.filter(item => item?.category).map(item => item.category)));
-      if (listCategories.includes("unknown")) {
-        listCategories = ["unknown", ...listCategories.filter(cat => cat !== "unknown")];
+      if (listCategories.includes(currentCategorySelected)) {
+        listCategories = [currentCategorySelected, ...listCategories.filter(cat => cat !== currentCategorySelected)];
       }
 
       loadData();
@@ -473,6 +473,7 @@ await initFirebase();
       } else {
         await updateDoc(doc(db, `Notes/${id}`), data);
       }
+      currentCategorySelected = category;
       await renderNotes();
       handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
     } catch (e) {
