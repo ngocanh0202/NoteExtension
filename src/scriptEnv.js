@@ -121,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (dataEnv.length < initialLength) {
           localStorage.setItem('envVariables', JSON.stringify(dataEnv));
           handleLoadLogEnvs();
-          console.log('Environment removed:', envKey);
         } else {
           console.warn('Environment not found:', envKey);
         }

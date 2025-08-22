@@ -7,5 +7,18 @@
     "action": {
         "default_icon": "./images/default.png",
         "default_popup": "./public/index.html"
+    },
+    "permissions" : [
+        "contextMenus",
+        "activeTab",
+        "storage"
+    ],
+    "background": {
+        "service_worker": "contextMenusNote.js"
+    },
+    "icons": {
+        "16": "./images/default.png",
+        "48": "./images/default.png",
+        "128": "./images/default.png"
     }
 }

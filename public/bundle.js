@@ -24879,7 +24879,6 @@ function _resetFirebaseApp() {
             return ((_handleTextEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(item, true)) === null || _handleTextEnv === void 0 ? void 0 : _handleTextEnv.APIKEY) === configEnv.APIKEY;
           });
           isExisted = !!existingEnvData;
-          console.log("isExisted", isExisted);
           if (!isExisted) {
             result = Object.entries(configEnv).map(function (_ref8) {
               var _ref9 = _slicedToArray(_ref8, 2),
@@ -24899,15 +24898,15 @@ function _resetFirebaseApp() {
           }
           handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
           return _context8.abrupt("return", true);
-        case 30:
-          _context8.prev = 30;
+        case 29:
+          _context8.prev = 29;
           _context8.t0 = _context8["catch"](2);
           throw _context8.t0;
-        case 33:
+        case 32:
         case "end":
           return _context8.stop();
       }
-    }, _callee8, null, [[2, 30]]);
+    }, _callee8, null, [[2, 29]]);
   }));
   return _resetFirebaseApp.apply(this, arguments);
 }
@@ -25098,26 +25097,31 @@ var renderNotes = /*#__PURE__*/function () {
           }).map(function (item) {
             return item.category;
           })));
+          if (listCategories.includes("unknown")) {
+            listCategories = ["unknown"].concat(_toConsumableArray(listCategories.filter(function (cat) {
+              return cat !== "unknown";
+            })));
+          }
           loadData();
           listItemTemp = _toConsumableArray(listItem);
           backUpdata();
-          _context5.next = 20;
+          _context5.next = 21;
           break;
-        case 15:
-          _context5.prev = 15;
+        case 16:
+          _context5.prev = 16;
           _context5.t0 = _context5["catch"](3);
           handleAlert(Alert.DANGER, "Error getting documents: " + _context5.t0.message, DurationLength.LONG);
           listItemTemp = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
           listItem = _toConsumableArray(listItemTemp);
-        case 20:
-          _context5.prev = 20;
+        case 21:
+          _context5.prev = 21;
           loadingOverlay.style.display = 'none';
-          return _context5.finish(20);
-        case 23:
+          return _context5.finish(21);
+        case 24:
         case "end":
           return _context5.stop();
       }
-    }, _callee5, null, [[3, 15, 20, 23]]);
+    }, _callee5, null, [[3, 16, 21, 24]]);
   }));
   return function renderNotes() {
     return _ref5.apply(this, arguments);
@@ -25486,6 +25490,41 @@ function _handleLoadEnv() {
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
+function AutoUpdateEditorContent() {
+  chrome.storage.local.get(['selectedText', 'addToNote', 'category', 'title'], function (result) {
+    if (result.addToNote && result.selectedText) {
+      try {
+        if (tinymce.get('editor')) {
+          var newContent = result.selectedText;
+          tinymce.get('editor').setContent(newContent);
+          document.getElementById('category').value = result.category || '';
+          document.getElementById('Note').value = result.title || '';
+          var submitButton = document.getElementById('submit-note');
+          if (submitButton) {
+            submitButton.click();
+            currentCategorySelected = result.category || null;
+          }
+          handleAlert(Alert.INFO, 'Selected text added to editor, now saving to Notes...', DurationLength.MEDIUM);
+        }
+        chrome.storage.local.remove(['selectedText', 'addToNote']);
+      } catch (error) {
+        handleAlert(Alert.DANGER, 'Failed to add text to note', DurationLength.SHORT);
+      }
+    }
+  });
+}
+if (typeof chrome !== 'undefined' && chrome.storage) {
+  AutoUpdateEditorContent();
+}
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === 'autoUpdateEditor') {
+    AutoUpdateEditorContent();
+    sendResponse({
+      success: true
+    });
+    return true;
+  }
+});
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 

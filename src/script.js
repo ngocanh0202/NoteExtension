@@ -228,7 +228,6 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
 
     let existingEnvData = dataEnv.find(item => handleTextEnv(item, true)?.APIKEY === configEnv.APIKEY);
     let isExisted = !!existingEnvData;
-    console.log("isExisted", isExisted);
     if (!isExisted) {
         let result = Object.entries(configEnv)
           .map(([key, value]) => `  ${key}: "${value}",`)
@@ -432,6 +431,9 @@ await initFirebase();
       });
 
       listCategories = Array.from(new Set(listItem.filter(item => item?.category).map(item => item.category)));
+      if (listCategories.includes("unknown")) {
+        listCategories = ["unknown", ...listCategories.filter(cat => cat !== "unknown")];
+      }
 
       loadData();
       listItemTemp = [...listItem];
@@ -658,3 +660,42 @@ await initFirebase();
       switchCheckChecked.checked = false;
     }
   }
+
+  function AutoUpdateEditorContent() {
+     chrome.storage.local.get(['selectedText', 'addToNote','category','title'], function(result) {
+      if (result.addToNote && result.selectedText) {
+        try {
+          if (tinymce.get('editor')) {
+              const newContent = result.selectedText;
+              tinymce.get('editor').setContent(newContent);
+              document.getElementById('category').value = result.category || '';
+              document.getElementById('Note').value = result.title || '';
+
+              const submitButton = document.getElementById('submit-note');
+              if (submitButton) {
+                submitButton.click();
+                currentCategorySelected = result.category || null;
+              }
+              handleAlert(Alert.INFO, 'Selected text added to editor, now saving to Notes...', DurationLength.MEDIUM);
+          }
+          
+          chrome.storage.local.remove(['selectedText', 'addToNote']);
+          
+        } catch (error) {
+          handleAlert(Alert.DANGER, 'Failed to add text to note', DurationLength.SHORT);
+        }
+      }
+    });
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+    AutoUpdateEditorContent();    
+  }
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action === 'autoUpdateEditor') {
+      AutoUpdateEditorContent();
+      sendResponse({success: true});
+      return true;
+    }
+  });
