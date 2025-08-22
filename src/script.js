@@ -204,6 +204,7 @@ function validateFirebaseSetup() {
 async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
   try {
     categoryPageSize = 5;
+    currentCategorySelected = null;
     if (app) {
       await deleteApp(app);
       app = null;

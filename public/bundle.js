@@ -24842,37 +24842,38 @@ function _resetFirebaseApp() {
           isLoadInitWeb = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : false;
           _context8.prev = 2;
           categoryPageSize = 5;
+          currentCategorySelected = null;
           if (!app) {
-            _context8.next = 9;
+            _context8.next = 10;
             break;
           }
-          _context8.next = 7;
+          _context8.next = 8;
           return (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.deleteApp)(app);
-        case 7:
+        case 8:
           app = null;
           db = null;
-        case 9:
+        case 10:
           if (!newConfig) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
           configEnv = newConfig;
-          _context8.next = 15;
+          _context8.next = 16;
           break;
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return loadEnv();
-        case 15:
+        case 16:
           (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.validateEnvVars)(configEnv);
           setupFirebase();
           validateFirebaseSetup();
           if (isLoadInitWeb) {
-            _context8.next = 21;
+            _context8.next = 22;
             break;
           }
-          _context8.next = 21;
+          _context8.next = 22;
           return renderNotes();
-        case 21:
+        case 22:
           dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
           existingEnvData = dataEnv.find(function (item) {
             var _handleTextEnv;
@@ -24898,15 +24899,15 @@ function _resetFirebaseApp() {
           }
           handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
           return _context8.abrupt("return", true);
-        case 29:
-          _context8.prev = 29;
+        case 30:
+          _context8.prev = 30;
           _context8.t0 = _context8["catch"](2);
           throw _context8.t0;
-        case 32:
+        case 33:
         case "end":
           return _context8.stop();
       }
-    }, _callee8, null, [[2, 29]]);
+    }, _callee8, null, [[2, 30]]);
   }));
   return _resetFirebaseApp.apply(this, arguments);
 }
