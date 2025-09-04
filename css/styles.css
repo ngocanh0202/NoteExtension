@@ -56,6 +56,16 @@ body.dark-theme {
     --dark-color: #343a40;
 }
 
+.card-title.dark-theme {
+    color: #ffffff;
+    background-color: #495057;
+}
+
+.card-title.light-theme {
+    color: #000000;
+    background-color: #ffffff;
+}
+
 body {
     background-color: var(--background-color);
     color: var(--text-color);

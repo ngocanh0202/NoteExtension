@@ -24914,6 +24914,10 @@ themeSwitcher.addEventListener('click', function () {
   if (!darkTheme) {
     document.body.classList.remove('dark-theme');
     document.body.classList.add('light-theme');
+    document.querySelectorAll('.card-title').forEach(function (el) {
+      el.classList.remove('dark-theme');
+      el.classList.add('light-theme');
+    });
     img.src = '/icons/brightness-high-fill.svg';
     themeSwitcher.classList.add('border-dark');
     themeSwitcher.classList.add('btn-light');
@@ -24922,6 +24926,10 @@ themeSwitcher.addEventListener('click', function () {
   } else {
     document.body.classList.remove('light-theme');
     document.body.classList.add('dark-theme');
+    document.querySelectorAll('.card-title').forEach(function (el) {
+      el.classList.remove('light-theme');
+      el.classList.add('dark-theme');
+    });
     img.src = '/icons/moon-fill.svg';
     themeSwitcher.classList.add('border-light');
     themeSwitcher.classList.remove('border-dark');
