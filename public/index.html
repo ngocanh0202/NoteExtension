@@ -99,11 +99,14 @@
                 </div>
                 <div>
                     <i class="bi bi-trash"></i>
+                    <button class="btn btn-success rounded-circle" id="btn-clean-images">
+                        <img src="/icons/image-clean.svg" alt="">
+                    </button>
                     <a class="btn btn-primary rounded-circle" id="btn-open-modal" data-bs-toggle="modal" href="#createNote" role="button">+</a>
-                    <button class="btn btn-primary rounded-circle" id="theme-switcher">
+                    <button class="btn rounded-circle border-light" id="theme-switcher">
                         <img src="/icons/brightness-high-fill.svg" alt="">
                     </button>
-                    <button class="btn btn-primary rounded-circle" id="setting-env" data-bs-toggle="modal" href="#settingEnv" role="button">
+                    <button class="btn btn-warning rounded-circle" id="setting-env" data-bs-toggle="modal" href="#settingEnv" role="button">
                         <img src="/icons/setting.svg" alt="">
                     </button>
                 </div>
@@ -184,13 +187,19 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn-close-modal-setting" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <textarea class="form-control" id="env-variables" rows="10" placeholder="Enter environment variables... 
+                        <textarea class="form-control" id="env-variables" rows="15" placeholder="Enter environment variables... 
 apiKey: &quot;your_api_key_here&quot;,
 authDomain: &quot;your_project.firebaseapp.com&quot;,
 projectId: &quot;your_project_id&quot;,
 storageBucket: &quot;our_project.appspot.com&quot;,
 messagingSenderId: &quot;123456789&quot;,
-appId: &quot;1:123456789:web:abcdef123456&quot;,"></textarea>
+appId: &quot;1:123456789:web:abcdef123456&quot;,
+# Cloudinary (for image uploads and deletion)
+cloudinary_cloudname: &quot;your_cloud_name&quot;,
+cloudinary_uploadpreset: &quot;your_unsigned_preset&quot;,
+cloudinary_apikey: &quot;your_api_key&quot;,
+cloudinary_apisecret: &quot;your_api_secret&quot;,
+cloudinary_folder: &quot;images&quot;,"></textarea>
                         <button type="button" class="btn btn-primary mt-2" id="btn-save-env">Save</button>
                         <a class="btn btn-warning mt-2" id="btn-open-modal-confirm-env" data-bs-toggle="modal" href="#confirmBackEnvModal" role="button">Set Default?</a>
                     </div>

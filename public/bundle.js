@@ -24592,10 +24592,15 @@ function getModularInstance(service) {
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
-/* harmony import */ var firebase_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/analytics */ "./node_modules/firebase/analytics/dist/esm/index.esm.js");
-/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -24606,15 +24611,54 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
+function _regeneratorAsync(n, e, r, t, o) { var a = _regeneratorAsyncGen(n, e, r, t, o); return a.next().then(function (n) { return n.done ? n.value : a.next(); }); }
+function _regeneratorAsyncGen(r, e, t, o, n) { return new _regeneratorAsyncIterator(_regenerator().w(r, e, t, o), n || Promise); }
+function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c = t[r](o), u = c.value; return u instanceof _OverloadYield ? e.resolve(u.v).then(function (t) { n("next", t, i, f); }, function (t) { n("throw", t, i, f); }) : e.resolve(u).then(function (t) { c.value = t, i(c); }, function (t) { return n("throw", t, i, f); }); } catch (t) { f(t); } } var r; this.next || (_regeneratorDefine2(_regeneratorAsyncIterator.prototype), _regeneratorDefine2(_regeneratorAsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () { return this; })), _regeneratorDefine2(this, "_invoke", function (t, o, i) { function f() { return new e(function (e, r) { n(t, i, e, r); }); } return r = r ? r.then(f, f) : f(); }, !0); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _OverloadYield(e, d) { this.v = e, this.k = d; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
 
 
 
-
-// Initialize aler
+// Cloudinary signature generation
+function generateCloudinarySignature(_x, _x2) {
+  return _generateCloudinarySignature.apply(this, arguments);
+} // Initialize aler
+function _generateCloudinarySignature() {
+  _generateCloudinarySignature = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13(params, apiSecret) {
+    var sortedParams, message, encoder, data, hashBuffer, hashArray, hashHex;
+    return _regeneratorRuntime().wrap(function _callee13$(_context14) {
+      while (1) switch (_context14.prev = _context14.next) {
+        case 0:
+          sortedParams = Object.keys(params).sort().map(function (key) {
+            return "".concat(key, "=").concat(params[key]);
+          }).join('&');
+          message = sortedParams + apiSecret; // Use Web Crypto API to generate SHA-1 hash
+          encoder = new TextEncoder();
+          data = encoder.encode(message);
+          _context14.next = 6;
+          return crypto.subtle.digest('SHA-1', data);
+        case 6:
+          hashBuffer = _context14.sent;
+          hashArray = Array.from(new Uint8Array(hashBuffer));
+          hashHex = hashArray.map(function (b) {
+            return b.toString(16).padStart(2, '0');
+          }).join('');
+          return _context14.abrupt("return", hashHex);
+        case 10:
+        case "end":
+          return _context14.stop();
+      }
+    }, _callee13);
+  }));
+  return _generateCloudinarySignature.apply(this, arguments);
+}
 var alertWarning = document.querySelector('#alert-warning');
 var alertInfo = document.querySelector('#alert-info');
 var alertDanger = document.querySelector('#alert-danger');
@@ -24623,7 +24667,7 @@ var Alert = {
   INFO: "alertInfo",
   DANGER: "alertDanger"
 };
-var COLOR = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
+var COLOR = ['primary', 'secondary', 'success', 'danger', 'dark'];
 var DurationLength = {
   SHORT: 1000,
   MEDIUM: 2000,
@@ -24662,36 +24706,230 @@ function handleAlert(type, message, duration) {
 var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
   tinymce.init({
     selector: '#editor',
-    plugins: ['codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded',
+    menubar: false,
+    plugins: ['lists', 'table'],
+    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist',
     skin: isDarkTheme ? 'oxide-dark' : 'oxide',
     setup: function setup(editor) {
       editor.on('init', function () {
         editor.getBody().style.backgroundColor = isDarkTheme ? '#343a40' : '#ffffff';
         editor.getBody().style.color = isDarkTheme ? '#ffffff' : '#000000';
+        editor.getBody().style.fontSize = '18px';
       });
+      editor.on('paste', /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+          var items, handled, _loop, _ret, i;
+          return _regeneratorRuntime().wrap(function _callee3$(_context4) {
+            while (1) switch (_context4.prev = _context4.next) {
+              case 0:
+                items = e.clipboardData && e.clipboardData.items;
+                if (items) {
+                  _context4.next = 3;
+                  break;
+                }
+                return _context4.abrupt("return");
+              case 3:
+                handled = false;
+                _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
+                  var item, _configCloudinary, _configCloudinary2, _configCloudinary3, file, progressText, formData, cloudName, uploadPreset, api_key, content, updatedContent;
+                  return _regeneratorRuntime().wrap(function _loop$(_context3) {
+                    while (1) switch (_context3.prev = _context3.next) {
+                      case 0:
+                        item = items[i];
+                        if (!item.type.startsWith("image/")) {
+                          _context3.next = 20;
+                          break;
+                        }
+                        handled = true;
+                        e.preventDefault();
+                        file = item.getAsFile();
+                        progressText = '***Image Uploading DONT TOUCH THIS TEXT....***';
+                        editor.insertContent(progressText);
+                        formData = new FormData();
+                        formData.append('file', file);
+                        cloudName = (((_configCloudinary = configCloudinary) === null || _configCloudinary === void 0 ? void 0 : _configCloudinary.CLOUD_NAME) || '').trim();
+                        uploadPreset = (((_configCloudinary2 = configCloudinary) === null || _configCloudinary2 === void 0 ? void 0 : _configCloudinary2.UPLOAD_PRESET) || '').trim();
+                        api_key = (((_configCloudinary3 = configCloudinary) === null || _configCloudinary3 === void 0 ? void 0 : _configCloudinary3.API_KEY) || '').trim();
+                        if (!(!cloudName || !uploadPreset)) {
+                          _context3.next = 17;
+                          break;
+                        }
+                        content = editor.getContent();
+                        updatedContent = content.replace(progressText, '***Please configure Cloudinary settings to have best performance***');
+                        editor.setContent(updatedContent);
+                        return _context3.abrupt("return", {
+                          v: void 0
+                        });
+                      case 17:
+                        formData.append("api_key", api_key);
+                        formData.append("upload_preset", uploadPreset);
+                        fetch("https://api.cloudinary.com/v1_1/".concat(cloudName, "/image/upload"), {
+                          method: 'POST',
+                          body: formData
+                        }).then(/*#__PURE__*/function () {
+                          var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
+                            var data, _data;
+                            return _regeneratorRuntime().wrap(function _callee$(_context) {
+                              while (1) switch (_context.prev = _context.next) {
+                                case 0:
+                                  _context.prev = 0;
+                                  _context.next = 3;
+                                  return response.json();
+                                case 3:
+                                  data = _context.sent;
+                                  _context.next = 9;
+                                  break;
+                                case 6:
+                                  _context.prev = 6;
+                                  _context.t0 = _context["catch"](0);
+                                  data = null;
+                                case 9:
+                                  if (response.ok) {
+                                    _context.next = 12;
+                                    break;
+                                  }
+                                  console.error('Cloudinary upload failed', {
+                                    status: response.status,
+                                    data: data
+                                  });
+                                  throw new Error(((_data = data) === null || _data === void 0 || (_data = _data.error) === null || _data === void 0 ? void 0 : _data.message) || "Upload failed with status ".concat(response.status));
+                                case 12:
+                                  return _context.abrupt("return", data);
+                                case 13:
+                                case "end":
+                                  return _context.stop();
+                              }
+                            }, _callee, null, [[0, 6]]);
+                          }));
+                          return function (_x4) {
+                            return _ref2.apply(this, arguments);
+                          };
+                        }()).then(/*#__PURE__*/function () {
+                          var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(data) {
+                            var content, widthAttr, heightAttr, imgTxt, _updatedContent, dataImage, _updatedContent2;
+                            return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+                              while (1) switch (_context2.prev = _context2.next) {
+                                case 0:
+                                  content = editor.getContent();
+                                  if (!(data && data.secure_url)) {
+                                    _context2.next = 12;
+                                    break;
+                                  }
+                                  widthAttr = data.width ? " width=\"".concat(data.width, "\"") : '';
+                                  heightAttr = data.height ? " height=\"".concat(data.height, "\"") : '';
+                                  imgTxt = "<img src=\"".concat(data.secure_url, "\" alt=\"image\"").concat(widthAttr).concat(heightAttr, " />");
+                                  _updatedContent = content.replace(progressText, imgTxt);
+                                  editor.setContent(_updatedContent);
+                                  dataImage = {
+                                    url: data.secure_url,
+                                    signature: data.signature
+                                  };
+                                  _context2.next = 10;
+                                  return handleUploadImageUrl(dataImage);
+                                case 10:
+                                  _context2.next = 14;
+                                  break;
+                                case 12:
+                                  _updatedContent2 = content.replace(progressText, '***Image upload failed***');
+                                  editor.setContent(_updatedContent2);
+                                case 14:
+                                case "end":
+                                  return _context2.stop();
+                              }
+                            }, _callee2);
+                          }));
+                          return function (_x5) {
+                            return _ref3.apply(this, arguments);
+                          };
+                        }())["catch"](function (err) {
+                          console.error('Cloudinary upload error', err);
+                          var content = editor.getContent();
+                          var updatedContent = content.replace(progressText, '***Image upload failed***');
+                          editor.setContent(updatedContent);
+                        });
+                      case 20:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }, _loop);
+                });
+                i = 0;
+              case 6:
+                if (!(i < items.length)) {
+                  _context4.next = 14;
+                  break;
+                }
+                return _context4.delegateYield(_loop(), "t0", 8);
+              case 8:
+                _ret = _context4.t0;
+                if (!_ret) {
+                  _context4.next = 11;
+                  break;
+                }
+                return _context4.abrupt("return", _ret.v);
+              case 11:
+                i++;
+                _context4.next = 6;
+                break;
+              case 14:
+                if (handled) {
+                  e.preventDefault();
+                }
+              case 15:
+              case "end":
+                return _context4.stop();
+            }
+          }, _callee3);
+        }));
+        return function (_x3) {
+          return _ref.apply(this, arguments);
+        };
+      }());
     }
   });
 };
-
+var handleUploadImageUrl = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          _context5.next = 2;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "note-images"), data);
+        case 2:
+        case "end":
+          return _context5.stop();
+      }
+    }, _callee4);
+  }));
+  return function handleUploadImageUrl(_x6) {
+    return _ref4.apply(this, arguments);
+  };
+}();
 // change theme
 var themeSwitcher = document.getElementById('theme-switcher');
 var darkTheme = localStorage.getItem('dark-theme') === 'true';
 themeSwitcher.addEventListener('click', function () {
   var img = themeSwitcher.querySelector('img');
-  if (darkTheme) {
+  darkTheme = !darkTheme;
+  if (!darkTheme) {
     document.body.classList.remove('dark-theme');
     document.body.classList.add('light-theme');
     img.src = '/icons/brightness-high-fill.svg';
+    themeSwitcher.classList.add('border-dark');
+    themeSwitcher.classList.add('btn-light');
+    themeSwitcher.classList.remove('border-light');
+    themeSwitcher.classList.remove('btn-dark');
   } else {
     document.body.classList.remove('light-theme');
     document.body.classList.add('dark-theme');
     img.src = '/icons/moon-fill.svg';
+    themeSwitcher.classList.add('border-light');
+    themeSwitcher.classList.remove('border-dark');
+    themeSwitcher.classList.add('btn-dark');
+    themeSwitcher.classList.remove('btn-light');
   }
-  changeIconCustomTheme(!darkTheme);
+  changeIconCustomTheme(darkTheme);
   tinymce.remove();
-  darkTheme = !darkTheme;
   localStorage.setItem('dark-theme', darkTheme);
   applyTinyMCETheme(darkTheme);
 });
@@ -24700,9 +24938,17 @@ function initTheme() {
   if (darkTheme) {
     document.body.classList.add('dark-theme');
     img.src = '/icons/moon-fill.svg';
+    themeSwitcher.classList.add('border-light');
+    themeSwitcher.classList.remove('border-dark');
+    themeSwitcher.classList.add('btn-dark');
+    themeSwitcher.classList.remove('btn-light');
   } else {
     document.body.classList.add('light-theme');
     img.src = '/icons/brightness-high-fill.svg';
+    themeSwitcher.classList.add('border-dark');
+    themeSwitcher.classList.add('btn-light');
+    themeSwitcher.classList.remove('border-light');
+    themeSwitcher.classList.remove('btn-dark');
   }
   applyTinyMCETheme(darkTheme);
 }
@@ -24715,9 +24961,11 @@ function changeIconCustomTheme(darkTheme) {
       var isPinned = el.src.includes('pinned');
       el.src = isPinned ? '/icons/pinned-icon-yellow.svg' : '/icons/pin-white.svg';
     });
-    document.querySelectorAll('[id^="readMore-"]').forEach(function (el) {
-      el.classList.add('text-white');
-      el.classList.remove('text-dark');
+    document.querySelectorAll('[id^="deleteIcon-"]').forEach(function (el) {
+      el.src = '/icons/trash.svg';
+    });
+    document.querySelectorAll('[id^="editIcon-"]').forEach(function (el) {
+      el.src = '/icons/pencil-square.svg';
     });
   } else {
     document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
@@ -24727,9 +24975,11 @@ function changeIconCustomTheme(darkTheme) {
       var isPinned = el.src.includes('pinned');
       el.src = isPinned ? '/icons/pinned.svg' : '/icons/pin.svg';
     });
-    document.querySelectorAll('[id^="readMore-"]').forEach(function (el) {
-      el.classList.add('text-dark');
-      el.classList.remove('text-white');
+    document.querySelectorAll('[id^="deleteIcon-"]').forEach(function (el) {
+      el.src = '/icons/trash-black.svg';
+    });
+    document.querySelectorAll('[id^="editIcon-"]').forEach(function (el) {
+      el.src = '/icons/pencil-square-black.svg';
     });
   }
 }
@@ -24743,68 +24993,84 @@ var btnBackEnv = document.querySelector('#btn-back-confirm');
 var btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
 var dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
 envVariables.value = dataEnv[0] || '';
-btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-  return _regeneratorRuntime().wrap(function _callee$(_context) {
-    while (1) switch (_context.prev = _context.next) {
+btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+  return _regeneratorRuntime().wrap(function _callee5$(_context6) {
+    while (1) switch (_context6.prev = _context6.next) {
       case 0:
-        _context.prev = 0;
+        _context6.prev = 0;
         switchCheckChecked.checked = false;
         labelSwitch.textContent = "Notes";
-        _context.next = 5;
+        _context6.next = 5;
         return resetFirebaseApp();
       case 5:
         envVariables.value = '';
         btnCloseModalEnv.click();
         handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
         btnCloseBackModalEnv.click();
-        _context.next = 14;
+        _context6.next = 14;
         break;
       case 11:
-        _context.prev = 11;
-        _context.t0 = _context["catch"](0);
-        handleAlert(Alert.DANGER, "Failed to reset Firebase: ".concat(_context.t0.message), DurationLength.LONG);
+        _context6.prev = 11;
+        _context6.t0 = _context6["catch"](0);
+        handleAlert(Alert.DANGER, "Failed to reset Firebase: ".concat(_context6.t0.message), DurationLength.LONG);
       case 14:
       case "end":
-        return _context.stop();
+        return _context6.stop();
     }
-  }, _callee, null, [[0, 11]]);
+  }, _callee5, null, [[0, 11]]);
 })));
 var configEnv = {};
+var configCloudinary = {};
 var firebaseConfig = {};
 var app = null;
 var db = null;
 var loadEnv = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var response, text;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+    var response, text, tempConfigEnv;
+    return _regeneratorRuntime().wrap(function _callee6$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
         case 0:
-          _context2.prev = 0;
-          _context2.next = 3;
+          _context7.prev = 0;
+          _context7.next = 3;
           return fetch('/env');
         case 3:
-          response = _context2.sent;
-          _context2.next = 6;
+          response = _context7.sent;
+          _context7.next = 6;
           return response.text();
         case 6:
-          text = _context2.sent;
-          configEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(text, false);
-          _context2.next = 13;
+          text = _context7.sent;
+          tempConfigEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(text, false);
+          configEnv = {
+            APIKEY: tempConfigEnv.APIKEY,
+            AUTHDOMAIN: tempConfigEnv.AUTHDOMAIN,
+            PROJECTID: tempConfigEnv.PROJECTID,
+            STORAGEBUCKET: tempConfigEnv.STORAGEBUCKET,
+            MESSAGINGSENDERID: tempConfigEnv.MESSAGINGSENDERID,
+            APPID: tempConfigEnv.APPID
+          };
+          configCloudinary = {
+            CLOUD_NAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
+            UPLOAD_PRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
+            API_KEY: tempConfigEnv.CLOUDINARY_APIKEY,
+            API_SECRET: tempConfigEnv.CLOUDINARY_APISECRET
+          };
+          _context7.next = 15;
           break;
-        case 10:
-          _context2.prev = 10;
-          _context2.t0 = _context2["catch"](0);
-          throw new Error('Error loading .env file: ' + _context2.t0.message);
-        case 13:
+        case 12:
+          _context7.prev = 12;
+          _context7.t0 = _context7["catch"](0);
+          throw new Error('Error loading .env file: ' + _context7.t0.message);
+        case 15:
         case "end":
-          return _context2.stop();
+          return _context7.stop();
       }
-    }, _callee2, null, [[0, 10]]);
+    }, _callee6, null, [[0, 12]]);
   }));
   return function loadEnv() {
-    return _ref2.apply(this, arguments);
+    return _ref6.apply(this, arguments);
   };
 }();
+loadEnv();
 function setupFirebase() {
   firebaseConfig = {
     apiKey: configEnv.APIKEY,
@@ -24815,7 +25081,7 @@ function setupFirebase() {
     appId: configEnv.APPID
   };
   app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
-  db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);
+  db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);
 }
 
 // Validate that all required environment variables are loaded
@@ -24828,63 +25094,63 @@ function resetFirebaseApp() {
   return _resetFirebaseApp.apply(this, arguments);
 }
 function _resetFirebaseApp() {
-  _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+  _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
     var newConfig,
       isLoadInitWeb,
       existingEnvData,
       isExisted,
       result,
-      _args8 = arguments;
-    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
-      while (1) switch (_context8.prev = _context8.next) {
+      _args15 = arguments;
+    return _regeneratorRuntime().wrap(function _callee14$(_context15) {
+      while (1) switch (_context15.prev = _context15.next) {
         case 0:
-          newConfig = _args8.length > 0 && _args8[0] !== undefined ? _args8[0] : null;
-          isLoadInitWeb = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : false;
-          _context8.prev = 2;
+          newConfig = _args15.length > 0 && _args15[0] !== undefined ? _args15[0] : null;
+          isLoadInitWeb = _args15.length > 1 && _args15[1] !== undefined ? _args15[1] : false;
+          _context15.prev = 2;
           categoryPageSize = 5;
           currentCategorySelected = null;
           if (!app) {
-            _context8.next = 10;
+            _context15.next = 10;
             break;
           }
-          _context8.next = 8;
+          _context15.next = 8;
           return (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.deleteApp)(app);
         case 8:
           app = null;
           db = null;
         case 10:
           if (!newConfig) {
-            _context8.next = 14;
+            _context15.next = 14;
             break;
           }
           configEnv = newConfig;
-          _context8.next = 16;
+          _context15.next = 16;
           break;
         case 14:
-          _context8.next = 16;
+          _context15.next = 16;
           return loadEnv();
         case 16:
-          (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.validateEnvVars)(configEnv);
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.validateEnvVars)(configEnv);
           setupFirebase();
           validateFirebaseSetup();
           if (isLoadInitWeb) {
-            _context8.next = 22;
+            _context15.next = 22;
             break;
           }
-          _context8.next = 22;
+          _context15.next = 22;
           return renderNotes();
         case 22:
           dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
           existingEnvData = dataEnv.find(function (item) {
             var _handleTextEnv;
-            return ((_handleTextEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(item, true)) === null || _handleTextEnv === void 0 ? void 0 : _handleTextEnv.APIKEY) === configEnv.APIKEY;
+            return ((_handleTextEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(item, true)) === null || _handleTextEnv === void 0 ? void 0 : _handleTextEnv.APIKEY) === configEnv.APIKEY;
           });
           isExisted = !!existingEnvData;
           if (!isExisted) {
-            result = Object.entries(configEnv).map(function (_ref8) {
-              var _ref9 = _slicedToArray(_ref8, 2),
-                key = _ref9[0],
-                value = _ref9[1];
+            result = Object.entries(configEnv).map(function (_ref13) {
+              var _ref14 = _slicedToArray(_ref13, 2),
+                key = _ref14[0],
+                value = _ref14[1];
               return "  ".concat(key, ": \"").concat(value, "\",");
             }).join("\n");
             dataEnv.unshift(result);
@@ -24892,22 +25158,22 @@ function _resetFirebaseApp() {
           } else {
             dataEnv = dataEnv.filter(function (item) {
               var _handleTextEnv2;
-              return ((_handleTextEnv2 = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(item, true)) === null || _handleTextEnv2 === void 0 ? void 0 : _handleTextEnv2.APIKEY) !== configEnv.APIKEY;
+              return ((_handleTextEnv2 = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(item, true)) === null || _handleTextEnv2 === void 0 ? void 0 : _handleTextEnv2.APIKEY) !== configEnv.APIKEY;
             });
             dataEnv.unshift(existingEnvData);
             localStorage.setItem('envVariables', JSON.stringify(dataEnv));
           }
           handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
-          return _context8.abrupt("return", true);
+          return _context15.abrupt("return", true);
         case 30:
-          _context8.prev = 30;
-          _context8.t0 = _context8["catch"](2);
-          throw _context8.t0;
+          _context15.prev = 30;
+          _context15.t0 = _context15["catch"](2);
+          throw _context15.t0;
         case 33:
         case "end":
-          return _context8.stop();
+          return _context15.stop();
       }
-    }, _callee8, null, [[2, 30]]);
+    }, _callee14, null, [[2, 30]]);
   }));
   return _resetFirebaseApp.apply(this, arguments);
 }
@@ -24915,35 +25181,35 @@ function initFirebase() {
   return _initFirebase.apply(this, arguments);
 }
 function _initFirebase() {
-  _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-      while (1) switch (_context9.prev = _context9.next) {
+  _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
+    return _regeneratorRuntime().wrap(function _callee15$(_context16) {
+      while (1) switch (_context16.prev = _context16.next) {
         case 0:
-          _context9.prev = 0;
+          _context16.prev = 0;
           if (!(envVariables.value && envVariables.value.trim())) {
-            _context9.next = 6;
+            _context16.next = 6;
             break;
           }
-          _context9.next = 4;
-          return resetFirebaseApp((0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(envVariables.value, true), true);
+          _context16.next = 4;
+          return resetFirebaseApp((0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envVariables.value, true), true);
         case 4:
-          _context9.next = 8;
+          _context16.next = 8;
           break;
         case 6:
-          _context9.next = 8;
+          _context16.next = 8;
           return resetFirebaseApp(null, true);
         case 8:
-          _context9.next = 13;
+          _context16.next = 13;
           break;
         case 10:
-          _context9.prev = 10;
-          _context9.t0 = _context9["catch"](0);
-          handleAlert(Alert.DANGER, _context9.t0.message, DurationLength.LONG);
+          _context16.prev = 10;
+          _context16.t0 = _context16["catch"](0);
+          handleAlert(Alert.DANGER, _context16.t0.message, DurationLength.LONG);
         case 13:
         case "end":
-          return _context9.stop();
+          return _context16.stop();
       }
-    }, _callee9, null, [[0, 10]]);
+    }, _callee15, null, [[0, 10]]);
   }));
   return _initFirebase.apply(this, arguments);
 }
@@ -24973,17 +25239,18 @@ var switchCheckChecked = document.getElementById("switchCheckChecked");
 var labelSwitch = document.querySelector("label[for='switchCheckChecked']");
 var categoriesListItemDom = document.getElementById("categoriesList");
 var containerCategory = document.querySelector('.container-category');
-btnRefresh.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-  return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-    while (1) switch (_context3.prev = _context3.next) {
+var btnCleanImagesCloudinary = document.getElementById('btn-clean-images');
+btnRefresh.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+  return _regeneratorRuntime().wrap(function _callee7$(_context8) {
+    while (1) switch (_context8.prev = _context8.next) {
       case 0:
-        _context3.next = 2;
+        _context8.next = 2;
         return renderNotes();
       case 2:
       case "end":
-        return _context3.stop();
+        return _context8.stop();
     }
-  }, _callee3);
+  }, _callee7);
 })));
 createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
 btnCloseModal.addEventListener('click', handleReset);
@@ -24993,6 +25260,21 @@ containerWords.addEventListener('scroll', handleContainerScroll);
 scrollToTopBtn.addEventListener('click', scrollToTop);
 btnSaveEnv.addEventListener('click', handleLoadEnv);
 containerCategory.addEventListener('click', handleClickInContainer);
+btnCleanImagesCloudinary.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+  return _regeneratorRuntime().wrap(function _callee8$(_context9) {
+    while (1) switch (_context9.prev = _context9.next) {
+      case 0:
+        btnCleanImagesCloudinary.disabled = true;
+        _context9.next = 3;
+        return handleCleanImagesCloudinary();
+      case 3:
+        btnCleanImagesCloudinary.disabled = false;
+      case 4:
+      case "end":
+        return _context9.stop();
+    }
+  }, _callee8);
+})));
 createNote.addEventListener('click', function (e) {
   if (e.target !== e.currentTarget) {
     e.stopPropagation();
@@ -25018,16 +25300,16 @@ function LoadCategory() {
       badges += "\n          <span class=\"badge rounded-pill bg-".concat(colorClass, " me-1 mb-2 button-click-category user-select-none ").concat(isSelected, "\">").concat(category, "</span>\n        ");
     }
     if (categoryPageSize < listCategories.length) {
-      badges += "\n          <span class=\"badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark\">...</span>\n        ";
+      badges += "\n          <span class=\"badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark\">...+".concat(Math.min(listCategories.length - categoryPageSize, 5), "</span>\n        ");
     }
     containerCategory.innerHTML = badges;
   }
 }
 var loadData = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+  var _ref9 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
     var exampleWrappers;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+    return _regeneratorRuntime().wrap(function _callee9$(_context10) {
+      while (1) switch (_context10.prev = _context10.next) {
         case 0:
           containerWords.innerHTML = '';
           listItem.sort(function (a, b) {
@@ -25043,7 +25325,7 @@ var loadData = /*#__PURE__*/function () {
           });
           LoadCategory();
           listItem.forEach(function (item) {
-            containerWords.innerHTML += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-primary btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-danger btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
+            containerWords.innerHTML += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
           });
           changeIconCustomTheme(darkTheme);
           exampleWrappers = document.querySelectorAll('.example-wrapper');
@@ -25055,32 +25337,32 @@ var loadData = /*#__PURE__*/function () {
           });
         case 7:
         case "end":
-          return _context4.stop();
+          return _context10.stop();
       }
-    }, _callee4);
+    }, _callee9);
   }));
   return function loadData() {
-    return _ref4.apply(this, arguments);
+    return _ref9.apply(this, arguments);
   };
 }();
 var backUpdata = function backUpdata() {
   localStorage.setItem('NotesBackups', JSON.stringify(listItem));
 };
 var renderNotes = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+  var _ref10 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
     var querySnapshot;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
+    return _regeneratorRuntime().wrap(function _callee10$(_context11) {
+      while (1) switch (_context11.prev = _context11.next) {
         case 0:
           containerWords.innerHTML = '';
           listItem = [];
           listItemTemp = [];
-          _context5.prev = 3;
+          _context11.prev = 3;
           loadingOverlay.style.display = '';
-          _context5.next = 7;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "Notes"));
+          _context11.next = 7;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "Notes"));
         case 7:
-          querySnapshot = _context5.sent;
+          querySnapshot = _context11.sent;
           querySnapshot.forEach(function (doc) {
             var data = doc.data();
             listItem.push({
@@ -25106,58 +25388,191 @@ var renderNotes = /*#__PURE__*/function () {
           loadData();
           listItemTemp = _toConsumableArray(listItem);
           backUpdata();
-          _context5.next = 21;
+          _context11.next = 21;
           break;
         case 16:
-          _context5.prev = 16;
-          _context5.t0 = _context5["catch"](3);
-          handleAlert(Alert.DANGER, "Error getting documents: " + _context5.t0.message, DurationLength.LONG);
+          _context11.prev = 16;
+          _context11.t0 = _context11["catch"](3);
+          handleAlert(Alert.DANGER, "Error getting documents: " + _context11.t0.message, DurationLength.LONG);
           listItemTemp = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
           listItem = _toConsumableArray(listItemTemp);
         case 21:
-          _context5.prev = 21;
+          _context11.prev = 21;
           loadingOverlay.style.display = 'none';
-          return _context5.finish(21);
+          return _context11.finish(21);
         case 24:
         case "end":
-          return _context5.stop();
+          return _context11.stop();
       }
-    }, _callee5, null, [[3, 16, 21, 24]]);
+    }, _callee10, null, [[3, 16, 21, 24]]);
   }));
   return function renderNotes() {
-    return _ref5.apply(this, arguments);
+    return _ref10.apply(this, arguments);
   };
 }();
 await renderNotes();
-function handleSubmit(_x) {
+function handleCleanImagesCloudinary() {
+  return _handleCleanImagesCloudinary.apply(this, arguments);
+}
+function _handleCleanImagesCloudinary() {
+  _handleCleanImagesCloudinary = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
+    var listImage, querySnapshotImages, unusedImages, _iterator, _step, img, urlParts, uploadIndex, pathAfterUpload, lastPart, publicId, timestamp, params, signature, response, data;
+    return _regeneratorRuntime().wrap(function _callee16$(_context17) {
+      while (1) switch (_context17.prev = _context17.next) {
+        case 0:
+          listImage = [];
+          _context17.next = 3;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "note-images"));
+        case 3:
+          querySnapshotImages = _context17.sent;
+          querySnapshotImages.forEach(function (doc) {
+            var data = doc.data();
+            listImage.push({
+              id: doc.id,
+              url: data.url,
+              signature: data.signature
+            });
+          });
+          if (!(listImage.length === 0)) {
+            _context17.next = 7;
+            break;
+          }
+          return _context17.abrupt("return");
+        case 7:
+          unusedImages = listImage.filter(function (img) {
+            return !listItem.some(function (item) {
+              return item.example.includes(img.url);
+            });
+          });
+          if (!(unusedImages.length && configCloudinary.API_SECRET)) {
+            _context17.next = 59;
+            break;
+          }
+          loadingOverlay.style.display = '';
+          _iterator = _createForOfIteratorHelper(unusedImages);
+          _context17.prev = 11;
+          _iterator.s();
+        case 13:
+          if ((_step = _iterator.n()).done) {
+            _context17.next = 51;
+            break;
+          }
+          img = _step.value;
+          _context17.prev = 15;
+          urlParts = img.url.split('/');
+          uploadIndex = urlParts.findIndex(function (part) {
+            return part === 'upload';
+          });
+          if (!(uploadIndex === -1)) {
+            _context17.next = 20;
+            break;
+          }
+          return _context17.abrupt("continue", 49);
+        case 20:
+          pathAfterUpload = urlParts.slice(uploadIndex + 1);
+          lastPart = pathAfterUpload[pathAfterUpload.length - 1];
+          publicId = lastPart.split('.')[0];
+          timestamp = Math.floor(Date.now() / 1000);
+          params = {
+            public_id: publicId,
+            timestamp: timestamp,
+            invalidate: true
+          };
+          _context17.next = 27;
+          return generateCloudinarySignature(params, configCloudinary.API_SECRET);
+        case 27:
+          signature = _context17.sent;
+          _context17.next = 30;
+          return fetch("https://api.cloudinary.com/v1_1/".concat(configCloudinary.CLOUD_NAME, "/image/destroy"), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(_objectSpread(_objectSpread({}, params), {}, {
+              api_key: configCloudinary.API_KEY,
+              signature: signature
+            }))
+          });
+        case 30:
+          response = _context17.sent;
+          _context17.next = 33;
+          return response.json();
+        case 33:
+          data = _context17.sent;
+          if (!(data.result !== 'ok')) {
+            _context17.next = 38;
+            break;
+          }
+          handleAlert(Alert.DANGER, 'Failed to delete image from Cloudinary', DurationLength.LONG);
+          _context17.next = 41;
+          break;
+        case 38:
+          _context17.next = 40;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "note-images/".concat(img.id)));
+        case 40:
+          handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
+        case 41:
+          _context17.next = 46;
+          break;
+        case 43:
+          _context17.prev = 43;
+          _context17.t0 = _context17["catch"](15);
+          handleAlert(Alert.DANGER, 'Error: ' + _context17.t0.message, DurationLength.LONG);
+        case 46:
+          _context17.prev = 46;
+          loadingOverlay.style.display = 'none';
+          return _context17.finish(46);
+        case 49:
+          _context17.next = 13;
+          break;
+        case 51:
+          _context17.next = 56;
+          break;
+        case 53:
+          _context17.prev = 53;
+          _context17.t1 = _context17["catch"](11);
+          _iterator.e(_context17.t1);
+        case 56:
+          _context17.prev = 56;
+          _iterator.f();
+          return _context17.finish(56);
+        case 59:
+        case "end":
+          return _context17.stop();
+      }
+    }, _callee16, null, [[11, 53, 56, 59], [15, 43, 46, 49]]);
+  }));
+  return _handleCleanImagesCloudinary.apply(this, arguments);
+}
+function handleSubmit(_x7) {
   return _handleSubmit.apply(this, arguments);
 }
 function _handleSubmit() {
-  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10(e) {
-    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-      while (1) switch (_context10.prev = _context10.next) {
+  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17(e) {
+    return _regeneratorRuntime().wrap(function _callee17$(_context18) {
+      while (1) switch (_context18.prev = _context18.next) {
         case 0:
           e.preventDefault();
           e.stopPropagation();
-          _context10.next = 4;
+          _context18.next = 4;
           return handleUpsertNote(e, currentNoteId);
         case 4:
         case "end":
-          return _context10.stop();
+          return _context18.stop();
       }
-    }, _callee10);
+    }, _callee17);
   }));
   return _handleSubmit.apply(this, arguments);
 }
 ;
-function handleUpsertNote(_x2, _x3) {
+function handleUpsertNote(_x8, _x9) {
   return _handleUpsertNote.apply(this, arguments);
 }
 function _handleUpsertNote() {
-  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11(e, idNote) {
+  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee18(e, idNote) {
     var id, Note, example, category, data;
-    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-      while (1) switch (_context11.prev = _context11.next) {
+    return _regeneratorRuntime().wrap(function _callee18$(_context19) {
+      while (1) switch (_context19.prev = _context19.next) {
         case 0:
           id = idNote;
           Note = e.target.Note.value;
@@ -25170,31 +25585,31 @@ function _handleUpsertNote() {
             timestamp: new Date(),
             category: category
           };
-          _context11.prev = 6;
+          _context19.prev = 6;
           if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
-            _context11.next = 12;
+            _context19.next = 12;
             break;
           }
-          _context11.next = 10;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "Notes"), data);
+          _context19.next = 10;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "Notes"), data);
         case 10:
-          _context11.next = 14;
+          _context19.next = 14;
           break;
         case 12:
-          _context11.next = 14;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(id)), data);
+          _context19.next = 14;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "Notes/".concat(id)), data);
         case 14:
           currentCategorySelected = category;
-          _context11.next = 17;
+          _context19.next = 17;
           return renderNotes();
         case 17:
           handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
-          _context11.next = 26;
+          _context19.next = 26;
           break;
         case 20:
-          _context11.prev = 20;
-          _context11.t0 = _context11["catch"](6);
-          handleAlert(Alert.DANGER, "Error adding document: " + _context11.t0.message, DurationLength.LONG);
+          _context19.prev = 20;
+          _context19.t0 = _context19["catch"](6);
+          handleAlert(Alert.DANGER, "Error adding document: " + _context19.t0.message, DurationLength.LONG);
           listItemTemp = listItemTemp.push({
             Note: Note,
             example: example,
@@ -25203,15 +25618,15 @@ function _handleUpsertNote() {
           listItem = _toConsumableArray(listItemTemp);
           backUpdata();
         case 26:
-          _context11.prev = 26;
+          _context19.prev = 26;
           loadingOverlay.style.display = 'none';
           btnCloseModal.click();
-          return _context11.finish(26);
+          return _context19.finish(26);
         case 30:
         case "end":
-          return _context11.stop();
+          return _context19.stop();
       }
-    }, _callee11, null, [[6, 20, 26, 30]]);
+    }, _callee18, null, [[6, 20, 26, 30]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }
@@ -25254,20 +25669,24 @@ function handleClickInContainer(e) {
   } else if (target.matches('.button-click-category-more')) {
     categoryPageSize += 5;
     LoadCategory();
+    containerCategory.scrollTo({
+      top: containerCategory.scrollHeight,
+      behavior: 'smooth'
+    });
   }
 }
-function handleContainerEventClick(_x4) {
+function handleContainerEventClick(_x10) {
   return _handleContainerEventClick.apply(this, arguments);
 }
 function _handleContainerEventClick() {
-  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12(e) {
+  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee19(e) {
     var id, NoteId, Note, _NoteId, _NoteId2, _Note, isPinned, _NoteId3, exampleWrapper, readMoreButton;
-    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-      while (1) switch (_context12.prev = _context12.next) {
+    return _regeneratorRuntime().wrap(function _callee19$(_context20) {
+      while (1) switch (_context20.prev = _context20.next) {
         case 0:
           id = e.target.id;
           if (!id.includes('edit')) {
-            _context12.next = 12;
+            _context20.next = 12;
             break;
           }
           NoteId = id.split('-')[1];
@@ -25280,31 +25699,31 @@ function _handleContainerEventClick() {
           isClickNewButton = false;
           currentNoteId = NoteId;
           btnOpenModal.click();
-          _context12.next = 47;
+          _context20.next = 47;
           break;
         case 12:
           if (!id.includes('delete')) {
-            _context12.next = 19;
+            _context20.next = 19;
             break;
           }
           currentNoteId = id.split('-')[1];
           isClickNewButton = true;
           btnModalConfirm.click();
           btnDelete.addEventListener('click', _handleDeleteNote);
-          _context12.next = 47;
+          _context20.next = 47;
           break;
         case 19:
           if (!id.includes('copy')) {
-            _context12.next = 24;
+            _context20.next = 24;
             break;
           }
           _NoteId = id.split('-')[1];
           onClickCopy(_NoteId);
-          _context12.next = 47;
+          _context20.next = 47;
           break;
         case 24:
           if (!id.includes('pin')) {
-            _context12.next = 46;
+            _context20.next = 46;
             break;
           }
           _NoteId2 = id.split('-')[1];
@@ -25313,28 +25732,28 @@ function _handleContainerEventClick() {
           });
           _Note.isPinned = !_Note.isPinned;
           isPinned = _Note.isPinned;
-          _context12.prev = 29;
+          _context20.prev = 29;
           loadingOverlay.style.display = '';
-          _context12.next = 33;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(_NoteId2)), {
+          _context20.next = 33;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "Notes/".concat(_NoteId2)), {
             isPinned: _Note.isPinned
           });
         case 33:
           handleAlert(Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), DurationLength.SHORT);
           loadData();
-          _context12.next = 40;
+          _context20.next = 40;
           break;
         case 37:
-          _context12.prev = 37;
-          _context12.t0 = _context12["catch"](29);
-          handleAlert(Alert.DANGER, "Error pinning note: " + _context12.t0.message, DurationLength.LONG);
+          _context20.prev = 37;
+          _context20.t0 = _context20["catch"](29);
+          handleAlert(Alert.DANGER, "Error pinning note: " + _context20.t0.message, DurationLength.LONG);
         case 40:
-          _context12.prev = 40;
+          _context20.prev = 40;
           backUpdata();
           loadingOverlay.style.display = 'none';
-          return _context12.finish(40);
+          return _context20.finish(40);
         case 44:
-          _context12.next = 47;
+          _context20.next = 47;
           break;
         case 46:
           if (id.includes('readMore')) {
@@ -25346,7 +25765,6 @@ function _handleContainerEventClick() {
               readMoreButton.textContent = 'less';
             } else {
               readMoreButton.textContent = 'more...';
-              // scroll to readMoreButton
               readMoreButton.scrollIntoView({
                 behavior: 'smooth'
               });
@@ -25354,82 +25772,137 @@ function _handleContainerEventClick() {
           }
         case 47:
         case "end":
-          return _context12.stop();
+          return _context20.stop();
       }
-    }, _callee12, null, [[29, 37, 40, 44]]);
+    }, _callee19, null, [[29, 37, 40, 44]]);
   }));
   return _handleContainerEventClick.apply(this, arguments);
+}
+function stripHtmlAdvancedToCopy(html) {
+  html = html.replace(/<\s*br\s*\/?>/gi, '\n').replace(/<\/p\s*>/gi, '\n');
+  var temp = document.createElement("div");
+  temp.innerHTML = html;
+  function processNode(node) {
+    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    var text = '';
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.nodeValue;
+    }
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName === 'UL') {
+        var items = [];
+        node.querySelectorAll(':scope > li').forEach(function (li) {
+          items.push('• ' + processNode(li).trim());
+        });
+        return items.join('\n');
+      }
+      if (node.tagName === 'OL') {
+        var _items = [];
+        var index = 1;
+        node.querySelectorAll(':scope > li').forEach(function (li) {
+          _items.push(index + '. ' + processNode(li).trim());
+          index++;
+        });
+        return _items.join('\n');
+      }
+      if (node.tagName === 'LI') {
+        return Array.from(node.childNodes).map(function (child) {
+          return processNode(child);
+        }).join('');
+      }
+      return Array.from(node.childNodes).map(function (child) {
+        return processNode(child);
+      }).join('');
+    }
+    return text;
+  }
+  var text = processNode(temp);
+  var lines = text.split(/\n+/).map(function (line) {
+    line = line.trim();
+    if (line) {
+      var endsWithPunct = /[.!?:;…]$/.test(line);
+      var isListItem = /^(\u2022|•|\d+\.|\[\s?[\sxX]?\])/.test(line);
+      if (!endsWithPunct && !isListItem) {
+        line += '.';
+      }
+    }
+    return line;
+  });
+  return lines.filter(function (l) {
+    return l;
+  }).join('\n');
 }
 function onClickCopy(id) {
   var item = listItem.find(function (item) {
     return item.id === id;
   });
   handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-  navigator.clipboard.writeText(item.otherExample);
+  console.log(stripHtmlAdvancedToCopy(item.example));
+  navigator.clipboard.writeText(stripHtmlAdvancedToCopy(item.example));
 }
 var _handleDeleteNote = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-      while (1) switch (_context6.prev = _context6.next) {
+  var _ref11 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+    return _regeneratorRuntime().wrap(function _callee11$(_context12) {
+      while (1) switch (_context12.prev = _context12.next) {
         case 0:
           if (!currentNoteId) {
-            _context6.next = 5;
+            _context12.next = 5;
             break;
           }
-          _context6.next = 3;
+          _context12.next = 3;
           return deleteNote(currentNoteId);
         case 3:
           currentNoteId = null;
           btnDelete.removeEventListener('click', _handleDeleteNote);
         case 5:
         case "end":
-          return _context6.stop();
+          return _context12.stop();
       }
-    }, _callee6);
+    }, _callee11);
   }));
   return function handleDeleteNote() {
-    return _ref6.apply(this, arguments);
+    return _ref11.apply(this, arguments);
   };
 }();
 var deleteNote = /*#__PURE__*/function () {
-  var _ref7 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7(NoteId) {
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
+  var _ref12 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12(NoteId) {
+    return _regeneratorRuntime().wrap(function _callee12$(_context13) {
+      while (1) switch (_context13.prev = _context13.next) {
         case 0:
-          _context7.prev = 0;
+          _context13.prev = 0;
           if (!switchCheckChecked.checked) {
-            _context7.next = 3;
+            _context13.next = 3;
             break;
           }
-          return _context7.abrupt("return");
+          return _context13.abrupt("return");
         case 3:
           loadingOverlay.style.display = '';
-          _context7.next = 6;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.doc)(db, "Notes/".concat(NoteId)));
+          _context13.next = 6;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "Notes/".concat(NoteId)));
         case 6:
-          _context7.next = 8;
+          _context13.next = 8;
           return renderNotes();
         case 8:
           handleAlert(Alert.WARNING, "Note removed successfully", DurationLength.MEDIUM);
-          _context7.next = 14;
+          _context13.next = 14;
           break;
         case 11:
-          _context7.prev = 11;
-          _context7.t0 = _context7["catch"](0);
-          handleAlert(Alert.DANGER, "Error removing document: " + _context7.t0.message, DurationLength.LONG);
+          _context13.prev = 11;
+          _context13.t0 = _context13["catch"](0);
+          handleAlert(Alert.DANGER, "Error removing document: " + _context13.t0.message, DurationLength.LONG);
         case 14:
-          _context7.prev = 14;
+          _context13.prev = 14;
           loadingOverlay.style.display = 'none';
           btnModalConfirmClose.click();
-          return _context7.finish(14);
+          return _context13.finish(14);
         case 18:
         case "end":
-          return _context7.stop();
+          return _context13.stop();
       }
-    }, _callee7, null, [[0, 11, 14, 18]]);
+    }, _callee12, null, [[0, 11, 14, 18]]);
   }));
-  return function deleteNote(_x5) {
-    return _ref7.apply(this, arguments);
+  return function deleteNote(_x11) {
+    return _ref12.apply(this, arguments);
   };
 }();
 function handleContainerScroll() {
@@ -25449,46 +25922,46 @@ function handleLoadEnv() {
   return _handleLoadEnv.apply(this, arguments);
 }
 function _handleLoadEnv() {
-  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
     var envText, env, success;
-    return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-      while (1) switch (_context13.prev = _context13.next) {
+    return _regeneratorRuntime().wrap(function _callee20$(_context21) {
+      while (1) switch (_context21.prev = _context21.next) {
         case 0:
           loadingOverlay.style.display = 'block';
           envText = envVariables.value.trim();
           if (envText) {
-            _context13.next = 6;
+            _context21.next = 6;
             break;
           }
           handleAlert(Alert.WARNING, "Please enter environment variables", DurationLength.SHORT);
           loadingOverlay.style.display = 'none';
-          return _context13.abrupt("return");
+          return _context21.abrupt("return");
         case 6:
-          _context13.prev = 6;
-          env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__.handleTextEnv)(envText, true);
-          _context13.next = 10;
+          _context21.prev = 6;
+          env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envText, true);
+          _context21.next = 10;
           return resetFirebaseApp(env);
         case 10:
-          success = _context13.sent;
+          success = _context21.sent;
           if (success) {
             btnCloseModalEnv.click();
           }
-          _context13.next = 17;
+          _context21.next = 17;
           break;
         case 14:
-          _context13.prev = 14;
-          _context13.t0 = _context13["catch"](6);
-          handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context13.t0.message), DurationLength.LONG);
+          _context21.prev = 14;
+          _context21.t0 = _context21["catch"](6);
+          handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context21.t0.message), DurationLength.LONG);
         case 17:
-          _context13.prev = 17;
+          _context21.prev = 17;
           loadingOverlay.style.display = 'none';
           switchCheckChecked.checked = false;
-          return _context13.finish(17);
+          return _context21.finish(17);
         case 21:
         case "end":
-          return _context13.stop();
+          return _context21.stop();
       }
-    }, _callee13, null, [[6, 14, 17, 21]]);
+    }, _callee20, null, [[6, 14, 17, 21]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
@@ -25576,1307 +26049,6 @@ function validateEnvVars(configEnv) {
     throw new Error("Missing required environment variables: ".concat(missingVars.join(', ')));
   }
 }
-
-/***/ }),
-
-/***/ "./node_modules/@firebase/analytics/dist/esm/index.esm2017.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/@firebase/analytics/dist/esm/index.esm2017.js ***!
-  \********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getAnalytics: () => (/* binding */ getAnalytics),
-/* harmony export */   getGoogleAnalyticsClientId: () => (/* binding */ getGoogleAnalyticsClientId),
-/* harmony export */   initializeAnalytics: () => (/* binding */ initializeAnalytics),
-/* harmony export */   isSupported: () => (/* binding */ isSupported),
-/* harmony export */   logEvent: () => (/* binding */ logEvent),
-/* harmony export */   setAnalyticsCollectionEnabled: () => (/* binding */ setAnalyticsCollectionEnabled),
-/* harmony export */   setConsent: () => (/* binding */ setConsent),
-/* harmony export */   setCurrentScreen: () => (/* binding */ setCurrentScreen),
-/* harmony export */   setDefaultEventParameters: () => (/* binding */ setDefaultEventParameters),
-/* harmony export */   setUserId: () => (/* binding */ setUserId),
-/* harmony export */   setUserProperties: () => (/* binding */ setUserProperties),
-/* harmony export */   settings: () => (/* binding */ settings)
-/* harmony export */ });
-/* harmony import */ var _firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @firebase/app */ "./node_modules/@firebase/app/dist/esm/index.esm2017.js");
-/* harmony import */ var _firebase_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @firebase/logger */ "./node_modules/@firebase/logger/dist/esm/index.esm2017.js");
-/* harmony import */ var _firebase_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @firebase/util */ "./node_modules/@firebase/util/dist/index.esm2017.js");
-/* harmony import */ var _firebase_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @firebase/component */ "./node_modules/@firebase/component/dist/esm/index.esm2017.js");
-/* harmony import */ var _firebase_installations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @firebase/installations */ "./node_modules/@firebase/installations/dist/esm/index.esm2017.js");
-
-
-
-
-
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Type constant for Firebase Analytics.
- */
-const ANALYTICS_TYPE = 'analytics';
-// Key to attach FID to in gtag params.
-const GA_FID_KEY = 'firebase_id';
-const ORIGIN_KEY = 'origin';
-const FETCH_TIMEOUT_MILLIS = 60 * 1000;
-const DYNAMIC_CONFIG_URL = 'https://firebase.googleapis.com/v1alpha/projects/-/apps/{app-id}/webConfig';
-const GTAG_URL = 'https://www.googletagmanager.com/gtag/js';
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const logger = new _firebase_logger__WEBPACK_IMPORTED_MODULE_1__.Logger('@firebase/analytics');
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const ERRORS = {
-    ["already-exists" /* AnalyticsError.ALREADY_EXISTS */]: 'A Firebase Analytics instance with the appId {$id} ' +
-        ' already exists. ' +
-        'Only one Firebase Analytics instance can be created for each appId.',
-    ["already-initialized" /* AnalyticsError.ALREADY_INITIALIZED */]: 'initializeAnalytics() cannot be called again with different options than those ' +
-        'it was initially called with. It can be called again with the same options to ' +
-        'return the existing instance, or getAnalytics() can be used ' +
-        'to get a reference to the already-initialized instance.',
-    ["already-initialized-settings" /* AnalyticsError.ALREADY_INITIALIZED_SETTINGS */]: 'Firebase Analytics has already been initialized.' +
-        'settings() must be called before initializing any Analytics instance' +
-        'or it will have no effect.',
-    ["interop-component-reg-failed" /* AnalyticsError.INTEROP_COMPONENT_REG_FAILED */]: 'Firebase Analytics Interop Component failed to instantiate: {$reason}',
-    ["invalid-analytics-context" /* AnalyticsError.INVALID_ANALYTICS_CONTEXT */]: 'Firebase Analytics is not supported in this environment. ' +
-        'Wrap initialization of analytics in analytics.isSupported() ' +
-        'to prevent initialization in unsupported environments. Details: {$errorInfo}',
-    ["indexeddb-unavailable" /* AnalyticsError.INDEXEDDB_UNAVAILABLE */]: 'IndexedDB unavailable or restricted in this environment. ' +
-        'Wrap initialization of analytics in analytics.isSupported() ' +
-        'to prevent initialization in unsupported environments. Details: {$errorInfo}',
-    ["fetch-throttle" /* AnalyticsError.FETCH_THROTTLE */]: 'The config fetch request timed out while in an exponential backoff state.' +
-        ' Unix timestamp in milliseconds when fetch request throttling ends: {$throttleEndTimeMillis}.',
-    ["config-fetch-failed" /* AnalyticsError.CONFIG_FETCH_FAILED */]: 'Dynamic config fetch failed: [{$httpStatus}] {$responseMessage}',
-    ["no-api-key" /* AnalyticsError.NO_API_KEY */]: 'The "apiKey" field is empty in the local Firebase config. Firebase Analytics requires this field to' +
-        'contain a valid API key.',
-    ["no-app-id" /* AnalyticsError.NO_APP_ID */]: 'The "appId" field is empty in the local Firebase config. Firebase Analytics requires this field to' +
-        'contain a valid app ID.',
-    ["no-client-id" /* AnalyticsError.NO_CLIENT_ID */]: 'The "client_id" field is empty.',
-    ["invalid-gtag-resource" /* AnalyticsError.INVALID_GTAG_RESOURCE */]: 'Trusted Types detected an invalid gtag resource: {$gtagURL}.'
-};
-const ERROR_FACTORY = new _firebase_util__WEBPACK_IMPORTED_MODULE_2__.ErrorFactory('analytics', 'Analytics', ERRORS);
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Verifies and creates a TrustedScriptURL.
- */
-function createGtagTrustedTypesScriptURL(url) {
-    if (!url.startsWith(GTAG_URL)) {
-        const err = ERROR_FACTORY.create("invalid-gtag-resource" /* AnalyticsError.INVALID_GTAG_RESOURCE */, {
-            gtagURL: url
-        });
-        logger.warn(err.message);
-        return '';
-    }
-    return url;
-}
-/**
- * Makeshift polyfill for Promise.allSettled(). Resolves when all promises
- * have either resolved or rejected.
- *
- * @param promises Array of promises to wait for.
- */
-function promiseAllSettled(promises) {
-    return Promise.all(promises.map(promise => promise.catch(e => e)));
-}
-/**
- * Creates a TrustedTypePolicy object that implements the rules passed as policyOptions.
- *
- * @param policyName A string containing the name of the policy
- * @param policyOptions Object containing implementations of instance methods for TrustedTypesPolicy, see {@link https://developer.mozilla.org/en-US/docs/Web/API/TrustedTypePolicy#instance_methods
- * | the TrustedTypePolicy reference documentation}.
- */
-function createTrustedTypesPolicy(policyName, policyOptions) {
-    // Create a TrustedTypes policy that we can use for updating src
-    // properties
-    let trustedTypesPolicy;
-    if (window.trustedTypes) {
-        trustedTypesPolicy = window.trustedTypes.createPolicy(policyName, policyOptions);
-    }
-    return trustedTypesPolicy;
-}
-/**
- * Inserts gtag script tag into the page to asynchronously download gtag.
- * @param dataLayerName Name of datalayer (most often the default, "_dataLayer").
- */
-function insertScriptTag(dataLayerName, measurementId) {
-    const trustedTypesPolicy = createTrustedTypesPolicy('firebase-js-sdk-policy', {
-        createScriptURL: createGtagTrustedTypesScriptURL
-    });
-    const script = document.createElement('script');
-    // We are not providing an analyticsId in the URL because it would trigger a `page_view`
-    // without fid. We will initialize ga-id using gtag (config) command together with fid.
-    const gtagScriptURL = `${GTAG_URL}?l=${dataLayerName}&id=${measurementId}`;
-    script.src = trustedTypesPolicy
-        ? trustedTypesPolicy === null || trustedTypesPolicy === void 0 ? void 0 : trustedTypesPolicy.createScriptURL(gtagScriptURL)
-        : gtagScriptURL;
-    script.async = true;
-    document.head.appendChild(script);
-}
-/**
- * Get reference to, or create, global datalayer.
- * @param dataLayerName Name of datalayer (most often the default, "_dataLayer").
- */
-function getOrCreateDataLayer(dataLayerName) {
-    // Check for existing dataLayer and create if needed.
-    let dataLayer = [];
-    if (Array.isArray(window[dataLayerName])) {
-        dataLayer = window[dataLayerName];
-    }
-    else {
-        window[dataLayerName] = dataLayer;
-    }
-    return dataLayer;
-}
-/**
- * Wrapped gtag logic when gtag is called with 'config' command.
- *
- * @param gtagCore Basic gtag function that just appends to dataLayer.
- * @param initializationPromisesMap Map of appIds to their initialization promises.
- * @param dynamicConfigPromisesList Array of dynamic config fetch promises.
- * @param measurementIdToAppId Map of GA measurementIDs to corresponding Firebase appId.
- * @param measurementId GA Measurement ID to set config for.
- * @param gtagParams Gtag config params to set.
- */
-async function gtagOnConfig(gtagCore, initializationPromisesMap, dynamicConfigPromisesList, measurementIdToAppId, measurementId, gtagParams) {
-    // If config is already fetched, we know the appId and can use it to look up what FID promise we
-    /// are waiting for, and wait only on that one.
-    const correspondingAppId = measurementIdToAppId[measurementId];
-    try {
-        if (correspondingAppId) {
-            await initializationPromisesMap[correspondingAppId];
-        }
-        else {
-            // If config is not fetched yet, wait for all configs (we don't know which one we need) and
-            // find the appId (if any) corresponding to this measurementId. If there is one, wait on
-            // that appId's initialization promise. If there is none, promise resolves and gtag
-            // call goes through.
-            const dynamicConfigResults = await promiseAllSettled(dynamicConfigPromisesList);
-            const foundConfig = dynamicConfigResults.find(config => config.measurementId === measurementId);
-            if (foundConfig) {
-                await initializationPromisesMap[foundConfig.appId];
-            }
-        }
-    }
-    catch (e) {
-        logger.error(e);
-    }
-    gtagCore("config" /* GtagCommand.CONFIG */, measurementId, gtagParams);
-}
-/**
- * Wrapped gtag logic when gtag is called with 'event' command.
- *
- * @param gtagCore Basic gtag function that just appends to dataLayer.
- * @param initializationPromisesMap Map of appIds to their initialization promises.
- * @param dynamicConfigPromisesList Array of dynamic config fetch promises.
- * @param measurementId GA Measurement ID to log event to.
- * @param gtagParams Params to log with this event.
- */
-async function gtagOnEvent(gtagCore, initializationPromisesMap, dynamicConfigPromisesList, measurementId, gtagParams) {
-    try {
-        let initializationPromisesToWaitFor = [];
-        // If there's a 'send_to' param, check if any ID specified matches
-        // an initializeIds() promise we are waiting for.
-        if (gtagParams && gtagParams['send_to']) {
-            let gaSendToList = gtagParams['send_to'];
-            // Make it an array if is isn't, so it can be dealt with the same way.
-            if (!Array.isArray(gaSendToList)) {
-                gaSendToList = [gaSendToList];
-            }
-            // Checking 'send_to' fields requires having all measurement ID results back from
-            // the dynamic config fetch.
-            const dynamicConfigResults = await promiseAllSettled(dynamicConfigPromisesList);
-            for (const sendToId of gaSendToList) {
-                // Any fetched dynamic measurement ID that matches this 'send_to' ID
-                const foundConfig = dynamicConfigResults.find(config => config.measurementId === sendToId);
-                const initializationPromise = foundConfig && initializationPromisesMap[foundConfig.appId];
-                if (initializationPromise) {
-                    initializationPromisesToWaitFor.push(initializationPromise);
-                }
-                else {
-                    // Found an item in 'send_to' that is not associated
-                    // directly with an FID, possibly a group.  Empty this array,
-                    // exit the loop early, and let it get populated below.
-                    initializationPromisesToWaitFor = [];
-                    break;
-                }
-            }
-        }
-        // This will be unpopulated if there was no 'send_to' field , or
-        // if not all entries in the 'send_to' field could be mapped to
-        // a FID. In these cases, wait on all pending initialization promises.
-        if (initializationPromisesToWaitFor.length === 0) {
-            /* eslint-disable-next-line @typescript-eslint/no-floating-promises */
-            initializationPromisesToWaitFor = Object.values(initializationPromisesMap);
-        }
-        // Run core gtag function with args after all relevant initialization
-        // promises have been resolved.
-        await Promise.all(initializationPromisesToWaitFor);
-        // Workaround for http://b/141370449 - third argument cannot be undefined.
-        gtagCore("event" /* GtagCommand.EVENT */, measurementId, gtagParams || {});
-    }
-    catch (e) {
-        logger.error(e);
-    }
-}
-/**
- * Wraps a standard gtag function with extra code to wait for completion of
- * relevant initialization promises before sending requests.
- *
- * @param gtagCore Basic gtag function that just appends to dataLayer.
- * @param initializationPromisesMap Map of appIds to their initialization promises.
- * @param dynamicConfigPromisesList Array of dynamic config fetch promises.
- * @param measurementIdToAppId Map of GA measurementIDs to corresponding Firebase appId.
- */
-function wrapGtag(gtagCore, 
-/**
- * Allows wrapped gtag calls to wait on whichever initialization promises are required,
- * depending on the contents of the gtag params' `send_to` field, if any.
- */
-initializationPromisesMap, 
-/**
- * Wrapped gtag calls sometimes require all dynamic config fetches to have returned
- * before determining what initialization promises (which include FIDs) to wait for.
- */
-dynamicConfigPromisesList, 
-/**
- * Wrapped gtag config calls can narrow down which initialization promise (with FID)
- * to wait for if the measurementId is already fetched, by getting the corresponding appId,
- * which is the key for the initialization promises map.
- */
-measurementIdToAppId) {
-    /**
-     * Wrapper around gtag that ensures FID is sent with gtag calls.
-     * @param command Gtag command type.
-     * @param idOrNameOrParams Measurement ID if command is EVENT/CONFIG, params if command is SET.
-     * @param gtagParams Params if event is EVENT/CONFIG.
-     */
-    async function gtagWrapper(command, ...args) {
-        try {
-            // If event, check that relevant initialization promises have completed.
-            if (command === "event" /* GtagCommand.EVENT */) {
-                const [measurementId, gtagParams] = args;
-                // If EVENT, second arg must be measurementId.
-                await gtagOnEvent(gtagCore, initializationPromisesMap, dynamicConfigPromisesList, measurementId, gtagParams);
-            }
-            else if (command === "config" /* GtagCommand.CONFIG */) {
-                const [measurementId, gtagParams] = args;
-                // If CONFIG, second arg must be measurementId.
-                await gtagOnConfig(gtagCore, initializationPromisesMap, dynamicConfigPromisesList, measurementIdToAppId, measurementId, gtagParams);
-            }
-            else if (command === "consent" /* GtagCommand.CONSENT */) {
-                const [consentAction, gtagParams] = args;
-                // consentAction can be one of 'default' or 'update'.
-                gtagCore("consent" /* GtagCommand.CONSENT */, consentAction, gtagParams);
-            }
-            else if (command === "get" /* GtagCommand.GET */) {
-                const [measurementId, fieldName, callback] = args;
-                gtagCore("get" /* GtagCommand.GET */, measurementId, fieldName, callback);
-            }
-            else if (command === "set" /* GtagCommand.SET */) {
-                const [customParams] = args;
-                // If SET, second arg must be params.
-                gtagCore("set" /* GtagCommand.SET */, customParams);
-            }
-            else {
-                gtagCore(command, ...args);
-            }
-        }
-        catch (e) {
-            logger.error(e);
-        }
-    }
-    return gtagWrapper;
-}
-/**
- * Creates global gtag function or wraps existing one if found.
- * This wrapped function attaches Firebase instance ID (FID) to gtag 'config' and
- * 'event' calls that belong to the GAID associated with this Firebase instance.
- *
- * @param initializationPromisesMap Map of appIds to their initialization promises.
- * @param dynamicConfigPromisesList Array of dynamic config fetch promises.
- * @param measurementIdToAppId Map of GA measurementIDs to corresponding Firebase appId.
- * @param dataLayerName Name of global GA datalayer array.
- * @param gtagFunctionName Name of global gtag function ("gtag" if not user-specified).
- */
-function wrapOrCreateGtag(initializationPromisesMap, dynamicConfigPromisesList, measurementIdToAppId, dataLayerName, gtagFunctionName) {
-    // Create a basic core gtag function
-    let gtagCore = function (..._args) {
-        // Must push IArguments object, not an array.
-        window[dataLayerName].push(arguments);
-    };
-    // Replace it with existing one if found
-    if (window[gtagFunctionName] &&
-        typeof window[gtagFunctionName] === 'function') {
-        // @ts-ignore
-        gtagCore = window[gtagFunctionName];
-    }
-    window[gtagFunctionName] = wrapGtag(gtagCore, initializationPromisesMap, dynamicConfigPromisesList, measurementIdToAppId);
-    return {
-        gtagCore,
-        wrappedGtag: window[gtagFunctionName]
-    };
-}
-/**
- * Returns the script tag in the DOM matching both the gtag url pattern
- * and the provided data layer name.
- */
-function findGtagScriptOnPage(dataLayerName) {
-    const scriptTags = window.document.getElementsByTagName('script');
-    for (const tag of Object.values(scriptTags)) {
-        if (tag.src &&
-            tag.src.includes(GTAG_URL) &&
-            tag.src.includes(dataLayerName)) {
-            return tag;
-        }
-    }
-    return null;
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Backoff factor for 503 errors, which we want to be conservative about
- * to avoid overloading servers. Each retry interval will be
- * BASE_INTERVAL_MILLIS * LONG_RETRY_FACTOR ^ retryCount, so the second one
- * will be ~30 seconds (with fuzzing).
- */
-const LONG_RETRY_FACTOR = 30;
-/**
- * Base wait interval to multiplied by backoffFactor^backoffCount.
- */
-const BASE_INTERVAL_MILLIS = 1000;
-/**
- * Stubbable retry data storage class.
- */
-class RetryData {
-    constructor(throttleMetadata = {}, intervalMillis = BASE_INTERVAL_MILLIS) {
-        this.throttleMetadata = throttleMetadata;
-        this.intervalMillis = intervalMillis;
-    }
-    getThrottleMetadata(appId) {
-        return this.throttleMetadata[appId];
-    }
-    setThrottleMetadata(appId, metadata) {
-        this.throttleMetadata[appId] = metadata;
-    }
-    deleteThrottleMetadata(appId) {
-        delete this.throttleMetadata[appId];
-    }
-}
-const defaultRetryData = new RetryData();
-/**
- * Set GET request headers.
- * @param apiKey App API key.
- */
-function getHeaders(apiKey) {
-    return new Headers({
-        Accept: 'application/json',
-        'x-goog-api-key': apiKey
-    });
-}
-/**
- * Fetches dynamic config from backend.
- * @param app Firebase app to fetch config for.
- */
-async function fetchDynamicConfig(appFields) {
-    var _a;
-    const { appId, apiKey } = appFields;
-    const request = {
-        method: 'GET',
-        headers: getHeaders(apiKey)
-    };
-    const appUrl = DYNAMIC_CONFIG_URL.replace('{app-id}', appId);
-    const response = await fetch(appUrl, request);
-    if (response.status !== 200 && response.status !== 304) {
-        let errorMessage = '';
-        try {
-            // Try to get any error message text from server response.
-            const jsonResponse = (await response.json());
-            if ((_a = jsonResponse.error) === null || _a === void 0 ? void 0 : _a.message) {
-                errorMessage = jsonResponse.error.message;
-            }
-        }
-        catch (_ignored) { }
-        throw ERROR_FACTORY.create("config-fetch-failed" /* AnalyticsError.CONFIG_FETCH_FAILED */, {
-            httpStatus: response.status,
-            responseMessage: errorMessage
-        });
-    }
-    return response.json();
-}
-/**
- * Fetches dynamic config from backend, retrying if failed.
- * @param app Firebase app to fetch config for.
- */
-async function fetchDynamicConfigWithRetry(app, 
-// retryData and timeoutMillis are parameterized to allow passing a different value for testing.
-retryData = defaultRetryData, timeoutMillis) {
-    const { appId, apiKey, measurementId } = app.options;
-    if (!appId) {
-        throw ERROR_FACTORY.create("no-app-id" /* AnalyticsError.NO_APP_ID */);
-    }
-    if (!apiKey) {
-        if (measurementId) {
-            return {
-                measurementId,
-                appId
-            };
-        }
-        throw ERROR_FACTORY.create("no-api-key" /* AnalyticsError.NO_API_KEY */);
-    }
-    const throttleMetadata = retryData.getThrottleMetadata(appId) || {
-        backoffCount: 0,
-        throttleEndTimeMillis: Date.now()
-    };
-    const signal = new AnalyticsAbortSignal();
-    setTimeout(async () => {
-        // Note a very low delay, eg < 10ms, can elapse before listeners are initialized.
-        signal.abort();
-    }, timeoutMillis !== undefined ? timeoutMillis : FETCH_TIMEOUT_MILLIS);
-    return attemptFetchDynamicConfigWithRetry({ appId, apiKey, measurementId }, throttleMetadata, signal, retryData);
-}
-/**
- * Runs one retry attempt.
- * @param appFields Necessary app config fields.
- * @param throttleMetadata Ongoing metadata to determine throttling times.
- * @param signal Abort signal.
- */
-async function attemptFetchDynamicConfigWithRetry(appFields, { throttleEndTimeMillis, backoffCount }, signal, retryData = defaultRetryData // for testing
-) {
-    var _a;
-    const { appId, measurementId } = appFields;
-    // Starts with a (potentially zero) timeout to support resumption from stored state.
-    // Ensures the throttle end time is honored if the last attempt timed out.
-    // Note the SDK will never make a request if the fetch timeout expires at this point.
-    try {
-        await setAbortableTimeout(signal, throttleEndTimeMillis);
-    }
-    catch (e) {
-        if (measurementId) {
-            logger.warn(`Timed out fetching this Firebase app's measurement ID from the server.` +
-                ` Falling back to the measurement ID ${measurementId}` +
-                ` provided in the "measurementId" field in the local Firebase config. [${e === null || e === void 0 ? void 0 : e.message}]`);
-            return { appId, measurementId };
-        }
-        throw e;
-    }
-    try {
-        const response = await fetchDynamicConfig(appFields);
-        // Note the SDK only clears throttle state if response is success or non-retriable.
-        retryData.deleteThrottleMetadata(appId);
-        return response;
-    }
-    catch (e) {
-        const error = e;
-        if (!isRetriableError(error)) {
-            retryData.deleteThrottleMetadata(appId);
-            if (measurementId) {
-                logger.warn(`Failed to fetch this Firebase app's measurement ID from the server.` +
-                    ` Falling back to the measurement ID ${measurementId}` +
-                    ` provided in the "measurementId" field in the local Firebase config. [${error === null || error === void 0 ? void 0 : error.message}]`);
-                return { appId, measurementId };
-            }
-            else {
-                throw e;
-            }
-        }
-        const backoffMillis = Number((_a = error === null || error === void 0 ? void 0 : error.customData) === null || _a === void 0 ? void 0 : _a.httpStatus) === 503
-            ? (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.calculateBackoffMillis)(backoffCount, retryData.intervalMillis, LONG_RETRY_FACTOR)
-            : (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.calculateBackoffMillis)(backoffCount, retryData.intervalMillis);
-        // Increments backoff state.
-        const throttleMetadata = {
-            throttleEndTimeMillis: Date.now() + backoffMillis,
-            backoffCount: backoffCount + 1
-        };
-        // Persists state.
-        retryData.setThrottleMetadata(appId, throttleMetadata);
-        logger.debug(`Calling attemptFetch again in ${backoffMillis} millis`);
-        return attemptFetchDynamicConfigWithRetry(appFields, throttleMetadata, signal, retryData);
-    }
-}
-/**
- * Supports waiting on a backoff by:
- *
- * <ul>
- *   <li>Promisifying setTimeout, so we can set a timeout in our Promise chain</li>
- *   <li>Listening on a signal bus for abort events, just like the Fetch API</li>
- *   <li>Failing in the same way the Fetch API fails, so timing out a live request and a throttled
- *       request appear the same.</li>
- * </ul>
- *
- * <p>Visible for testing.
- */
-function setAbortableTimeout(signal, throttleEndTimeMillis) {
-    return new Promise((resolve, reject) => {
-        // Derives backoff from given end time, normalizing negative numbers to zero.
-        const backoffMillis = Math.max(throttleEndTimeMillis - Date.now(), 0);
-        const timeout = setTimeout(resolve, backoffMillis);
-        // Adds listener, rather than sets onabort, because signal is a shared object.
-        signal.addEventListener(() => {
-            clearTimeout(timeout);
-            // If the request completes before this timeout, the rejection has no effect.
-            reject(ERROR_FACTORY.create("fetch-throttle" /* AnalyticsError.FETCH_THROTTLE */, {
-                throttleEndTimeMillis
-            }));
-        });
-    });
-}
-/**
- * Returns true if the {@link Error} indicates a fetch request may succeed later.
- */
-function isRetriableError(e) {
-    if (!(e instanceof _firebase_util__WEBPACK_IMPORTED_MODULE_2__.FirebaseError) || !e.customData) {
-        return false;
-    }
-    // Uses string index defined by ErrorData, which FirebaseError implements.
-    const httpStatus = Number(e.customData['httpStatus']);
-    return (httpStatus === 429 ||
-        httpStatus === 500 ||
-        httpStatus === 503 ||
-        httpStatus === 504);
-}
-/**
- * Shims a minimal AbortSignal (copied from Remote Config).
- *
- * <p>AbortController's AbortSignal conveniently decouples fetch timeout logic from other aspects
- * of networking, such as retries. Firebase doesn't use AbortController enough to justify a
- * polyfill recommendation, like we do with the Fetch API, but this minimal shim can easily be
- * swapped out if/when we do.
- */
-class AnalyticsAbortSignal {
-    constructor() {
-        this.listeners = [];
-    }
-    addEventListener(listener) {
-        this.listeners.push(listener);
-    }
-    abort() {
-        this.listeners.forEach(listener => listener());
-    }
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Event parameters to set on 'gtag' during initialization.
- */
-let defaultEventParametersForInit;
-/**
- * Logs an analytics event through the Firebase SDK.
- *
- * @param gtagFunction Wrapped gtag function that waits for fid to be set before sending an event
- * @param eventName Google Analytics event name, choose from standard list or use a custom string.
- * @param eventParams Analytics event parameters.
- */
-async function logEvent$1(gtagFunction, initializationPromise, eventName, eventParams, options) {
-    if (options && options.global) {
-        gtagFunction("event" /* GtagCommand.EVENT */, eventName, eventParams);
-        return;
-    }
-    else {
-        const measurementId = await initializationPromise;
-        const params = Object.assign(Object.assign({}, eventParams), { 'send_to': measurementId });
-        gtagFunction("event" /* GtagCommand.EVENT */, eventName, params);
-    }
-}
-/**
- * Set screen_name parameter for this Google Analytics ID.
- *
- * @deprecated Use {@link logEvent} with `eventName` as 'screen_view' and add relevant `eventParams`.
- * See {@link https://firebase.google.com/docs/analytics/screenviews | Track Screenviews}.
- *
- * @param gtagFunction Wrapped gtag function that waits for fid to be set before sending an event
- * @param screenName Screen name string to set.
- */
-async function setCurrentScreen$1(gtagFunction, initializationPromise, screenName, options) {
-    if (options && options.global) {
-        gtagFunction("set" /* GtagCommand.SET */, { 'screen_name': screenName });
-        return Promise.resolve();
-    }
-    else {
-        const measurementId = await initializationPromise;
-        gtagFunction("config" /* GtagCommand.CONFIG */, measurementId, {
-            update: true,
-            'screen_name': screenName
-        });
-    }
-}
-/**
- * Set user_id parameter for this Google Analytics ID.
- *
- * @param gtagFunction Wrapped gtag function that waits for fid to be set before sending an event
- * @param id User ID string to set
- */
-async function setUserId$1(gtagFunction, initializationPromise, id, options) {
-    if (options && options.global) {
-        gtagFunction("set" /* GtagCommand.SET */, { 'user_id': id });
-        return Promise.resolve();
-    }
-    else {
-        const measurementId = await initializationPromise;
-        gtagFunction("config" /* GtagCommand.CONFIG */, measurementId, {
-            update: true,
-            'user_id': id
-        });
-    }
-}
-/**
- * Set all other user properties other than user_id and screen_name.
- *
- * @param gtagFunction Wrapped gtag function that waits for fid to be set before sending an event
- * @param properties Map of user properties to set
- */
-async function setUserProperties$1(gtagFunction, initializationPromise, properties, options) {
-    if (options && options.global) {
-        const flatProperties = {};
-        for (const key of Object.keys(properties)) {
-            // use dot notation for merge behavior in gtag.js
-            flatProperties[`user_properties.${key}`] = properties[key];
-        }
-        gtagFunction("set" /* GtagCommand.SET */, flatProperties);
-        return Promise.resolve();
-    }
-    else {
-        const measurementId = await initializationPromise;
-        gtagFunction("config" /* GtagCommand.CONFIG */, measurementId, {
-            update: true,
-            'user_properties': properties
-        });
-    }
-}
-/**
- * Retrieves a unique Google Analytics identifier for the web client.
- * See {@link https://developers.google.com/analytics/devguides/collection/ga4/reference/config#client_id | client_id}.
- *
- * @param gtagFunction Wrapped gtag function that waits for fid to be set before sending an event
- */
-async function internalGetGoogleAnalyticsClientId(gtagFunction, initializationPromise) {
-    const measurementId = await initializationPromise;
-    return new Promise((resolve, reject) => {
-        gtagFunction("get" /* GtagCommand.GET */, measurementId, 'client_id', (clientId) => {
-            if (!clientId) {
-                reject(ERROR_FACTORY.create("no-client-id" /* AnalyticsError.NO_CLIENT_ID */));
-            }
-            resolve(clientId);
-        });
-    });
-}
-/**
- * Set whether collection is enabled for this ID.
- *
- * @param enabled If true, collection is enabled for this ID.
- */
-async function setAnalyticsCollectionEnabled$1(initializationPromise, enabled) {
-    const measurementId = await initializationPromise;
-    window[`ga-disable-${measurementId}`] = !enabled;
-}
-/**
- * Consent parameters to default to during 'gtag' initialization.
- */
-let defaultConsentSettingsForInit;
-/**
- * Sets the variable {@link defaultConsentSettingsForInit} for use in the initialization of
- * analytics.
- *
- * @param consentSettings Maps the applicable end user consent state for gtag.js.
- */
-function _setConsentDefaultForInit(consentSettings) {
-    defaultConsentSettingsForInit = consentSettings;
-}
-/**
- * Sets the variable `defaultEventParametersForInit` for use in the initialization of
- * analytics.
- *
- * @param customParams Any custom params the user may pass to gtag.js.
- */
-function _setDefaultEventParametersForInit(customParams) {
-    defaultEventParametersForInit = customParams;
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function validateIndexedDB() {
-    if (!(0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.isIndexedDBAvailable)()) {
-        logger.warn(ERROR_FACTORY.create("indexeddb-unavailable" /* AnalyticsError.INDEXEDDB_UNAVAILABLE */, {
-            errorInfo: 'IndexedDB is not available in this environment.'
-        }).message);
-        return false;
-    }
-    else {
-        try {
-            await (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.validateIndexedDBOpenable)();
-        }
-        catch (e) {
-            logger.warn(ERROR_FACTORY.create("indexeddb-unavailable" /* AnalyticsError.INDEXEDDB_UNAVAILABLE */, {
-                errorInfo: e === null || e === void 0 ? void 0 : e.toString()
-            }).message);
-            return false;
-        }
-    }
-    return true;
-}
-/**
- * Initialize the analytics instance in gtag.js by calling config command with fid.
- *
- * NOTE: We combine analytics initialization and setting fid together because we want fid to be
- * part of the `page_view` event that's sent during the initialization
- * @param app Firebase app
- * @param gtagCore The gtag function that's not wrapped.
- * @param dynamicConfigPromisesList Array of all dynamic config promises.
- * @param measurementIdToAppId Maps measurementID to appID.
- * @param installations _FirebaseInstallationsInternal instance.
- *
- * @returns Measurement ID.
- */
-async function _initializeAnalytics(app, dynamicConfigPromisesList, measurementIdToAppId, installations, gtagCore, dataLayerName, options) {
-    var _a;
-    const dynamicConfigPromise = fetchDynamicConfigWithRetry(app);
-    // Once fetched, map measurementIds to appId, for ease of lookup in wrapped gtag function.
-    dynamicConfigPromise
-        .then(config => {
-        measurementIdToAppId[config.measurementId] = config.appId;
-        if (app.options.measurementId &&
-            config.measurementId !== app.options.measurementId) {
-            logger.warn(`The measurement ID in the local Firebase config (${app.options.measurementId})` +
-                ` does not match the measurement ID fetched from the server (${config.measurementId}).` +
-                ` To ensure analytics events are always sent to the correct Analytics property,` +
-                ` update the` +
-                ` measurement ID field in the local config or remove it from the local config.`);
-        }
-    })
-        .catch(e => logger.error(e));
-    // Add to list to track state of all dynamic config promises.
-    dynamicConfigPromisesList.push(dynamicConfigPromise);
-    const fidPromise = validateIndexedDB().then(envIsValid => {
-        if (envIsValid) {
-            return installations.getId();
-        }
-        else {
-            return undefined;
-        }
-    });
-    const [dynamicConfig, fid] = await Promise.all([
-        dynamicConfigPromise,
-        fidPromise
-    ]);
-    // Detect if user has already put the gtag <script> tag on this page with the passed in
-    // data layer name.
-    if (!findGtagScriptOnPage(dataLayerName)) {
-        insertScriptTag(dataLayerName, dynamicConfig.measurementId);
-    }
-    // Detects if there are consent settings that need to be configured.
-    if (defaultConsentSettingsForInit) {
-        gtagCore("consent" /* GtagCommand.CONSENT */, 'default', defaultConsentSettingsForInit);
-        _setConsentDefaultForInit(undefined);
-    }
-    // This command initializes gtag.js and only needs to be called once for the entire web app,
-    // but since it is idempotent, we can call it multiple times.
-    // We keep it together with other initialization logic for better code structure.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    gtagCore('js', new Date());
-    // User config added first. We don't want users to accidentally overwrite
-    // base Firebase config properties.
-    const configProperties = (_a = options === null || options === void 0 ? void 0 : options.config) !== null && _a !== void 0 ? _a : {};
-    // guard against developers accidentally setting properties with prefix `firebase_`
-    configProperties[ORIGIN_KEY] = 'firebase';
-    configProperties.update = true;
-    if (fid != null) {
-        configProperties[GA_FID_KEY] = fid;
-    }
-    // It should be the first config command called on this GA-ID
-    // Initialize this GA-ID and set FID on it using the gtag config API.
-    // Note: This will trigger a page_view event unless 'send_page_view' is set to false in
-    // `configProperties`.
-    gtagCore("config" /* GtagCommand.CONFIG */, dynamicConfig.measurementId, configProperties);
-    // Detects if there is data that will be set on every event logged from the SDK.
-    if (defaultEventParametersForInit) {
-        gtagCore("set" /* GtagCommand.SET */, defaultEventParametersForInit);
-        _setDefaultEventParametersForInit(undefined);
-    }
-    return dynamicConfig.measurementId;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Analytics Service class.
- */
-class AnalyticsService {
-    constructor(app) {
-        this.app = app;
-    }
-    _delete() {
-        delete initializationPromisesMap[this.app.options.appId];
-        return Promise.resolve();
-    }
-}
-/**
- * Maps appId to full initialization promise. Wrapped gtag calls must wait on
- * all or some of these, depending on the call's `send_to` param and the status
- * of the dynamic config fetches (see below).
- */
-let initializationPromisesMap = {};
-/**
- * List of dynamic config fetch promises. In certain cases, wrapped gtag calls
- * wait on all these to be complete in order to determine if it can selectively
- * wait for only certain initialization (FID) promises or if it must wait for all.
- */
-let dynamicConfigPromisesList = [];
-/**
- * Maps fetched measurementIds to appId. Populated when the app's dynamic config
- * fetch completes. If already populated, gtag config calls can use this to
- * selectively wait for only this app's initialization promise (FID) instead of all
- * initialization promises.
- */
-const measurementIdToAppId = {};
-/**
- * Name for window global data layer array used by GA: defaults to 'dataLayer'.
- */
-let dataLayerName = 'dataLayer';
-/**
- * Name for window global gtag function used by GA: defaults to 'gtag'.
- */
-let gtagName = 'gtag';
-/**
- * Reproduction of standard gtag function or reference to existing
- * gtag function on window object.
- */
-let gtagCoreFunction;
-/**
- * Wrapper around gtag function that ensures FID is sent with all
- * relevant event and config calls.
- */
-let wrappedGtagFunction;
-/**
- * Flag to ensure page initialization steps (creation or wrapping of
- * dataLayer and gtag script) are only run once per page load.
- */
-let globalInitDone = false;
-/**
- * Configures Firebase Analytics to use custom `gtag` or `dataLayer` names.
- * Intended to be used if `gtag.js` script has been installed on
- * this page independently of Firebase Analytics, and is using non-default
- * names for either the `gtag` function or for `dataLayer`.
- * Must be called before calling `getAnalytics()` or it won't
- * have any effect.
- *
- * @public
- *
- * @param options - Custom gtag and dataLayer names.
- */
-function settings(options) {
-    if (globalInitDone) {
-        throw ERROR_FACTORY.create("already-initialized" /* AnalyticsError.ALREADY_INITIALIZED */);
-    }
-    if (options.dataLayerName) {
-        dataLayerName = options.dataLayerName;
-    }
-    if (options.gtagName) {
-        gtagName = options.gtagName;
-    }
-}
-/**
- * Returns true if no environment mismatch is found.
- * If environment mismatches are found, throws an INVALID_ANALYTICS_CONTEXT
- * error that also lists details for each mismatch found.
- */
-function warnOnBrowserContextMismatch() {
-    const mismatchedEnvMessages = [];
-    if ((0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.isBrowserExtension)()) {
-        mismatchedEnvMessages.push('This is a browser extension environment.');
-    }
-    if (!(0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.areCookiesEnabled)()) {
-        mismatchedEnvMessages.push('Cookies are not available.');
-    }
-    if (mismatchedEnvMessages.length > 0) {
-        const details = mismatchedEnvMessages
-            .map((message, index) => `(${index + 1}) ${message}`)
-            .join(' ');
-        const err = ERROR_FACTORY.create("invalid-analytics-context" /* AnalyticsError.INVALID_ANALYTICS_CONTEXT */, {
-            errorInfo: details
-        });
-        logger.warn(err.message);
-    }
-}
-/**
- * Analytics instance factory.
- * @internal
- */
-function factory(app, installations, options) {
-    warnOnBrowserContextMismatch();
-    const appId = app.options.appId;
-    if (!appId) {
-        throw ERROR_FACTORY.create("no-app-id" /* AnalyticsError.NO_APP_ID */);
-    }
-    if (!app.options.apiKey) {
-        if (app.options.measurementId) {
-            logger.warn(`The "apiKey" field is empty in the local Firebase config. This is needed to fetch the latest` +
-                ` measurement ID for this Firebase app. Falling back to the measurement ID ${app.options.measurementId}` +
-                ` provided in the "measurementId" field in the local Firebase config.`);
-        }
-        else {
-            throw ERROR_FACTORY.create("no-api-key" /* AnalyticsError.NO_API_KEY */);
-        }
-    }
-    if (initializationPromisesMap[appId] != null) {
-        throw ERROR_FACTORY.create("already-exists" /* AnalyticsError.ALREADY_EXISTS */, {
-            id: appId
-        });
-    }
-    if (!globalInitDone) {
-        // Steps here should only be done once per page: creation or wrapping
-        // of dataLayer and global gtag function.
-        getOrCreateDataLayer(dataLayerName);
-        const { wrappedGtag, gtagCore } = wrapOrCreateGtag(initializationPromisesMap, dynamicConfigPromisesList, measurementIdToAppId, dataLayerName, gtagName);
-        wrappedGtagFunction = wrappedGtag;
-        gtagCoreFunction = gtagCore;
-        globalInitDone = true;
-    }
-    // Async but non-blocking.
-    // This map reflects the completion state of all promises for each appId.
-    initializationPromisesMap[appId] = _initializeAnalytics(app, dynamicConfigPromisesList, measurementIdToAppId, installations, gtagCoreFunction, dataLayerName, options);
-    const analyticsInstance = new AnalyticsService(app);
-    return analyticsInstance;
-}
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * Returns an {@link Analytics} instance for the given app.
- *
- * @public
- *
- * @param app - The {@link @firebase/app#FirebaseApp} to use.
- */
-function getAnalytics(app = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApp)()) {
-    app = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(app);
-    // Dependencies
-    const analyticsProvider = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._getProvider)(app, ANALYTICS_TYPE);
-    if (analyticsProvider.isInitialized()) {
-        return analyticsProvider.getImmediate();
-    }
-    return initializeAnalytics(app);
-}
-/**
- * Returns an {@link Analytics} instance for the given app.
- *
- * @public
- *
- * @param app - The {@link @firebase/app#FirebaseApp} to use.
- */
-function initializeAnalytics(app, options = {}) {
-    // Dependencies
-    const analyticsProvider = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._getProvider)(app, ANALYTICS_TYPE);
-    if (analyticsProvider.isInitialized()) {
-        const existingInstance = analyticsProvider.getImmediate();
-        if ((0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.deepEqual)(options, analyticsProvider.getOptions())) {
-            return existingInstance;
-        }
-        else {
-            throw ERROR_FACTORY.create("already-initialized" /* AnalyticsError.ALREADY_INITIALIZED */);
-        }
-    }
-    const analyticsInstance = analyticsProvider.initialize({ options });
-    return analyticsInstance;
-}
-/**
- * This is a public static method provided to users that wraps four different checks:
- *
- * 1. Check if it's not a browser extension environment.
- * 2. Check if cookies are enabled in current browser.
- * 3. Check if IndexedDB is supported by the browser environment.
- * 4. Check if the current browser context is valid for using `IndexedDB.open()`.
- *
- * @public
- *
- */
-async function isSupported() {
-    if ((0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.isBrowserExtension)()) {
-        return false;
-    }
-    if (!(0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.areCookiesEnabled)()) {
-        return false;
-    }
-    if (!(0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.isIndexedDBAvailable)()) {
-        return false;
-    }
-    try {
-        const isDBOpenable = await (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.validateIndexedDBOpenable)();
-        return isDBOpenable;
-    }
-    catch (error) {
-        return false;
-    }
-}
-/**
- * Use gtag `config` command to set `screen_name`.
- *
- * @public
- *
- * @deprecated Use {@link logEvent} with `eventName` as 'screen_view' and add relevant `eventParams`.
- * See {@link https://firebase.google.com/docs/analytics/screenviews | Track Screenviews}.
- *
- * @param analyticsInstance - The {@link Analytics} instance.
- * @param screenName - Screen name to set.
- */
-function setCurrentScreen(analyticsInstance, screenName, options) {
-    analyticsInstance = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(analyticsInstance);
-    setCurrentScreen$1(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId], screenName, options).catch(e => logger.error(e));
-}
-/**
- * Retrieves a unique Google Analytics identifier for the web client.
- * See {@link https://developers.google.com/analytics/devguides/collection/ga4/reference/config#client_id | client_id}.
- *
- * @public
- *
- * @param app - The {@link @firebase/app#FirebaseApp} to use.
- */
-async function getGoogleAnalyticsClientId(analyticsInstance) {
-    analyticsInstance = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(analyticsInstance);
-    return internalGetGoogleAnalyticsClientId(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId]);
-}
-/**
- * Use gtag `config` command to set `user_id`.
- *
- * @public
- *
- * @param analyticsInstance - The {@link Analytics} instance.
- * @param id - User ID to set.
- */
-function setUserId(analyticsInstance, id, options) {
-    analyticsInstance = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(analyticsInstance);
-    setUserId$1(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId], id, options).catch(e => logger.error(e));
-}
-/**
- * Use gtag `config` command to set all params specified.
- *
- * @public
- */
-function setUserProperties(analyticsInstance, properties, options) {
-    analyticsInstance = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(analyticsInstance);
-    setUserProperties$1(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId], properties, options).catch(e => logger.error(e));
-}
-/**
- * Sets whether Google Analytics collection is enabled for this app on this device.
- * Sets global `window['ga-disable-analyticsId'] = true;`
- *
- * @public
- *
- * @param analyticsInstance - The {@link Analytics} instance.
- * @param enabled - If true, enables collection, if false, disables it.
- */
-function setAnalyticsCollectionEnabled(analyticsInstance, enabled) {
-    analyticsInstance = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(analyticsInstance);
-    setAnalyticsCollectionEnabled$1(initializationPromisesMap[analyticsInstance.app.options.appId], enabled).catch(e => logger.error(e));
-}
-/**
- * Adds data that will be set on every event logged from the SDK, including automatic ones.
- * With gtag's "set" command, the values passed persist on the current page and are passed with
- * all subsequent events.
- * @public
- * @param customParams - Any custom params the user may pass to gtag.js.
- */
-function setDefaultEventParameters(customParams) {
-    // Check if reference to existing gtag function on window object exists
-    if (wrappedGtagFunction) {
-        wrappedGtagFunction("set" /* GtagCommand.SET */, customParams);
-    }
-    else {
-        _setDefaultEventParametersForInit(customParams);
-    }
-}
-/**
- * Sends a Google Analytics event with given `eventParams`. This method
- * automatically associates this logged event with this Firebase web
- * app instance on this device.
- * List of official event parameters can be found in the gtag.js
- * reference documentation:
- * {@link https://developers.google.com/gtagjs/reference/ga4-events
- * | the GA4 reference documentation}.
- *
- * @public
- */
-function logEvent(analyticsInstance, eventName, eventParams, options) {
-    analyticsInstance = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getModularInstance)(analyticsInstance);
-    logEvent$1(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId], eventName, eventParams, options).catch(e => logger.error(e));
-}
-/**
- * Sets the applicable end user consent state for this web app across all gtag references once
- * Firebase Analytics is initialized.
- *
- * Use the {@link ConsentSettings} to specify individual consent type values. By default consent
- * types are set to "granted".
- * @public
- * @param consentSettings - Maps the applicable end user consent state for gtag.js.
- */
-function setConsent(consentSettings) {
-    // Check if reference to existing gtag function on window object exists
-    if (wrappedGtagFunction) {
-        wrappedGtagFunction("consent" /* GtagCommand.CONSENT */, 'update', consentSettings);
-    }
-    else {
-        _setConsentDefaultForInit(consentSettings);
-    }
-}
-
-const name = "@firebase/analytics";
-const version = "0.10.11";
-
-/**
- * The Firebase Analytics Web SDK.
- * This SDK does not work in a Node.js environment.
- *
- * @packageDocumentation
- */
-function registerAnalytics() {
-    (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._registerComponent)(new _firebase_component__WEBPACK_IMPORTED_MODULE_3__.Component(ANALYTICS_TYPE, (container, { options: analyticsOptions }) => {
-        // getImmediate for FirebaseApp will always succeed
-        const app = container.getProvider('app').getImmediate();
-        const installations = container
-            .getProvider('installations-internal')
-            .getImmediate();
-        return factory(app, installations, analyticsOptions);
-    }, "PUBLIC" /* ComponentType.PUBLIC */));
-    (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._registerComponent)(new _firebase_component__WEBPACK_IMPORTED_MODULE_3__.Component('analytics-internal', internalFactory, "PRIVATE" /* ComponentType.PRIVATE */));
-    (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__.registerVersion)(name, version);
-    // BUILD_TARGET will be replaced by values like esm2017, cjs2017, etc during the compilation
-    (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__.registerVersion)(name, version, 'esm2017');
-    function internalFactory(container) {
-        try {
-            const analytics = container.getProvider(ANALYTICS_TYPE).getImmediate();
-            return {
-                logEvent: (eventName, eventParams, options) => logEvent(analytics, eventName, eventParams, options)
-            };
-        }
-        catch (e) {
-            throw ERROR_FACTORY.create("interop-component-reg-failed" /* AnalyticsError.INTEROP_COMPONENT_REG_FAILED */, {
-                reason: e
-            });
-        }
-    }
-}
-registerAnalytics();
-
-
-//# sourceMappingURL=index.esm2017.js.map
-
 
 /***/ }),
 
@@ -28500,1183 +27672,6 @@ class ComponentContainer {
 
 /***/ }),
 
-/***/ "./node_modules/@firebase/installations/dist/esm/index.esm2017.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/@firebase/installations/dist/esm/index.esm2017.js ***!
-  \************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   deleteInstallations: () => (/* binding */ deleteInstallations),
-/* harmony export */   getId: () => (/* binding */ getId),
-/* harmony export */   getInstallations: () => (/* binding */ getInstallations),
-/* harmony export */   getToken: () => (/* binding */ getToken),
-/* harmony export */   onIdChange: () => (/* binding */ onIdChange)
-/* harmony export */ });
-/* harmony import */ var _firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @firebase/app */ "./node_modules/@firebase/app/dist/esm/index.esm2017.js");
-/* harmony import */ var _firebase_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @firebase/component */ "./node_modules/@firebase/component/dist/esm/index.esm2017.js");
-/* harmony import */ var _firebase_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @firebase/util */ "./node_modules/@firebase/util/dist/index.esm2017.js");
-/* harmony import */ var idb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! idb */ "./node_modules/idb/build/index.js");
-
-
-
-
-
-const name = "@firebase/installations";
-const version = "0.6.12";
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const PENDING_TIMEOUT_MS = 10000;
-const PACKAGE_VERSION = `w:${version}`;
-const INTERNAL_AUTH_VERSION = 'FIS_v2';
-const INSTALLATIONS_API_URL = 'https://firebaseinstallations.googleapis.com/v1';
-const TOKEN_EXPIRATION_BUFFER = 60 * 60 * 1000; // One hour
-const SERVICE = 'installations';
-const SERVICE_NAME = 'Installations';
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const ERROR_DESCRIPTION_MAP = {
-    ["missing-app-config-values" /* ErrorCode.MISSING_APP_CONFIG_VALUES */]: 'Missing App configuration value: "{$valueName}"',
-    ["not-registered" /* ErrorCode.NOT_REGISTERED */]: 'Firebase Installation is not registered.',
-    ["installation-not-found" /* ErrorCode.INSTALLATION_NOT_FOUND */]: 'Firebase Installation not found.',
-    ["request-failed" /* ErrorCode.REQUEST_FAILED */]: '{$requestName} request failed with error "{$serverCode} {$serverStatus}: {$serverMessage}"',
-    ["app-offline" /* ErrorCode.APP_OFFLINE */]: 'Could not process request. Application offline.',
-    ["delete-pending-registration" /* ErrorCode.DELETE_PENDING_REGISTRATION */]: "Can't delete installation while there is a pending registration request."
-};
-const ERROR_FACTORY = new _firebase_util__WEBPACK_IMPORTED_MODULE_2__.ErrorFactory(SERVICE, SERVICE_NAME, ERROR_DESCRIPTION_MAP);
-/** Returns true if error is a FirebaseError that is based on an error from the server. */
-function isServerError(error) {
-    return (error instanceof _firebase_util__WEBPACK_IMPORTED_MODULE_2__.FirebaseError &&
-        error.code.includes("request-failed" /* ErrorCode.REQUEST_FAILED */));
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function getInstallationsEndpoint({ projectId }) {
-    return `${INSTALLATIONS_API_URL}/projects/${projectId}/installations`;
-}
-function extractAuthTokenInfoFromResponse(response) {
-    return {
-        token: response.token,
-        requestStatus: 2 /* RequestStatus.COMPLETED */,
-        expiresIn: getExpiresInFromResponseExpiresIn(response.expiresIn),
-        creationTime: Date.now()
-    };
-}
-async function getErrorFromResponse(requestName, response) {
-    const responseJson = await response.json();
-    const errorData = responseJson.error;
-    return ERROR_FACTORY.create("request-failed" /* ErrorCode.REQUEST_FAILED */, {
-        requestName,
-        serverCode: errorData.code,
-        serverMessage: errorData.message,
-        serverStatus: errorData.status
-    });
-}
-function getHeaders({ apiKey }) {
-    return new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'x-goog-api-key': apiKey
-    });
-}
-function getHeadersWithAuth(appConfig, { refreshToken }) {
-    const headers = getHeaders(appConfig);
-    headers.append('Authorization', getAuthorizationHeader(refreshToken));
-    return headers;
-}
-/**
- * Calls the passed in fetch wrapper and returns the response.
- * If the returned response has a status of 5xx, re-runs the function once and
- * returns the response.
- */
-async function retryIfServerError(fn) {
-    const result = await fn();
-    if (result.status >= 500 && result.status < 600) {
-        // Internal Server Error. Retry request.
-        return fn();
-    }
-    return result;
-}
-function getExpiresInFromResponseExpiresIn(responseExpiresIn) {
-    // This works because the server will never respond with fractions of a second.
-    return Number(responseExpiresIn.replace('s', '000'));
-}
-function getAuthorizationHeader(refreshToken) {
-    return `${INTERNAL_AUTH_VERSION} ${refreshToken}`;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function createInstallationRequest({ appConfig, heartbeatServiceProvider }, { fid }) {
-    const endpoint = getInstallationsEndpoint(appConfig);
-    const headers = getHeaders(appConfig);
-    // If heartbeat service exists, add the heartbeat string to the header.
-    const heartbeatService = heartbeatServiceProvider.getImmediate({
-        optional: true
-    });
-    if (heartbeatService) {
-        const heartbeatsHeader = await heartbeatService.getHeartbeatsHeader();
-        if (heartbeatsHeader) {
-            headers.append('x-firebase-client', heartbeatsHeader);
-        }
-    }
-    const body = {
-        fid,
-        authVersion: INTERNAL_AUTH_VERSION,
-        appId: appConfig.appId,
-        sdkVersion: PACKAGE_VERSION
-    };
-    const request = {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body)
-    };
-    const response = await retryIfServerError(() => fetch(endpoint, request));
-    if (response.ok) {
-        const responseValue = await response.json();
-        const registeredInstallationEntry = {
-            fid: responseValue.fid || fid,
-            registrationStatus: 2 /* RequestStatus.COMPLETED */,
-            refreshToken: responseValue.refreshToken,
-            authToken: extractAuthTokenInfoFromResponse(responseValue.authToken)
-        };
-        return registeredInstallationEntry;
-    }
-    else {
-        throw await getErrorFromResponse('Create Installation', response);
-    }
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/** Returns a promise that resolves after given time passes. */
-function sleep(ms) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function bufferToBase64UrlSafe(array) {
-    const b64 = btoa(String.fromCharCode(...array));
-    return b64.replace(/\+/g, '-').replace(/\//g, '_');
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const VALID_FID_PATTERN = /^[cdef][\w-]{21}$/;
-const INVALID_FID = '';
-/**
- * Generates a new FID using random values from Web Crypto API.
- * Returns an empty string if FID generation fails for any reason.
- */
-function generateFid() {
-    try {
-        // A valid FID has exactly 22 base64 characters, which is 132 bits, or 16.5
-        // bytes. our implementation generates a 17 byte array instead.
-        const fidByteArray = new Uint8Array(17);
-        const crypto = self.crypto || self.msCrypto;
-        crypto.getRandomValues(fidByteArray);
-        // Replace the first 4 random bits with the constant FID header of 0b0111.
-        fidByteArray[0] = 0b01110000 + (fidByteArray[0] % 0b00010000);
-        const fid = encode(fidByteArray);
-        return VALID_FID_PATTERN.test(fid) ? fid : INVALID_FID;
-    }
-    catch (_a) {
-        // FID generation errored
-        return INVALID_FID;
-    }
-}
-/** Converts a FID Uint8Array to a base64 string representation. */
-function encode(fidByteArray) {
-    const b64String = bufferToBase64UrlSafe(fidByteArray);
-    // Remove the 23rd character that was added because of the extra 4 bits at the
-    // end of our 17 byte array, and the '=' padding.
-    return b64String.substr(0, 22);
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/** Returns a string key that can be used to identify the app. */
-function getKey(appConfig) {
-    return `${appConfig.appName}!${appConfig.appId}`;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const fidChangeCallbacks = new Map();
-/**
- * Calls the onIdChange callbacks with the new FID value, and broadcasts the
- * change to other tabs.
- */
-function fidChanged(appConfig, fid) {
-    const key = getKey(appConfig);
-    callFidChangeCallbacks(key, fid);
-    broadcastFidChange(key, fid);
-}
-function addCallback(appConfig, callback) {
-    // Open the broadcast channel if it's not already open,
-    // to be able to listen to change events from other tabs.
-    getBroadcastChannel();
-    const key = getKey(appConfig);
-    let callbackSet = fidChangeCallbacks.get(key);
-    if (!callbackSet) {
-        callbackSet = new Set();
-        fidChangeCallbacks.set(key, callbackSet);
-    }
-    callbackSet.add(callback);
-}
-function removeCallback(appConfig, callback) {
-    const key = getKey(appConfig);
-    const callbackSet = fidChangeCallbacks.get(key);
-    if (!callbackSet) {
-        return;
-    }
-    callbackSet.delete(callback);
-    if (callbackSet.size === 0) {
-        fidChangeCallbacks.delete(key);
-    }
-    // Close broadcast channel if there are no more callbacks.
-    closeBroadcastChannel();
-}
-function callFidChangeCallbacks(key, fid) {
-    const callbacks = fidChangeCallbacks.get(key);
-    if (!callbacks) {
-        return;
-    }
-    for (const callback of callbacks) {
-        callback(fid);
-    }
-}
-function broadcastFidChange(key, fid) {
-    const channel = getBroadcastChannel();
-    if (channel) {
-        channel.postMessage({ key, fid });
-    }
-    closeBroadcastChannel();
-}
-let broadcastChannel = null;
-/** Opens and returns a BroadcastChannel if it is supported by the browser. */
-function getBroadcastChannel() {
-    if (!broadcastChannel && 'BroadcastChannel' in self) {
-        broadcastChannel = new BroadcastChannel('[Firebase] FID Change');
-        broadcastChannel.onmessage = e => {
-            callFidChangeCallbacks(e.data.key, e.data.fid);
-        };
-    }
-    return broadcastChannel;
-}
-function closeBroadcastChannel() {
-    if (fidChangeCallbacks.size === 0 && broadcastChannel) {
-        broadcastChannel.close();
-        broadcastChannel = null;
-    }
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const DATABASE_NAME = 'firebase-installations-database';
-const DATABASE_VERSION = 1;
-const OBJECT_STORE_NAME = 'firebase-installations-store';
-let dbPromise = null;
-function getDbPromise() {
-    if (!dbPromise) {
-        dbPromise = (0,idb__WEBPACK_IMPORTED_MODULE_3__.openDB)(DATABASE_NAME, DATABASE_VERSION, {
-            upgrade: (db, oldVersion) => {
-                // We don't use 'break' in this switch statement, the fall-through
-                // behavior is what we want, because if there are multiple versions between
-                // the old version and the current version, we want ALL the migrations
-                // that correspond to those versions to run, not only the last one.
-                // eslint-disable-next-line default-case
-                switch (oldVersion) {
-                    case 0:
-                        db.createObjectStore(OBJECT_STORE_NAME);
-                }
-            }
-        });
-    }
-    return dbPromise;
-}
-/** Assigns or overwrites the record for the given key with the given value. */
-async function set(appConfig, value) {
-    const key = getKey(appConfig);
-    const db = await getDbPromise();
-    const tx = db.transaction(OBJECT_STORE_NAME, 'readwrite');
-    const objectStore = tx.objectStore(OBJECT_STORE_NAME);
-    const oldValue = (await objectStore.get(key));
-    await objectStore.put(value, key);
-    await tx.done;
-    if (!oldValue || oldValue.fid !== value.fid) {
-        fidChanged(appConfig, value.fid);
-    }
-    return value;
-}
-/** Removes record(s) from the objectStore that match the given key. */
-async function remove(appConfig) {
-    const key = getKey(appConfig);
-    const db = await getDbPromise();
-    const tx = db.transaction(OBJECT_STORE_NAME, 'readwrite');
-    await tx.objectStore(OBJECT_STORE_NAME).delete(key);
-    await tx.done;
-}
-/**
- * Atomically updates a record with the result of updateFn, which gets
- * called with the current value. If newValue is undefined, the record is
- * deleted instead.
- * @return Updated value
- */
-async function update(appConfig, updateFn) {
-    const key = getKey(appConfig);
-    const db = await getDbPromise();
-    const tx = db.transaction(OBJECT_STORE_NAME, 'readwrite');
-    const store = tx.objectStore(OBJECT_STORE_NAME);
-    const oldValue = (await store.get(key));
-    const newValue = updateFn(oldValue);
-    if (newValue === undefined) {
-        await store.delete(key);
-    }
-    else {
-        await store.put(newValue, key);
-    }
-    await tx.done;
-    if (newValue && (!oldValue || oldValue.fid !== newValue.fid)) {
-        fidChanged(appConfig, newValue.fid);
-    }
-    return newValue;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Updates and returns the InstallationEntry from the database.
- * Also triggers a registration request if it is necessary and possible.
- */
-async function getInstallationEntry(installations) {
-    let registrationPromise;
-    const installationEntry = await update(installations.appConfig, oldEntry => {
-        const installationEntry = updateOrCreateInstallationEntry(oldEntry);
-        const entryWithPromise = triggerRegistrationIfNecessary(installations, installationEntry);
-        registrationPromise = entryWithPromise.registrationPromise;
-        return entryWithPromise.installationEntry;
-    });
-    if (installationEntry.fid === INVALID_FID) {
-        // FID generation failed. Waiting for the FID from the server.
-        return { installationEntry: await registrationPromise };
-    }
-    return {
-        installationEntry,
-        registrationPromise
-    };
-}
-/**
- * Creates a new Installation Entry if one does not exist.
- * Also clears timed out pending requests.
- */
-function updateOrCreateInstallationEntry(oldEntry) {
-    const entry = oldEntry || {
-        fid: generateFid(),
-        registrationStatus: 0 /* RequestStatus.NOT_STARTED */
-    };
-    return clearTimedOutRequest(entry);
-}
-/**
- * If the Firebase Installation is not registered yet, this will trigger the
- * registration and return an InProgressInstallationEntry.
- *
- * If registrationPromise does not exist, the installationEntry is guaranteed
- * to be registered.
- */
-function triggerRegistrationIfNecessary(installations, installationEntry) {
-    if (installationEntry.registrationStatus === 0 /* RequestStatus.NOT_STARTED */) {
-        if (!navigator.onLine) {
-            // Registration required but app is offline.
-            const registrationPromiseWithError = Promise.reject(ERROR_FACTORY.create("app-offline" /* ErrorCode.APP_OFFLINE */));
-            return {
-                installationEntry,
-                registrationPromise: registrationPromiseWithError
-            };
-        }
-        // Try registering. Change status to IN_PROGRESS.
-        const inProgressEntry = {
-            fid: installationEntry.fid,
-            registrationStatus: 1 /* RequestStatus.IN_PROGRESS */,
-            registrationTime: Date.now()
-        };
-        const registrationPromise = registerInstallation(installations, inProgressEntry);
-        return { installationEntry: inProgressEntry, registrationPromise };
-    }
-    else if (installationEntry.registrationStatus === 1 /* RequestStatus.IN_PROGRESS */) {
-        return {
-            installationEntry,
-            registrationPromise: waitUntilFidRegistration(installations)
-        };
-    }
-    else {
-        return { installationEntry };
-    }
-}
-/** This will be executed only once for each new Firebase Installation. */
-async function registerInstallation(installations, installationEntry) {
-    try {
-        const registeredInstallationEntry = await createInstallationRequest(installations, installationEntry);
-        return set(installations.appConfig, registeredInstallationEntry);
-    }
-    catch (e) {
-        if (isServerError(e) && e.customData.serverCode === 409) {
-            // Server returned a "FID cannot be used" error.
-            // Generate a new ID next time.
-            await remove(installations.appConfig);
-        }
-        else {
-            // Registration failed. Set FID as not registered.
-            await set(installations.appConfig, {
-                fid: installationEntry.fid,
-                registrationStatus: 0 /* RequestStatus.NOT_STARTED */
-            });
-        }
-        throw e;
-    }
-}
-/** Call if FID registration is pending in another request. */
-async function waitUntilFidRegistration(installations) {
-    // Unfortunately, there is no way of reliably observing when a value in
-    // IndexedDB changes (yet, see https://github.com/WICG/indexed-db-observers),
-    // so we need to poll.
-    let entry = await updateInstallationRequest(installations.appConfig);
-    while (entry.registrationStatus === 1 /* RequestStatus.IN_PROGRESS */) {
-        // createInstallation request still in progress.
-        await sleep(100);
-        entry = await updateInstallationRequest(installations.appConfig);
-    }
-    if (entry.registrationStatus === 0 /* RequestStatus.NOT_STARTED */) {
-        // The request timed out or failed in a different call. Try again.
-        const { installationEntry, registrationPromise } = await getInstallationEntry(installations);
-        if (registrationPromise) {
-            return registrationPromise;
-        }
-        else {
-            // if there is no registrationPromise, entry is registered.
-            return installationEntry;
-        }
-    }
-    return entry;
-}
-/**
- * Called only if there is a CreateInstallation request in progress.
- *
- * Updates the InstallationEntry in the DB based on the status of the
- * CreateInstallation request.
- *
- * Returns the updated InstallationEntry.
- */
-function updateInstallationRequest(appConfig) {
-    return update(appConfig, oldEntry => {
-        if (!oldEntry) {
-            throw ERROR_FACTORY.create("installation-not-found" /* ErrorCode.INSTALLATION_NOT_FOUND */);
-        }
-        return clearTimedOutRequest(oldEntry);
-    });
-}
-function clearTimedOutRequest(entry) {
-    if (hasInstallationRequestTimedOut(entry)) {
-        return {
-            fid: entry.fid,
-            registrationStatus: 0 /* RequestStatus.NOT_STARTED */
-        };
-    }
-    return entry;
-}
-function hasInstallationRequestTimedOut(installationEntry) {
-    return (installationEntry.registrationStatus === 1 /* RequestStatus.IN_PROGRESS */ &&
-        installationEntry.registrationTime + PENDING_TIMEOUT_MS < Date.now());
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function generateAuthTokenRequest({ appConfig, heartbeatServiceProvider }, installationEntry) {
-    const endpoint = getGenerateAuthTokenEndpoint(appConfig, installationEntry);
-    const headers = getHeadersWithAuth(appConfig, installationEntry);
-    // If heartbeat service exists, add the heartbeat string to the header.
-    const heartbeatService = heartbeatServiceProvider.getImmediate({
-        optional: true
-    });
-    if (heartbeatService) {
-        const heartbeatsHeader = await heartbeatService.getHeartbeatsHeader();
-        if (heartbeatsHeader) {
-            headers.append('x-firebase-client', heartbeatsHeader);
-        }
-    }
-    const body = {
-        installation: {
-            sdkVersion: PACKAGE_VERSION,
-            appId: appConfig.appId
-        }
-    };
-    const request = {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body)
-    };
-    const response = await retryIfServerError(() => fetch(endpoint, request));
-    if (response.ok) {
-        const responseValue = await response.json();
-        const completedAuthToken = extractAuthTokenInfoFromResponse(responseValue);
-        return completedAuthToken;
-    }
-    else {
-        throw await getErrorFromResponse('Generate Auth Token', response);
-    }
-}
-function getGenerateAuthTokenEndpoint(appConfig, { fid }) {
-    return `${getInstallationsEndpoint(appConfig)}/${fid}/authTokens:generate`;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Returns a valid authentication token for the installation. Generates a new
- * token if one doesn't exist, is expired or about to expire.
- *
- * Should only be called if the Firebase Installation is registered.
- */
-async function refreshAuthToken(installations, forceRefresh = false) {
-    let tokenPromise;
-    const entry = await update(installations.appConfig, oldEntry => {
-        if (!isEntryRegistered(oldEntry)) {
-            throw ERROR_FACTORY.create("not-registered" /* ErrorCode.NOT_REGISTERED */);
-        }
-        const oldAuthToken = oldEntry.authToken;
-        if (!forceRefresh && isAuthTokenValid(oldAuthToken)) {
-            // There is a valid token in the DB.
-            return oldEntry;
-        }
-        else if (oldAuthToken.requestStatus === 1 /* RequestStatus.IN_PROGRESS */) {
-            // There already is a token request in progress.
-            tokenPromise = waitUntilAuthTokenRequest(installations, forceRefresh);
-            return oldEntry;
-        }
-        else {
-            // No token or token expired.
-            if (!navigator.onLine) {
-                throw ERROR_FACTORY.create("app-offline" /* ErrorCode.APP_OFFLINE */);
-            }
-            const inProgressEntry = makeAuthTokenRequestInProgressEntry(oldEntry);
-            tokenPromise = fetchAuthTokenFromServer(installations, inProgressEntry);
-            return inProgressEntry;
-        }
-    });
-    const authToken = tokenPromise
-        ? await tokenPromise
-        : entry.authToken;
-    return authToken;
-}
-/**
- * Call only if FID is registered and Auth Token request is in progress.
- *
- * Waits until the current pending request finishes. If the request times out,
- * tries once in this thread as well.
- */
-async function waitUntilAuthTokenRequest(installations, forceRefresh) {
-    // Unfortunately, there is no way of reliably observing when a value in
-    // IndexedDB changes (yet, see https://github.com/WICG/indexed-db-observers),
-    // so we need to poll.
-    let entry = await updateAuthTokenRequest(installations.appConfig);
-    while (entry.authToken.requestStatus === 1 /* RequestStatus.IN_PROGRESS */) {
-        // generateAuthToken still in progress.
-        await sleep(100);
-        entry = await updateAuthTokenRequest(installations.appConfig);
-    }
-    const authToken = entry.authToken;
-    if (authToken.requestStatus === 0 /* RequestStatus.NOT_STARTED */) {
-        // The request timed out or failed in a different call. Try again.
-        return refreshAuthToken(installations, forceRefresh);
-    }
-    else {
-        return authToken;
-    }
-}
-/**
- * Called only if there is a GenerateAuthToken request in progress.
- *
- * Updates the InstallationEntry in the DB based on the status of the
- * GenerateAuthToken request.
- *
- * Returns the updated InstallationEntry.
- */
-function updateAuthTokenRequest(appConfig) {
-    return update(appConfig, oldEntry => {
-        if (!isEntryRegistered(oldEntry)) {
-            throw ERROR_FACTORY.create("not-registered" /* ErrorCode.NOT_REGISTERED */);
-        }
-        const oldAuthToken = oldEntry.authToken;
-        if (hasAuthTokenRequestTimedOut(oldAuthToken)) {
-            return Object.assign(Object.assign({}, oldEntry), { authToken: { requestStatus: 0 /* RequestStatus.NOT_STARTED */ } });
-        }
-        return oldEntry;
-    });
-}
-async function fetchAuthTokenFromServer(installations, installationEntry) {
-    try {
-        const authToken = await generateAuthTokenRequest(installations, installationEntry);
-        const updatedInstallationEntry = Object.assign(Object.assign({}, installationEntry), { authToken });
-        await set(installations.appConfig, updatedInstallationEntry);
-        return authToken;
-    }
-    catch (e) {
-        if (isServerError(e) &&
-            (e.customData.serverCode === 401 || e.customData.serverCode === 404)) {
-            // Server returned a "FID not found" or a "Invalid authentication" error.
-            // Generate a new ID next time.
-            await remove(installations.appConfig);
-        }
-        else {
-            const updatedInstallationEntry = Object.assign(Object.assign({}, installationEntry), { authToken: { requestStatus: 0 /* RequestStatus.NOT_STARTED */ } });
-            await set(installations.appConfig, updatedInstallationEntry);
-        }
-        throw e;
-    }
-}
-function isEntryRegistered(installationEntry) {
-    return (installationEntry !== undefined &&
-        installationEntry.registrationStatus === 2 /* RequestStatus.COMPLETED */);
-}
-function isAuthTokenValid(authToken) {
-    return (authToken.requestStatus === 2 /* RequestStatus.COMPLETED */ &&
-        !isAuthTokenExpired(authToken));
-}
-function isAuthTokenExpired(authToken) {
-    const now = Date.now();
-    return (now < authToken.creationTime ||
-        authToken.creationTime + authToken.expiresIn < now + TOKEN_EXPIRATION_BUFFER);
-}
-/** Returns an updated InstallationEntry with an InProgressAuthToken. */
-function makeAuthTokenRequestInProgressEntry(oldEntry) {
-    const inProgressAuthToken = {
-        requestStatus: 1 /* RequestStatus.IN_PROGRESS */,
-        requestTime: Date.now()
-    };
-    return Object.assign(Object.assign({}, oldEntry), { authToken: inProgressAuthToken });
-}
-function hasAuthTokenRequestTimedOut(authToken) {
-    return (authToken.requestStatus === 1 /* RequestStatus.IN_PROGRESS */ &&
-        authToken.requestTime + PENDING_TIMEOUT_MS < Date.now());
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Creates a Firebase Installation if there isn't one for the app and
- * returns the Installation ID.
- * @param installations - The `Installations` instance.
- *
- * @public
- */
-async function getId(installations) {
-    const installationsImpl = installations;
-    const { installationEntry, registrationPromise } = await getInstallationEntry(installationsImpl);
-    if (registrationPromise) {
-        registrationPromise.catch(console.error);
-    }
-    else {
-        // If the installation is already registered, update the authentication
-        // token if needed.
-        refreshAuthToken(installationsImpl).catch(console.error);
-    }
-    return installationEntry.fid;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Returns a Firebase Installations auth token, identifying the current
- * Firebase Installation.
- * @param installations - The `Installations` instance.
- * @param forceRefresh - Force refresh regardless of token expiration.
- *
- * @public
- */
-async function getToken(installations, forceRefresh = false) {
-    const installationsImpl = installations;
-    await completeInstallationRegistration(installationsImpl);
-    // At this point we either have a Registered Installation in the DB, or we've
-    // already thrown an error.
-    const authToken = await refreshAuthToken(installationsImpl, forceRefresh);
-    return authToken.token;
-}
-async function completeInstallationRegistration(installations) {
-    const { registrationPromise } = await getInstallationEntry(installations);
-    if (registrationPromise) {
-        // A createInstallation request is in progress. Wait until it finishes.
-        await registrationPromise;
-    }
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function deleteInstallationRequest(appConfig, installationEntry) {
-    const endpoint = getDeleteEndpoint(appConfig, installationEntry);
-    const headers = getHeadersWithAuth(appConfig, installationEntry);
-    const request = {
-        method: 'DELETE',
-        headers
-    };
-    const response = await retryIfServerError(() => fetch(endpoint, request));
-    if (!response.ok) {
-        throw await getErrorFromResponse('Delete Installation', response);
-    }
-}
-function getDeleteEndpoint(appConfig, { fid }) {
-    return `${getInstallationsEndpoint(appConfig)}/${fid}`;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Deletes the Firebase Installation and all associated data.
- * @param installations - The `Installations` instance.
- *
- * @public
- */
-async function deleteInstallations(installations) {
-    const { appConfig } = installations;
-    const entry = await update(appConfig, oldEntry => {
-        if (oldEntry && oldEntry.registrationStatus === 0 /* RequestStatus.NOT_STARTED */) {
-            // Delete the unregistered entry without sending a deleteInstallation request.
-            return undefined;
-        }
-        return oldEntry;
-    });
-    if (entry) {
-        if (entry.registrationStatus === 1 /* RequestStatus.IN_PROGRESS */) {
-            // Can't delete while trying to register.
-            throw ERROR_FACTORY.create("delete-pending-registration" /* ErrorCode.DELETE_PENDING_REGISTRATION */);
-        }
-        else if (entry.registrationStatus === 2 /* RequestStatus.COMPLETED */) {
-            if (!navigator.onLine) {
-                throw ERROR_FACTORY.create("app-offline" /* ErrorCode.APP_OFFLINE */);
-            }
-            else {
-                await deleteInstallationRequest(appConfig, entry);
-                await remove(appConfig);
-            }
-        }
-    }
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Sets a new callback that will get called when Installation ID changes.
- * Returns an unsubscribe function that will remove the callback when called.
- * @param installations - The `Installations` instance.
- * @param callback - The callback function that is invoked when FID changes.
- * @returns A function that can be called to unsubscribe.
- *
- * @public
- */
-function onIdChange(installations, callback) {
-    const { appConfig } = installations;
-    addCallback(appConfig, callback);
-    return () => {
-        removeCallback(appConfig, callback);
-    };
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Returns an instance of {@link Installations} associated with the given
- * {@link @firebase/app#FirebaseApp} instance.
- * @param app - The {@link @firebase/app#FirebaseApp} instance.
- *
- * @public
- */
-function getInstallations(app = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApp)()) {
-    const installationsImpl = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._getProvider)(app, 'installations').getImmediate();
-    return installationsImpl;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function extractAppConfig(app) {
-    if (!app || !app.options) {
-        throw getMissingValueError('App Configuration');
-    }
-    if (!app.name) {
-        throw getMissingValueError('App Name');
-    }
-    // Required app config keys
-    const configKeys = [
-        'projectId',
-        'apiKey',
-        'appId'
-    ];
-    for (const keyName of configKeys) {
-        if (!app.options[keyName]) {
-            throw getMissingValueError(keyName);
-        }
-    }
-    return {
-        appName: app.name,
-        projectId: app.options.projectId,
-        apiKey: app.options.apiKey,
-        appId: app.options.appId
-    };
-}
-function getMissingValueError(valueName) {
-    return ERROR_FACTORY.create("missing-app-config-values" /* ErrorCode.MISSING_APP_CONFIG_VALUES */, {
-        valueName
-    });
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const INSTALLATIONS_NAME = 'installations';
-const INSTALLATIONS_NAME_INTERNAL = 'installations-internal';
-const publicFactory = (container) => {
-    const app = container.getProvider('app').getImmediate();
-    // Throws if app isn't configured properly.
-    const appConfig = extractAppConfig(app);
-    const heartbeatServiceProvider = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._getProvider)(app, 'heartbeat');
-    const installationsImpl = {
-        app,
-        appConfig,
-        heartbeatServiceProvider,
-        _delete: () => Promise.resolve()
-    };
-    return installationsImpl;
-};
-const internalFactory = (container) => {
-    const app = container.getProvider('app').getImmediate();
-    // Internal FIS instance relies on public FIS instance.
-    const installations = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._getProvider)(app, INSTALLATIONS_NAME).getImmediate();
-    const installationsInternal = {
-        getId: () => getId(installations),
-        getToken: (forceRefresh) => getToken(installations, forceRefresh)
-    };
-    return installationsInternal;
-};
-function registerInstallations() {
-    (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._registerComponent)(new _firebase_component__WEBPACK_IMPORTED_MODULE_1__.Component(INSTALLATIONS_NAME, publicFactory, "PUBLIC" /* ComponentType.PUBLIC */));
-    (0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__._registerComponent)(new _firebase_component__WEBPACK_IMPORTED_MODULE_1__.Component(INSTALLATIONS_NAME_INTERNAL, internalFactory, "PRIVATE" /* ComponentType.PRIVATE */));
-}
-
-/**
- * The Firebase Installations Web SDK.
- * This SDK does not work in a Node.js environment.
- *
- * @packageDocumentation
- */
-registerInstallations();
-(0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__.registerVersion)(name, version);
-// BUILD_TARGET will be replaced by values like esm2017, cjs2017, etc during the compilation
-(0,_firebase_app__WEBPACK_IMPORTED_MODULE_0__.registerVersion)(name, version, 'esm2017');
-
-
-//# sourceMappingURL=index.esm2017.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/@firebase/logger/dist/esm/index.esm2017.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@firebase/logger/dist/esm/index.esm2017.js ***!
@@ -30093,34 +28088,6 @@ X.prototype.send=X.prototype.ea;X.prototype.setWithCredentials=X.prototype.Ha;Xh
 
 
 //# sourceMappingURL=webchannel_blob_es2018.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/firebase/analytics/dist/esm/index.esm.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/firebase/analytics/dist/esm/index.esm.js ***!
-  \***************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getAnalytics: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.getAnalytics),
-/* harmony export */   getGoogleAnalyticsClientId: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.getGoogleAnalyticsClientId),
-/* harmony export */   initializeAnalytics: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.initializeAnalytics),
-/* harmony export */   isSupported: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.isSupported),
-/* harmony export */   logEvent: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.logEvent),
-/* harmony export */   setAnalyticsCollectionEnabled: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.setAnalyticsCollectionEnabled),
-/* harmony export */   setConsent: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.setConsent),
-/* harmony export */   setCurrentScreen: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.setCurrentScreen),
-/* harmony export */   setDefaultEventParameters: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.setDefaultEventParameters),
-/* harmony export */   setUserId: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.setUserId),
-/* harmony export */   setUserProperties: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.setUserProperties),
-/* harmony export */   settings: () => (/* reexport safe */ _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__.settings)
-/* harmony export */ });
-/* harmony import */ var _firebase_analytics__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @firebase/analytics */ "./node_modules/@firebase/analytics/dist/esm/index.esm2017.js");
-
-//# sourceMappingURL=index.esm.js.map
 
 
 /***/ }),

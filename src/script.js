@@ -1,37 +1,48 @@
 import { initializeApp, deleteApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import { handleTextEnv, validateEnvVars } from "./utils.js";
+
+// Cloudinary signature generation
+async function generateCloudinarySignature(params, apiSecret) {
+  const sortedParams = Object.keys(params)
+    .sort()
+    .map(key => `${key}=${params[key]}`)
+    .join('&');
+  
+  const message = sortedParams + apiSecret;
+  
+  // Use Web Crypto API to generate SHA-1 hash
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  return hashHex;
+}
 
 // Initialize aler
 const alertWarning = document.querySelector('#alert-warning');
 const alertInfo = document.querySelector('#alert-info');
 const alertDanger = document.querySelector('#alert-danger');
-
 const Alert = {
   WARNING: "alertWarning",
   INFO: "alertInfo",
   DANGER: "alertDanger"
 };
-
 const COLOR = [
   'primary',
   'secondary',
   'success',
   'danger',
-  'warning',
-  'info',
   'dark'
 ]
-
 const DurationLength = {
   SHORT: 1000,
   MEDIUM: 2000,
   LONG: 3000
 }
-
 let currentAlert = null;
-
 function handleAlert(type, message, duration) {
   if (currentAlert) {
     clearTimeout(currentAlert);
@@ -66,53 +77,144 @@ function handleAlert(type, message, duration) {
 const applyTinyMCETheme = (isDarkTheme) => {
   tinymce.init({
     selector: '#editor',
+    menubar: false,
     plugins: [
-      'codesample', 'emoticons', 'link', 'lists', 'searchreplace', 'table'
+      'lists', 'table'
     ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded',
+    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist',
     skin: isDarkTheme ? 'oxide-dark' : 'oxide',
     setup: (editor) => {
       editor.on('init', () => {
         editor.getBody().style.backgroundColor = isDarkTheme ? '#343a40' : '#ffffff';
         editor.getBody().style.color = isDarkTheme ? '#ffffff' : '#000000';
+        editor.getBody().style.fontSize = '18px';
+      });
+      editor.on('paste', async function(e) {
+        const items = e.clipboardData && e.clipboardData.items;
+        if (!items) return;
+        let handled = false;
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          if (item.type.startsWith("image/")) {
+            handled = true;
+            e.preventDefault();
+            const file = item.getAsFile();
+            const progressText = '***Image Uploading DONT TOUCH THIS TEXT....***';
+            editor.insertContent(progressText);
+            const formData = new FormData();
+            formData.append('file', file);
+                         const cloudName = (configCloudinary?.CLOUD_NAME || '').trim();
+             const uploadPreset = (configCloudinary?.UPLOAD_PRESET || '').trim();
+             const api_key = (configCloudinary?.API_KEY || '').trim();
+
+            if (!cloudName || !uploadPreset) {
+              const content = editor.getContent();
+              const updatedContent = content.replace(progressText, 
+                '***Please configure Cloudinary settings to have best performance***'
+              );
+              editor.setContent(updatedContent);
+              return;
+            }
+            
+            formData.append("api_key", api_key);
+            formData.append("upload_preset", uploadPreset);
+
+            fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: 'POST',
+                body: formData
+              })
+              .then(async (response) => {
+                let data;
+                try { data = await response.json(); } catch (_) { data = null; }
+                if (!response.ok) {
+                  console.error('Cloudinary upload failed', { status: response.status, data });
+                  throw new Error(data?.error?.message || `Upload failed with status ${response.status}`);
+                }
+                return data;
+              })
+              .then(async data => {
+                const content = editor.getContent();
+                if (data && data.secure_url) {
+                  const widthAttr = data.width ? ` width=\"${data.width}\"` : '';
+                  const heightAttr = data.height ? ` height=\"${data.height}\"` : '';
+                  const imgTxt = `<img src=\"${data.secure_url}\" alt=\"image\"${widthAttr}${heightAttr} />`;
+                  const updatedContent = content.replace(progressText, imgTxt);
+                  editor.setContent(updatedContent);
+                  let dataImage = {
+                    url: data.secure_url,
+                    signature: data.signature
+                  }
+                  await handleUploadImageUrl(dataImage);
+                } else {
+                  const updatedContent = content.replace(progressText, '***Image upload failed***');
+                  editor.setContent(updatedContent);
+                }
+              })
+              .catch((err) => {
+                console.error('Cloudinary upload error', err);
+                const content = editor.getContent();
+                const updatedContent = content.replace(progressText, '***Image upload failed***');
+                editor.setContent(updatedContent);
+              });
+          }
+        }
+        if (handled) {
+          e.preventDefault();
+        }
       });
     }
   });
 };
-
+const handleUploadImageUrl = async (data) => {
+  await addDoc(collection(db, "note-images"), data);
+};
 // change theme
 const themeSwitcher = document.getElementById('theme-switcher');
 let darkTheme = localStorage.getItem('dark-theme') === 'true';
 themeSwitcher.addEventListener('click', () => {
     const img = themeSwitcher.querySelector('img');
-    if(darkTheme)
+    darkTheme = !darkTheme;
+    if(!darkTheme)
     {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
         img.src = '/icons/brightness-high-fill.svg';
+        themeSwitcher.classList.add('border-dark');
+        themeSwitcher.classList.add('btn-light');
+        themeSwitcher.classList.remove('border-light');
+        themeSwitcher.classList.remove('btn-dark');
     }
     else
     {
         document.body.classList.remove('light-theme');
         document.body.classList.add('dark-theme');
         img.src = '/icons/moon-fill.svg';
+        themeSwitcher.classList.add('border-light');
+        themeSwitcher.classList.remove('border-dark');
+        themeSwitcher.classList.add('btn-dark');
+        themeSwitcher.classList.remove('btn-light');
     }
-    changeIconCustomTheme(!darkTheme);
+    changeIconCustomTheme(darkTheme);
     tinymce.remove(); 
-    darkTheme = !darkTheme;
     localStorage.setItem('dark-theme', darkTheme);
     applyTinyMCETheme(darkTheme);
 });
-
 function initTheme() {
     const img = themeSwitcher.querySelector('img');
     if (darkTheme) {
         document.body.classList.add('dark-theme');
         img.src = '/icons/moon-fill.svg';
+        themeSwitcher.classList.add('border-light');
+        themeSwitcher.classList.remove('border-dark');
+        themeSwitcher.classList.add('btn-dark');
+        themeSwitcher.classList.remove('btn-light');
     } else {
         document.body.classList.add('light-theme');
         img.src = '/icons/brightness-high-fill.svg';
+        themeSwitcher.classList.add('border-dark');
+        themeSwitcher.classList.add('btn-light');
+        themeSwitcher.classList.remove('border-light');
+        themeSwitcher.classList.remove('btn-dark');
     }
     applyTinyMCETheme(darkTheme);
 }
@@ -125,9 +227,11 @@ function changeIconCustomTheme(darkTheme) {
           const isPinned = el.src.includes('pinned');
           el.src = isPinned ? '/icons/pinned-icon-yellow.svg' : '/icons/pin-white.svg';
         });
-        document.querySelectorAll('[id^="readMore-"]').forEach((el) => {
-          el.classList.add('text-white');
-          el.classList.remove('text-dark');
+        document.querySelectorAll('[id^="deleteIcon-"]').forEach((el) => {
+          el.src = '/icons/trash.svg';
+        });
+        document.querySelectorAll('[id^="editIcon-"]').forEach((el) => {
+          el.src = '/icons/pencil-square.svg';
         });
     } else {
         document.querySelectorAll('[id^="copyIcon-"]').forEach((el) => {
@@ -137,9 +241,11 @@ function changeIconCustomTheme(darkTheme) {
           const isPinned = el.src.includes('pinned');
           el.src = isPinned ? '/icons/pinned.svg' : '/icons/pin.svg';
         });
-        document.querySelectorAll('[id^="readMore-"]').forEach((el) => {
-          el.classList.add('text-dark');
-          el.classList.remove('text-white');
+        document.querySelectorAll('[id^="deleteIcon-"]').forEach((el) => {
+          el.src = '/icons/trash-black.svg';
+        });
+        document.querySelectorAll('[id^="editIcon-"]').forEach((el) => {
+          el.src = '/icons/pencil-square-black.svg';
         });
     }
 }
@@ -167,6 +273,7 @@ btnBackEnv.addEventListener('click', async () => {
   }
 });
 let configEnv = {};
+let configCloudinary = {};
 let firebaseConfig = {};
 var app = null;
 var db = null;
@@ -175,12 +282,26 @@ const loadEnv = async () => {
   try {
     const response = await fetch('/env');
     const text = await response.text();
-    configEnv = handleTextEnv(text, false);
+    let tempConfigEnv = handleTextEnv(text, false);
+    configEnv = {
+      APIKEY: tempConfigEnv.APIKEY,
+      AUTHDOMAIN: tempConfigEnv.AUTHDOMAIN,
+      PROJECTID: tempConfigEnv.PROJECTID,
+      STORAGEBUCKET: tempConfigEnv.STORAGEBUCKET,
+      MESSAGINGSENDERID: tempConfigEnv.MESSAGINGSENDERID,
+      APPID: tempConfigEnv.APPID
+    }
+       configCloudinary = {
+       CLOUD_NAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
+       UPLOAD_PRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
+       API_KEY: tempConfigEnv.CLOUDINARY_APIKEY,
+       API_SECRET: tempConfigEnv.CLOUDINARY_APISECRET,
+     }
   } catch (error) {
     throw new Error('Error loading .env file: ' + error.message);
   }
 };
-
+loadEnv();
 function setupFirebase(){
   firebaseConfig = {
     apiKey: configEnv.APIKEY,
@@ -200,7 +321,6 @@ function validateFirebaseSetup() {
     throw new Error('Firebase is not properly initialized');
   }
 }
-
 async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
   try {
     categoryPageSize = 5;
@@ -247,7 +367,6 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
     throw error;
   }
 }
-
 async function initFirebase(){
   try {
     if (envVariables.value && envVariables.value.trim()) {
@@ -259,7 +378,6 @@ async function initFirebase(){
     handleAlert(Alert.DANGER, error.message, DurationLength.LONG);
   }
 }
-
 await initFirebase();
 
   // CRUD
@@ -288,6 +406,7 @@ await initFirebase();
   const labelSwitch = document.querySelector("label[for='switchCheckChecked']");
   const categoriesListItemDom = document.getElementById("categoriesList");
   const containerCategory = document.querySelector('.container-category');
+  const btnCleanImagesCloudinary = document.getElementById('btn-clean-images');
 
   btnRefresh.addEventListener("click", async()=>{await renderNotes()});
   createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
@@ -298,7 +417,11 @@ await initFirebase();
   scrollToTopBtn.addEventListener('click', scrollToTop);
   btnSaveEnv.addEventListener('click', handleLoadEnv)
   containerCategory.addEventListener('click', handleClickInContainer);
-
+  btnCleanImagesCloudinary.addEventListener('click', async () => {
+    btnCleanImagesCloudinary.disabled = true;
+    await handleCleanImagesCloudinary();
+    btnCleanImagesCloudinary.disabled = false;
+  });
 
   createNote.addEventListener('click', (e)=>{
     if (e.target !== e.currentTarget) {
@@ -330,7 +453,7 @@ await initFirebase();
       }
       if(categoryPageSize < listCategories.length){
          badges += `
-          <span class="badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark">...</span>
+          <span class="badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark">...+${Math.min(listCategories.length - categoryPageSize, 5)}</span>
         `;
       }
       containerCategory.innerHTML = badges;
@@ -359,7 +482,7 @@ await initFirebase();
       containerWords.innerHTML += `
       <div class="card mb-2">
         <div class="card-body">
-          <div class="card-title d-flex align-items-center justify-content-between">
+          <div class="card-title d-flex align-items-center justify-content-between sticky-top" style="z-index:1;">
             <div class="d-flex align-items-center">
               <h5 class="mb-0 me-2">${item.Note}</h5>
               <button type="button" id="pin-${item.id}" class="btn">
@@ -367,10 +490,10 @@ await initFirebase();
               </button>
             </div>
             <div class="btn-group">
-              <button type="button" id="edit-${item.id}" class="btn btn-primary btn-edit">
+              <button type="button" id="edit-${item.id}" class="btn btn-edit">
                 <img id="editIcon-${item.id}" src="/icons/pencil-square.svg" alt="">
               </button>
-              <button type="button" id="delete-${item.id}" class="btn btn-danger btn-delete">
+              <button type="button" id="delete-${item.id}" class="btn btn-delete">
                 <img id="deleteIcon-${item.id}" src="/icons/trash.svg" alt="">
               </button>
             </div>
@@ -435,7 +558,6 @@ await initFirebase();
       if (listCategories.includes(currentCategorySelected)) {
         listCategories = [currentCategorySelected, ...listCategories.filter(cat => cat !== currentCategorySelected)];
       }
-
       loadData();
       listItemTemp = [...listItem];
       backUpdata();
@@ -448,6 +570,71 @@ await initFirebase();
     }
   };
   await renderNotes();
+
+  async function handleCleanImagesCloudinary() {
+      let listImage = [];
+      const querySnapshotImages = await getDocs(collection(db, "note-images"));
+      querySnapshotImages.forEach((doc) => {
+        const data = doc.data();
+        listImage.push({
+          id: doc.id,
+          url: data.url,
+          signature: data.signature
+        });
+      });
+      if (listImage.length === 0) {
+        return;
+      }
+      const unusedImages = listImage.filter(
+        img => !listItem.some(item => item.example.includes(img.url))
+      );
+      if (unusedImages.length && configCloudinary.API_SECRET) {
+        loadingOverlay.style.display = '';
+        for (const img of unusedImages) {
+          try {
+            const urlParts = img.url.split('/');
+            const uploadIndex = urlParts.findIndex(part => part === 'upload');
+            if (uploadIndex === -1) continue;
+            
+            const pathAfterUpload = urlParts.slice(uploadIndex + 1);
+            const lastPart = pathAfterUpload[pathAfterUpload.length - 1];
+            const publicId = lastPart.split('.')[0];
+            const timestamp = Math.floor(Date.now() / 1000);
+            
+            const params = {
+              public_id: publicId,
+              timestamp: timestamp,
+              invalidate: true
+            };
+            
+            const signature = await generateCloudinarySignature(params, configCloudinary.API_SECRET);
+
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${configCloudinary.CLOUD_NAME}/image/destroy`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                ...params,
+                api_key: configCloudinary.API_KEY,
+                signature: signature
+              })
+            });
+            
+            const data = await response.json();
+            if (data.result !== 'ok') {
+              handleAlert(Alert.DANGER, 'Failed to delete image from Cloudinary', DurationLength.LONG);
+            } else {
+              await deleteDoc(doc(db, `note-images/${img.id}`));
+              handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
+            }
+          } catch (error) {
+            handleAlert(Alert.DANGER, 'Error: ' + error.message, DurationLength.LONG);
+          }
+          finally {
+            loadingOverlay.style.display = 'none';
+          }
+        }
+      }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -536,6 +723,10 @@ await initFirebase();
     else if (target.matches('.button-click-category-more')) {
       categoryPageSize += 5;
       LoadCategory();
+      containerCategory.scrollTo({
+        top: containerCategory.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   }
 
@@ -588,16 +779,70 @@ await initFirebase();
         readMoreButton.textContent = 'less';
       } else {
         readMoreButton.textContent = 'more...';
-        // scroll to readMoreButton
         readMoreButton.scrollIntoView({ behavior: 'smooth' });
       }
     }
   }
 
+  function stripHtmlAdvancedToCopy(html) {
+    html = html.replace(/<\s*br\s*\/?>/gi, '\n')
+              .replace(/<\/p\s*>/gi, '\n');
+
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+
+    function processNode(node, prefix = '') {
+      let text = '';
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.nodeValue;
+      }
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        if (node.tagName === 'UL') {
+          let items = [];
+          node.querySelectorAll(':scope > li').forEach(li => {
+            items.push('• ' + processNode(li).trim());
+          });
+          return items.join('\n');
+        }
+        if (node.tagName === 'OL') {
+          let items = [];
+          let index = 1;
+          node.querySelectorAll(':scope > li').forEach(li => {
+            items.push(index + '. ' + processNode(li).trim());
+            index++;
+          });
+          return items.join('\n');
+        }
+        if (node.tagName === 'LI') {
+          return Array.from(node.childNodes).map(child => processNode(child)).join('');
+        }
+        return Array.from(node.childNodes).map(child => processNode(child)).join('');
+      }
+      return text;
+    }
+
+    let text = processNode(temp);
+
+    let lines = text.split(/\n+/).map(line => {
+      line = line.trim();
+      if (line) {
+        const endsWithPunct = /[.!?:;…]$/.test(line);
+        const isListItem = /^(\u2022|•|\d+\.|\[\s?[\sxX]?\])/.test(line);
+        if (!endsWithPunct && !isListItem) {
+          line += '.';
+        }
+      }
+      return line;
+    });
+
+    return lines.filter(l => l).join('\n');
+  }
+
   function onClickCopy(id){
     const item = listItem.find(item => item.id === id);
     handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-    navigator.clipboard.writeText(item.otherExample);
+    console.log(stripHtmlAdvancedToCopy(item.example));
+    navigator.clipboard.writeText(stripHtmlAdvancedToCopy(item.example));
   }
 
   const handleDeleteNote = async () => {
