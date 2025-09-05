@@ -79,9 +79,9 @@ const applyTinyMCETheme = (isDarkTheme) => {
     selector: '#editor',
     menubar: false,
     plugins: [
-      'lists', 'table'
+      'lists', 'table', 'fullscreen'
     ],
-    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist',
+    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist | fullscreen',
     skin: isDarkTheme ? 'oxide-dark' : 'oxide',
     setup: (editor) => {
       editor.on('init', () => {

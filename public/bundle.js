@@ -24707,8 +24707,8 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
   tinymce.init({
     selector: '#editor',
     menubar: false,
-    plugins: ['lists', 'table'],
-    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist',
+    plugins: ['lists', 'table', 'fullscreen'],
+    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist | fullscreen',
     skin: isDarkTheme ? 'oxide-dark' : 'oxide',
     setup: function setup(editor) {
       editor.on('init', function () {
