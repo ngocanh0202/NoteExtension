@@ -81,7 +81,7 @@ const applyTinyMCETheme = (isDarkTheme) => {
     plugins: [
       'lists', 'table', 'fullscreen'
     ],
-    toolbar: 'bold italic underline | forecolor backcolor | table | align lineheight | checklist numlist bullist | fullscreen',
+    toolbar: 'bold italic underline | forecolor backcolor | fullscreen | align lineheight | checklist numlist bullist | table',
     skin: isDarkTheme ? 'oxide-dark' : 'oxide',
     setup: (editor) => {
       editor.on('init', () => {
