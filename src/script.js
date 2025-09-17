@@ -99,11 +99,10 @@ const applyTinyMCETheme = (isDarkTheme) => {
             handled = true;
             e.preventDefault();
             const file = item.getAsFile();
-            const progressText = '***Image Uploading DONT TOUCH THIS TEXT....***';
+            const progressText = '***Image Uploading....***';
             editor.insertContent(progressText);
             const formData = new FormData();
             formData.append('file', file);
-            console.log(configCloudinary);
             const cloudName = (configCloudinary?.CLOUDINARY_CLOUDNAME || '').trim();
             const uploadPreset = (configCloudinary?.CLOUDINARY_UPLOADPRESET || '').trim();
             const api_key = (configCloudinary?.CLOUDINARY_APIKEY || '').trim();
@@ -692,6 +691,7 @@ await initFirebase();
       currentCategorySelected = category;
       await renderNotes();
       handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
+      btnCleanImagesCloudinary.click();
     } catch (e) {
       handleAlert(Alert.DANGER, "Error adding document: "+ e.message, DurationLength.LONG);
       listItemTemp = listItemTemp.push({
@@ -870,7 +870,6 @@ await initFirebase();
   function onClickCopy(id){
     const item = listItem.find(item => item.id === id);
     handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-    console.log(stripHtmlAdvancedToCopy(item.example));
     navigator.clipboard.writeText(stripHtmlAdvancedToCopy(item.example));
   }
 
@@ -924,7 +923,6 @@ await initFirebase();
 
     try {
       const env = handleTextEnv(envText, true);
-      console.log(env);
       configEnv = {
         APIKEY: env.APIKEY,
         AUTHDOMAIN: env.AUTHDOMAIN,

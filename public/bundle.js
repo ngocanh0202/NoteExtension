@@ -24737,22 +24737,21 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                       case 0:
                         item = items[i];
                         if (!item.type.startsWith("image/")) {
-                          _context3.next = 21;
+                          _context3.next = 20;
                           break;
                         }
                         handled = true;
                         e.preventDefault();
                         file = item.getAsFile();
-                        progressText = '***Image Uploading DONT TOUCH THIS TEXT....***';
+                        progressText = '***Image Uploading....***';
                         editor.insertContent(progressText);
                         formData = new FormData();
                         formData.append('file', file);
-                        console.log(configCloudinary);
                         cloudName = (((_configCloudinary = configCloudinary) === null || _configCloudinary === void 0 ? void 0 : _configCloudinary.CLOUDINARY_CLOUDNAME) || '').trim();
                         uploadPreset = (((_configCloudinary2 = configCloudinary) === null || _configCloudinary2 === void 0 ? void 0 : _configCloudinary2.CLOUDINARY_UPLOADPRESET) || '').trim();
                         api_key = (((_configCloudinary3 = configCloudinary) === null || _configCloudinary3 === void 0 ? void 0 : _configCloudinary3.CLOUDINARY_APIKEY) || '').trim();
                         if (!(!cloudName || !uploadPreset || !api_key)) {
-                          _context3.next = 18;
+                          _context3.next = 17;
                           break;
                         }
                         content = editor.getContent();
@@ -24761,7 +24760,7 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                         return _context3.abrupt("return", {
                           v: void 0
                         });
-                      case 18:
+                      case 17:
                         formData.append("api_key", api_key);
                         formData.append("upload_preset", uploadPreset);
                         fetch("https://api.cloudinary.com/v1_1/".concat(cloudName, "/image/upload"), {
@@ -24848,7 +24847,7 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                           var updatedContent = content.replace(progressText, '***Image upload failed***');
                           editor.setContent(updatedContent);
                         });
-                      case 21:
+                      case 20:
                       case "end":
                         return _context3.stop();
                     }
@@ -25646,10 +25645,11 @@ function _handleUpsertNote() {
           return renderNotes();
         case 17:
           handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
-          _context19.next = 26;
+          btnCleanImagesCloudinary.click();
+          _context19.next = 27;
           break;
-        case 20:
-          _context19.prev = 20;
+        case 21:
+          _context19.prev = 21;
           _context19.t0 = _context19["catch"](6);
           handleAlert(Alert.DANGER, "Error adding document: " + _context19.t0.message, DurationLength.LONG);
           listItemTemp = listItemTemp.push({
@@ -25659,16 +25659,16 @@ function _handleUpsertNote() {
           });
           listItem = _toConsumableArray(listItemTemp);
           backUpdata();
-        case 26:
-          _context19.prev = 26;
+        case 27:
+          _context19.prev = 27;
           loadingOverlay.style.display = 'none';
           btnCloseModal.click();
-          return _context19.finish(26);
-        case 30:
+          return _context19.finish(27);
+        case 31:
         case "end":
           return _context19.stop();
       }
-    }, _callee18, null, [[6, 20, 26, 30]]);
+    }, _callee18, null, [[6, 21, 27, 31]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }
@@ -25879,7 +25879,6 @@ function onClickCopy(id) {
     return item.id === id;
   });
   handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-  console.log(stripHtmlAdvancedToCopy(item.example));
   navigator.clipboard.writeText(stripHtmlAdvancedToCopy(item.example));
 }
 var _handleDeleteNote = /*#__PURE__*/function () {
@@ -25981,7 +25980,6 @@ function _handleLoadEnv() {
         case 6:
           _context21.prev = 6;
           env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envText, true);
-          console.log(env);
           configEnv = {
             APIKEY: env.APIKEY,
             AUTHDOMAIN: env.AUTHDOMAIN,
@@ -26014,29 +26012,29 @@ function _handleLoadEnv() {
           } else {
             localStorage.setItem('envCloudinary', JSON.stringify(localVarCloudinaryConfig));
           }
-          _context21.next = 19;
+          _context21.next = 18;
           return resetFirebaseApp(configEnv);
-        case 19:
+        case 18:
           success = _context21.sent;
           if (success) {
             btnCloseModalEnv.click();
           }
-          _context21.next = 26;
+          _context21.next = 25;
           break;
-        case 23:
-          _context21.prev = 23;
+        case 22:
+          _context21.prev = 22;
           _context21.t0 = _context21["catch"](6);
           handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context21.t0.message), DurationLength.LONG);
-        case 26:
-          _context21.prev = 26;
+        case 25:
+          _context21.prev = 25;
           loadingOverlay.style.display = 'none';
           switchCheckChecked.checked = false;
-          return _context21.finish(26);
-        case 30:
+          return _context21.finish(25);
+        case 29:
         case "end":
           return _context21.stop();
       }
-    }, _callee20, null, [[6, 23, 26, 30]]);
+    }, _callee20, null, [[6, 22, 25, 29]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
