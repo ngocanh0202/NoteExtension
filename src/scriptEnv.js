@@ -104,7 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       
       if (selectedEnv) {
-        textAreaEnvVariables.value = selectedEnv;
+        let cloudinaryText = Object.entries(localStorage.getItem('envCloudinary') ? JSON.parse(localStorage.getItem('envCloudinary')) : {})
+          .map(([key, value]) => `${key}: "${value}"`)
+          .join(',\n');
+        textAreaEnvVariables.value = selectedEnv + ',\n' + cloudinaryText;
         btnSaveEnv.click();
         switchCheckChecked.checked = false;
         labelSwitch.textContent = "Notes";

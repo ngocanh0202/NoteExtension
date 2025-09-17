@@ -103,11 +103,12 @@ const applyTinyMCETheme = (isDarkTheme) => {
             editor.insertContent(progressText);
             const formData = new FormData();
             formData.append('file', file);
-                         const cloudName = (configCloudinary?.CLOUD_NAME || '').trim();
-             const uploadPreset = (configCloudinary?.UPLOAD_PRESET || '').trim();
-             const api_key = (configCloudinary?.API_KEY || '').trim();
+            console.log(configCloudinary);
+            const cloudName = (configCloudinary?.CLOUDINARY_CLOUDNAME || '').trim();
+            const uploadPreset = (configCloudinary?.CLOUDINARY_UPLOADPRESET || '').trim();
+            const api_key = (configCloudinary?.CLOUDINARY_APIKEY || '').trim();
 
-            if (!cloudName || !uploadPreset) {
+            if (!cloudName || !uploadPreset || !api_key) {
               const content = editor.getContent();
               const updatedContent = content.replace(progressText, 
                 '***Please configure Cloudinary settings to have best performance***'
@@ -266,13 +267,24 @@ const btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
 const btnBackEnv = document.querySelector('#btn-back-confirm');
 const btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
 let dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
-envVariables.value = dataEnv[0] || '';
+let localVarCloudinaryConfig = JSON.parse(localStorage.getItem('envCloudinary')) || {};
+let configText = Object.entries(localVarCloudinaryConfig)
+  .map(([key, value]) => `${key}: "${value}"`)
+  .join(',\n');
+envVariables.value = (dataEnv[0] ? dataEnv[0] + ',\n' : '') + configText;
 btnBackEnv.addEventListener('click', async () => {
   try{
     switchCheckChecked.checked = false;
     labelSwitch.textContent = "Notes";
     await resetFirebaseApp();
-    envVariables.value = '';
+    let configText = Object.entries(localVarCloudinaryConfig)
+    .map(([key, value]) => `${key}: "${value}"`)
+    .join(',\n');
+    let env = Object.entries(configEnv)
+      .map(([key, value]) => `${key}: "${value}"`)
+      .join(',\n')
+
+    envVariables.value = env + ',\n' + configText;
     btnCloseModalEnv.click();
     handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
     btnCloseBackModalEnv.click();
@@ -299,17 +311,24 @@ const loadEnv = async () => {
       MESSAGINGSENDERID: tempConfigEnv.MESSAGINGSENDERID,
       APPID: tempConfigEnv.APPID
     }
-       configCloudinary = {
-       CLOUD_NAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
-       UPLOAD_PRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
-       API_KEY: tempConfigEnv.CLOUDINARY_APIKEY,
-       API_SECRET: tempConfigEnv.CLOUDINARY_APISECRET,
-     }
+    if(localVarCloudinaryConfig && Object.keys(localVarCloudinaryConfig).length > 0){
+      configCloudinary = {...localVarCloudinaryConfig};
+    }
+    else{
+      configCloudinary = {
+        CLOUDINARY_CLOUDNAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
+        CLOUDINARY_UPLOADPRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
+        CLOUDINARY_APIKEY: tempConfigEnv.CLOUDINARY_APIKEY,
+        CLOUDINARY_APISECRET: tempConfigEnv.CLOUDINARY_APISECRET,
+      };
+      localVarCloudinaryConfig = {...configCloudinary};
+      localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
+    }
+
   } catch (error) {
     throw new Error('Error loading .env file: ' + error.message);
   }
 };
-loadEnv();
 function setupFirebase(){
   firebaseConfig = {
     apiKey: configEnv.APIKEY,
@@ -341,8 +360,13 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
     
     if (newConfig) {
       configEnv = newConfig;
+      configCloudinary = {...localVarCloudinaryConfig};
     } else {
       await loadEnv();
+      let cloudinaryText = Object.entries(configCloudinary)
+        .map(([key, value]) => `${key}: "${value}"`)
+        .join(',\n');
+      localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
     }
 
     validateEnvVars(configEnv);
@@ -352,8 +376,6 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
     if (!isLoadInitWeb) {
       await renderNotes();
     }
-    
-    dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
 
     let existingEnvData = dataEnv.find(item => handleTextEnv(item, true)?.APIKEY === configEnv.APIKEY);
     let isExisted = !!existingEnvData;
@@ -362,12 +384,11 @@ async function resetFirebaseApp(newConfig = null, isLoadInitWeb = false) {
           .map(([key, value]) => `  ${key}: "${value}",`)
           .join("\n");
         dataEnv.unshift(result);
-        localStorage.setItem('envVariables', JSON.stringify(dataEnv));
     } else {
         dataEnv = dataEnv.filter(item => handleTextEnv(item, true)?.APIKEY !== configEnv.APIKEY);
         dataEnv.unshift(existingEnvData);
-        localStorage.setItem('envVariables', JSON.stringify(dataEnv));
     }
+    localStorage.setItem('envVariables', JSON.stringify(dataEnv));
     handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
 
     return true;
@@ -596,7 +617,7 @@ await initFirebase();
       const unusedImages = listImage.filter(
         img => !listItem.some(item => item.example.includes(img.url))
       );
-      if (unusedImages.length && configCloudinary.API_SECRET) {
+      if (unusedImages.length && configCloudinary.CLOUDINARY_APISECRET) {
         loadingOverlay.style.display = '';
         for (const img of unusedImages) {
           try {
@@ -615,14 +636,14 @@ await initFirebase();
               invalidate: true
             };
             
-            const signature = await generateCloudinarySignature(params, configCloudinary.API_SECRET);
+            const signature = await generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
 
-            const response = await fetch(`https://api.cloudinary.com/v1_1/${configCloudinary.CLOUD_NAME}/image/destroy`, {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${configCloudinary.CLOUDINARY_CLOUDNAME}/image/destroy`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 ...params,
-                api_key: configCloudinary.API_KEY,
+                api_key: configCloudinary.CLOUDINARY_APIKEY,
                 signature: signature
               })
             });
@@ -903,7 +924,41 @@ await initFirebase();
 
     try {
       const env = handleTextEnv(envText, true);
-      const success = await resetFirebaseApp(env);
+      console.log(env);
+      configEnv = {
+        APIKEY: env.APIKEY,
+        AUTHDOMAIN: env.AUTHDOMAIN,
+        PROJECTID: env.PROJECTID,
+        STORAGEBUCKET: env.STORAGEBUCKET,
+        MESSAGINGSENDERID: env.MESSAGINGSENDERID,
+        APPID: env.APPID
+      }
+      localVarCloudinaryConfig = {
+        CLOUDINARY_CLOUDNAME: env.CLOUDINARY_CLOUDNAME,
+        CLOUDINARY_UPLOADPRESET: env.CLOUDINARY_UPLOADPRESET,
+        CLOUDINARY_APIKEY: env.CLOUDINARY_APIKEY,
+        CLOUDINARY_APISECRET: env.CLOUDINARY_APISECRET,
+      }
+
+      const missingCloudinaryKeys = [];
+      if (!localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME || typeof localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME.trim()) {
+        missingCloudinaryKeys.push('CLOUDINARY_CLOUDNAME');
+      }
+      if (!localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET || typeof localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET.trim()) {
+        missingCloudinaryKeys.push('CLOUDINARY_UPLOADPRESET');
+      }
+      if (!localVarCloudinaryConfig.CLOUDINARY_APIKEY || typeof localVarCloudinaryConfig.CLOUDINARY_APIKEY !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_APIKEY.trim()) {
+        missingCloudinaryKeys.push('CLOUDINARY_APIKEY');
+      }
+      if (!localVarCloudinaryConfig.CLOUDINARY_APISECRET || typeof localVarCloudinaryConfig.CLOUDINARY_APISECRET !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_APISECRET.trim()) {
+        missingCloudinaryKeys.push('CLOUDINARY_APISECRET');
+      }
+      if (missingCloudinaryKeys.length > 0) {
+        handleAlert(Alert.WARNING, `Missing Cloudinary config: ${missingCloudinaryKeys.join(', ')}`, DurationLength.LONG);
+      } else {
+        localStorage.setItem('envCloudinary', JSON.stringify(localVarCloudinaryConfig));
+      }
+      const success = await resetFirebaseApp(configEnv);
       
       if (success) {
         btnCloseModalEnv.click();

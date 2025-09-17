@@ -24595,22 +24595,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
 function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
@@ -24737,7 +24737,7 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                       case 0:
                         item = items[i];
                         if (!item.type.startsWith("image/")) {
-                          _context3.next = 20;
+                          _context3.next = 21;
                           break;
                         }
                         handled = true;
@@ -24747,11 +24747,12 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                         editor.insertContent(progressText);
                         formData = new FormData();
                         formData.append('file', file);
-                        cloudName = (((_configCloudinary = configCloudinary) === null || _configCloudinary === void 0 ? void 0 : _configCloudinary.CLOUD_NAME) || '').trim();
-                        uploadPreset = (((_configCloudinary2 = configCloudinary) === null || _configCloudinary2 === void 0 ? void 0 : _configCloudinary2.UPLOAD_PRESET) || '').trim();
-                        api_key = (((_configCloudinary3 = configCloudinary) === null || _configCloudinary3 === void 0 ? void 0 : _configCloudinary3.API_KEY) || '').trim();
-                        if (!(!cloudName || !uploadPreset)) {
-                          _context3.next = 17;
+                        console.log(configCloudinary);
+                        cloudName = (((_configCloudinary = configCloudinary) === null || _configCloudinary === void 0 ? void 0 : _configCloudinary.CLOUDINARY_CLOUDNAME) || '').trim();
+                        uploadPreset = (((_configCloudinary2 = configCloudinary) === null || _configCloudinary2 === void 0 ? void 0 : _configCloudinary2.CLOUDINARY_UPLOADPRESET) || '').trim();
+                        api_key = (((_configCloudinary3 = configCloudinary) === null || _configCloudinary3 === void 0 ? void 0 : _configCloudinary3.CLOUDINARY_APIKEY) || '').trim();
+                        if (!(!cloudName || !uploadPreset || !api_key)) {
+                          _context3.next = 18;
                           break;
                         }
                         content = editor.getContent();
@@ -24760,7 +24761,7 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                         return _context3.abrupt("return", {
                           v: void 0
                         });
-                      case 17:
+                      case 18:
                         formData.append("api_key", api_key);
                         formData.append("upload_preset", uploadPreset);
                         fetch("https://api.cloudinary.com/v1_1/".concat(cloudName, "/image/upload"), {
@@ -24847,7 +24848,7 @@ var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
                           var updatedContent = content.replace(progressText, '***Image upload failed***');
                           editor.setContent(updatedContent);
                         });
-                      case 20:
+                      case 21:
                       case "end":
                         return _context3.stop();
                     }
@@ -25000,8 +25001,16 @@ var btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
 var btnBackEnv = document.querySelector('#btn-back-confirm');
 var btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
 var dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
-envVariables.value = dataEnv[0] || '';
+var localVarCloudinaryConfig = JSON.parse(localStorage.getItem('envCloudinary')) || {};
+var configText = Object.entries(localVarCloudinaryConfig).map(function (_ref5) {
+  var _ref6 = _slicedToArray(_ref5, 2),
+    key = _ref6[0],
+    value = _ref6[1];
+  return "".concat(key, ": \"").concat(value, "\"");
+}).join(',\n');
+envVariables.value = (dataEnv[0] ? dataEnv[0] + ',\n' : '') + configText;
 btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+  var _configText, env;
   return _regeneratorRuntime().wrap(function _callee5$(_context6) {
     while (1) switch (_context6.prev = _context6.next) {
       case 0:
@@ -25011,21 +25020,33 @@ btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*
         _context6.next = 5;
         return resetFirebaseApp();
       case 5:
-        envVariables.value = '';
+        _configText = Object.entries(localVarCloudinaryConfig).map(function (_ref8) {
+          var _ref9 = _slicedToArray(_ref8, 2),
+            key = _ref9[0],
+            value = _ref9[1];
+          return "".concat(key, ": \"").concat(value, "\"");
+        }).join(',\n');
+        env = Object.entries(configEnv).map(function (_ref10) {
+          var _ref11 = _slicedToArray(_ref10, 2),
+            key = _ref11[0],
+            value = _ref11[1];
+          return "".concat(key, ": \"").concat(value, "\"");
+        }).join(',\n');
+        envVariables.value = env + ',\n' + _configText;
         btnCloseModalEnv.click();
         handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
         btnCloseBackModalEnv.click();
-        _context6.next = 14;
+        _context6.next = 16;
         break;
-      case 11:
-        _context6.prev = 11;
+      case 13:
+        _context6.prev = 13;
         _context6.t0 = _context6["catch"](0);
         handleAlert(Alert.DANGER, "Failed to reset Firebase: ".concat(_context6.t0.message), DurationLength.LONG);
-      case 14:
+      case 16:
       case "end":
         return _context6.stop();
     }
-  }, _callee5, null, [[0, 11]]);
+  }, _callee5, null, [[0, 13]]);
 })));
 var configEnv = {};
 var configCloudinary = {};
@@ -25033,7 +25054,7 @@ var firebaseConfig = {};
 var app = null;
 var db = null;
 var loadEnv = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+  var _ref12 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
     var response, text, tempConfigEnv;
     return _regeneratorRuntime().wrap(function _callee6$(_context7) {
       while (1) switch (_context7.prev = _context7.next) {
@@ -25056,12 +25077,18 @@ var loadEnv = /*#__PURE__*/function () {
             MESSAGINGSENDERID: tempConfigEnv.MESSAGINGSENDERID,
             APPID: tempConfigEnv.APPID
           };
-          configCloudinary = {
-            CLOUD_NAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
-            UPLOAD_PRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
-            API_KEY: tempConfigEnv.CLOUDINARY_APIKEY,
-            API_SECRET: tempConfigEnv.CLOUDINARY_APISECRET
-          };
+          if (localVarCloudinaryConfig && Object.keys(localVarCloudinaryConfig).length > 0) {
+            configCloudinary = _objectSpread({}, localVarCloudinaryConfig);
+          } else {
+            configCloudinary = {
+              CLOUDINARY_CLOUDNAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
+              CLOUDINARY_UPLOADPRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
+              CLOUDINARY_APIKEY: tempConfigEnv.CLOUDINARY_APIKEY,
+              CLOUDINARY_APISECRET: tempConfigEnv.CLOUDINARY_APISECRET
+            };
+            localVarCloudinaryConfig = _objectSpread({}, configCloudinary);
+            localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
+          }
           _context7.next = 15;
           break;
         case 12:
@@ -25075,10 +25102,9 @@ var loadEnv = /*#__PURE__*/function () {
     }, _callee6, null, [[0, 12]]);
   }));
   return function loadEnv() {
-    return _ref6.apply(this, arguments);
+    return _ref12.apply(this, arguments);
   };
 }();
-loadEnv();
 function setupFirebase() {
   firebaseConfig = {
     apiKey: configEnv.APIKEY,
@@ -25105,6 +25131,7 @@ function _resetFirebaseApp() {
   _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
     var newConfig,
       isLoadInitWeb,
+      cloudinaryText,
       existingEnvData,
       isExisted,
       result,
@@ -25128,60 +25155,67 @@ function _resetFirebaseApp() {
           db = null;
         case 10:
           if (!newConfig) {
-            _context15.next = 14;
+            _context15.next = 15;
             break;
           }
           configEnv = newConfig;
-          _context15.next = 16;
+          configCloudinary = _objectSpread({}, localVarCloudinaryConfig);
+          _context15.next = 19;
           break;
-        case 14:
-          _context15.next = 16;
+        case 15:
+          _context15.next = 17;
           return loadEnv();
-        case 16:
+        case 17:
+          cloudinaryText = Object.entries(configCloudinary).map(function (_ref19) {
+            var _ref20 = _slicedToArray(_ref19, 2),
+              key = _ref20[0],
+              value = _ref20[1];
+            return "".concat(key, ": \"").concat(value, "\"");
+          }).join(',\n');
+          localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
+        case 19:
           (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.validateEnvVars)(configEnv);
           setupFirebase();
           validateFirebaseSetup();
           if (isLoadInitWeb) {
-            _context15.next = 22;
+            _context15.next = 25;
             break;
           }
-          _context15.next = 22;
+          _context15.next = 25;
           return renderNotes();
-        case 22:
-          dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
+        case 25:
           existingEnvData = dataEnv.find(function (item) {
             var _handleTextEnv;
             return ((_handleTextEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(item, true)) === null || _handleTextEnv === void 0 ? void 0 : _handleTextEnv.APIKEY) === configEnv.APIKEY;
           });
           isExisted = !!existingEnvData;
           if (!isExisted) {
-            result = Object.entries(configEnv).map(function (_ref13) {
-              var _ref14 = _slicedToArray(_ref13, 2),
-                key = _ref14[0],
-                value = _ref14[1];
+            result = Object.entries(configEnv).map(function (_ref21) {
+              var _ref22 = _slicedToArray(_ref21, 2),
+                key = _ref22[0],
+                value = _ref22[1];
               return "  ".concat(key, ": \"").concat(value, "\",");
             }).join("\n");
             dataEnv.unshift(result);
-            localStorage.setItem('envVariables', JSON.stringify(dataEnv));
           } else {
             dataEnv = dataEnv.filter(function (item) {
               var _handleTextEnv2;
               return ((_handleTextEnv2 = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(item, true)) === null || _handleTextEnv2 === void 0 ? void 0 : _handleTextEnv2.APIKEY) !== configEnv.APIKEY;
             });
             dataEnv.unshift(existingEnvData);
-            localStorage.setItem('envVariables', JSON.stringify(dataEnv));
           }
+          localStorage.setItem('envVariables', JSON.stringify(dataEnv));
           handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
           return _context15.abrupt("return", true);
-        case 30:
-          _context15.prev = 30;
+        case 33:
+          _context15.prev = 33;
           _context15.t0 = _context15["catch"](2);
           throw _context15.t0;
-        case 33:
+        case 36:
         case "end":
           return _context15.stop();
       }
-    }, _callee14, null, [[2, 30]]);
+    }, _callee14, null, [[2, 33]]);
   }));
   return _resetFirebaseApp.apply(this, arguments);
 }
@@ -25314,7 +25348,7 @@ function LoadCategory() {
   }
 }
 var loadData = /*#__PURE__*/function () {
-  var _ref9 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+  var _ref15 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
     var exampleWrappers;
     return _regeneratorRuntime().wrap(function _callee9$(_context10) {
       while (1) switch (_context10.prev = _context10.next) {
@@ -25350,14 +25384,14 @@ var loadData = /*#__PURE__*/function () {
     }, _callee9);
   }));
   return function loadData() {
-    return _ref9.apply(this, arguments);
+    return _ref15.apply(this, arguments);
   };
 }();
 var backUpdata = function backUpdata() {
   localStorage.setItem('NotesBackups', JSON.stringify(listItem));
 };
 var renderNotes = /*#__PURE__*/function () {
-  var _ref10 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+  var _ref16 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
     var querySnapshot;
     return _regeneratorRuntime().wrap(function _callee10$(_context11) {
       while (1) switch (_context11.prev = _context11.next) {
@@ -25415,7 +25449,7 @@ var renderNotes = /*#__PURE__*/function () {
     }, _callee10, null, [[3, 16, 21, 24]]);
   }));
   return function renderNotes() {
-    return _ref10.apply(this, arguments);
+    return _ref16.apply(this, arguments);
   };
 }();
 await renderNotes();
@@ -25452,7 +25486,7 @@ function _handleCleanImagesCloudinary() {
               return item.example.includes(img.url);
             });
           });
-          if (!(unusedImages.length && configCloudinary.API_SECRET)) {
+          if (!(unusedImages.length && configCloudinary.CLOUDINARY_APISECRET)) {
             _context17.next = 59;
             break;
           }
@@ -25487,17 +25521,17 @@ function _handleCleanImagesCloudinary() {
             invalidate: true
           };
           _context17.next = 27;
-          return generateCloudinarySignature(params, configCloudinary.API_SECRET);
+          return generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
         case 27:
           signature = _context17.sent;
           _context17.next = 30;
-          return fetch("https://api.cloudinary.com/v1_1/".concat(configCloudinary.CLOUD_NAME, "/image/destroy"), {
+          return fetch("https://api.cloudinary.com/v1_1/".concat(configCloudinary.CLOUDINARY_CLOUDNAME, "/image/destroy"), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(_objectSpread(_objectSpread({}, params), {}, {
-              api_key: configCloudinary.API_KEY,
+              api_key: configCloudinary.CLOUDINARY_APIKEY,
               signature: signature
             }))
           });
@@ -25849,7 +25883,7 @@ function onClickCopy(id) {
   navigator.clipboard.writeText(stripHtmlAdvancedToCopy(item.example));
 }
 var _handleDeleteNote = /*#__PURE__*/function () {
-  var _ref11 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+  var _ref17 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
     return _regeneratorRuntime().wrap(function _callee11$(_context12) {
       while (1) switch (_context12.prev = _context12.next) {
         case 0:
@@ -25869,11 +25903,11 @@ var _handleDeleteNote = /*#__PURE__*/function () {
     }, _callee11);
   }));
   return function handleDeleteNote() {
-    return _ref11.apply(this, arguments);
+    return _ref17.apply(this, arguments);
   };
 }();
 var deleteNote = /*#__PURE__*/function () {
-  var _ref12 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12(NoteId) {
+  var _ref18 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12(NoteId) {
     return _regeneratorRuntime().wrap(function _callee12$(_context13) {
       while (1) switch (_context13.prev = _context13.next) {
         case 0:
@@ -25910,7 +25944,7 @@ var deleteNote = /*#__PURE__*/function () {
     }, _callee12, null, [[0, 11, 14, 18]]);
   }));
   return function deleteNote(_x11) {
-    return _ref12.apply(this, arguments);
+    return _ref18.apply(this, arguments);
   };
 }();
 function handleContainerScroll() {
@@ -25931,7 +25965,7 @@ function handleLoadEnv() {
 }
 function _handleLoadEnv() {
   _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
-    var envText, env, success;
+    var envText, env, missingCloudinaryKeys, success;
     return _regeneratorRuntime().wrap(function _callee20$(_context21) {
       while (1) switch (_context21.prev = _context21.next) {
         case 0:
@@ -25947,29 +25981,62 @@ function _handleLoadEnv() {
         case 6:
           _context21.prev = 6;
           env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envText, true);
-          _context21.next = 10;
-          return resetFirebaseApp(env);
-        case 10:
+          console.log(env);
+          configEnv = {
+            APIKEY: env.APIKEY,
+            AUTHDOMAIN: env.AUTHDOMAIN,
+            PROJECTID: env.PROJECTID,
+            STORAGEBUCKET: env.STORAGEBUCKET,
+            MESSAGINGSENDERID: env.MESSAGINGSENDERID,
+            APPID: env.APPID
+          };
+          localVarCloudinaryConfig = {
+            CLOUDINARY_CLOUDNAME: env.CLOUDINARY_CLOUDNAME,
+            CLOUDINARY_UPLOADPRESET: env.CLOUDINARY_UPLOADPRESET,
+            CLOUDINARY_APIKEY: env.CLOUDINARY_APIKEY,
+            CLOUDINARY_APISECRET: env.CLOUDINARY_APISECRET
+          };
+          missingCloudinaryKeys = [];
+          if (!localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME || typeof localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME.trim()) {
+            missingCloudinaryKeys.push('CLOUDINARY_CLOUDNAME');
+          }
+          if (!localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET || typeof localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET.trim()) {
+            missingCloudinaryKeys.push('CLOUDINARY_UPLOADPRESET');
+          }
+          if (!localVarCloudinaryConfig.CLOUDINARY_APIKEY || typeof localVarCloudinaryConfig.CLOUDINARY_APIKEY !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_APIKEY.trim()) {
+            missingCloudinaryKeys.push('CLOUDINARY_APIKEY');
+          }
+          if (!localVarCloudinaryConfig.CLOUDINARY_APISECRET || typeof localVarCloudinaryConfig.CLOUDINARY_APISECRET !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_APISECRET.trim()) {
+            missingCloudinaryKeys.push('CLOUDINARY_APISECRET');
+          }
+          if (missingCloudinaryKeys.length > 0) {
+            handleAlert(Alert.WARNING, "Missing Cloudinary config: ".concat(missingCloudinaryKeys.join(', ')), DurationLength.LONG);
+          } else {
+            localStorage.setItem('envCloudinary', JSON.stringify(localVarCloudinaryConfig));
+          }
+          _context21.next = 19;
+          return resetFirebaseApp(configEnv);
+        case 19:
           success = _context21.sent;
           if (success) {
             btnCloseModalEnv.click();
           }
-          _context21.next = 17;
+          _context21.next = 26;
           break;
-        case 14:
-          _context21.prev = 14;
+        case 23:
+          _context21.prev = 23;
           _context21.t0 = _context21["catch"](6);
           handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context21.t0.message), DurationLength.LONG);
-        case 17:
-          _context21.prev = 17;
+        case 26:
+          _context21.prev = 26;
           loadingOverlay.style.display = 'none';
           switchCheckChecked.checked = false;
-          return _context21.finish(17);
-        case 21:
+          return _context21.finish(26);
+        case 30:
         case "end":
           return _context21.stop();
       }
-    }, _callee20, null, [[6, 14, 17, 21]]);
+    }, _callee20, null, [[6, 23, 26, 30]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
