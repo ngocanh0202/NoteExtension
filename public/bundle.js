@@ -24583,28 +24583,562 @@ function getModularInstance(service) {
 
 /***/ }),
 
-/***/ "./src/script.js":
-/*!***********************!*\
-  !*** ./src/script.js ***!
-  \***********************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/config/dom.js":
+/*!***************************!*\
+  !*** ./src/config/dom.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
-/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DOM: () => (/* binding */ DOM),
+/* harmony export */   initDOM: () => (/* binding */ initDOM)
+/* harmony export */ });
+var DOM = {
+  alertWarning: null,
+  alertInfo: null,
+  alertDanger: null,
+  themeSwitcher: null,
+  envVariables: null,
+  btnSaveEnv: null,
+  btnCloseModalEnv: null,
+  btnBackEnv: null,
+  btnCloseBackModalEnv: null,
+  switchCheckChecked: null,
+  labelSwitch: null,
+  searchInput: null,
+  containerWords: null,
+  containerCategory: null,
+  categoriesList: null,
+  loadingOverlay: null,
+  createNote: null,
+  scrollToTopBtn: null,
+  btnRefresh: null,
+  btnCleanImagesCloudinary: null,
+  btnCloseModal: null,
+  btnOpenModal: null,
+  btnDelete: null,
+  btnModalConfirm: null,
+  btnModalConfirmClose: null,
+  createOrUpdateNoteForm: null
+};
+function initDOM() {
+  DOM.alertWarning = document.querySelector('#alert-warning');
+  DOM.alertInfo = document.querySelector('#alert-info');
+  DOM.alertDanger = document.querySelector('#alert-danger');
+  DOM.themeSwitcher = document.getElementById('theme-switcher');
+  DOM.envVariables = document.querySelector('#env-variables');
+  DOM.btnSaveEnv = document.querySelector('#btn-save-env');
+  DOM.btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
+  DOM.btnBackEnv = document.querySelector('#btn-back-confirm');
+  DOM.btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
+  DOM.switchCheckChecked = document.getElementById("switchCheckChecked");
+  DOM.labelSwitch = document.querySelector("label[for='switchCheckChecked']");
+  DOM.searchInput = document.querySelector('#search');
+  DOM.containerWords = document.querySelector('.container-word');
+  DOM.containerCategory = document.querySelector('.container-category');
+  DOM.categoriesList = document.getElementById("categoriesList");
+  DOM.loadingOverlay = document.querySelector('#loadingOverlay');
+  DOM.createNote = document.querySelector('#createNote');
+  DOM.scrollToTopBtn = document.querySelector('#scrollToTopBtn');
+  DOM.btnRefresh = document.getElementById("btn-refresh");
+  DOM.btnCleanImagesCloudinary = document.getElementById('btn-clean-images');
+  DOM.btnCloseModal = document.querySelector('#btn-close-modal');
+  DOM.btnOpenModal = document.querySelector('#btn-open-modal');
+  DOM.btnDelete = document.querySelector('#btn-delete-confirm');
+  DOM.btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
+  DOM.btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
+  DOM.createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
+}
+
+/***/ }),
+
+/***/ "./src/managers/cloudinary.js":
+/*!************************************!*\
+  !*** ./src/managers/cloudinary.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   generateCloudinarySignature: () => (/* binding */ generateCloudinarySignature),
+/* harmony export */   handleCleanImagesCloudinary: () => (/* binding */ handleCleanImagesCloudinary),
+/* harmony export */   handleUploadImageUrl: () => (/* binding */ handleUploadImageUrl)
+/* harmony export */ });
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+/* harmony import */ var _firebase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./firebase.js */ "./src/managers/firebase.js");
+/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
+function _regeneratorAsync(n, e, r, t, o) { var a = _regeneratorAsyncGen(n, e, r, t, o); return a.next().then(function (n) { return n.done ? n.value : a.next(); }); }
+function _regeneratorAsyncGen(r, e, t, o, n) { return new _regeneratorAsyncIterator(_regenerator().w(r, e, t, o), n || Promise); }
+function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c = t[r](o), u = c.value; return u instanceof _OverloadYield ? e.resolve(u.v).then(function (t) { n("next", t, i, f); }, function (t) { n("throw", t, i, f); }) : e.resolve(u).then(function (t) { c.value = t, i(c); }, function (t) { return n("throw", t, i, f); }); } catch (t) { f(t); } } var r; this.next || (_regeneratorDefine2(_regeneratorAsyncIterator.prototype), _regeneratorDefine2(_regeneratorAsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () { return this; })), _regeneratorDefine2(this, "_invoke", function (t, o, i) { function f() { return new e(function (e, r) { n(t, i, e, r); }); } return r = r ? r.then(f, f) : f(); }, !0); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _OverloadYield(e, d) { this.v = e, this.k = d; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+function generateCloudinarySignature(_x, _x2) {
+  return _generateCloudinarySignature.apply(this, arguments);
+}
+function _generateCloudinarySignature() {
+  _generateCloudinarySignature = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(params, apiSecret) {
+    var sortedParams, message, encoder, data, hashBuffer, hashArray;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          sortedParams = Object.keys(params).sort().map(function (key) {
+            return "".concat(key, "=").concat(params[key]);
+          }).join('&');
+          message = sortedParams + apiSecret;
+          encoder = new TextEncoder();
+          data = encoder.encode(message);
+          _context.next = 6;
+          return crypto.subtle.digest('SHA-1', data);
+        case 6:
+          hashBuffer = _context.sent;
+          hashArray = Array.from(new Uint8Array(hashBuffer));
+          return _context.abrupt("return", hashArray.map(function (b) {
+            return b.toString(16).padStart(2, '0');
+          }).join(''));
+        case 9:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _generateCloudinarySignature.apply(this, arguments);
+}
+function handleUploadImageUrl(_x3) {
+  return _handleUploadImageUrl.apply(this, arguments);
+}
+function _handleUploadImageUrl() {
+  _handleUploadImageUrl = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(data) {
+    var db;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          _context2.next = 3;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "note-images"), data);
+        case 3:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return _handleUploadImageUrl.apply(this, arguments);
+}
+function handleCleanImagesCloudinary(_x4, _x5) {
+  return _handleCleanImagesCloudinary.apply(this, arguments);
+}
+function _handleCleanImagesCloudinary() {
+  _handleCleanImagesCloudinary = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(listItem, setLoading) {
+    var db, configCloudinary, listImage, querySnapshotImages, unusedImages, _iterator, _step, img, urlParts, uploadIndex, pathAfterUpload, lastPart, publicId, timestamp, params, signature, response, data;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          configCloudinary = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getConfigCloudinary)();
+          listImage = [];
+          _context3.next = 5;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "note-images"));
+        case 5:
+          querySnapshotImages = _context3.sent;
+          querySnapshotImages.forEach(function (d) {
+            var data = d.data();
+            listImage.push({
+              id: d.id,
+              url: data.url,
+              signature: data.signature
+            });
+          });
+          if (!(listImage.length === 0)) {
+            _context3.next = 9;
+            break;
+          }
+          return _context3.abrupt("return");
+        case 9:
+          unusedImages = listImage.filter(function (img) {
+            return !listItem.some(function (item) {
+              return item.example.includes(img.url);
+            });
+          });
+          if (!(!unusedImages.length || !configCloudinary.CLOUDINARY_APISECRET)) {
+            _context3.next = 12;
+            break;
+          }
+          return _context3.abrupt("return");
+        case 12:
+          setLoading(true);
+          _context3.prev = 13;
+          _iterator = _createForOfIteratorHelper(unusedImages);
+          _context3.prev = 15;
+          _iterator.s();
+        case 17:
+          if ((_step = _iterator.n()).done) {
+            _context3.next = 52;
+            break;
+          }
+          img = _step.value;
+          _context3.prev = 19;
+          urlParts = img.url.split('/');
+          uploadIndex = urlParts.findIndex(function (part) {
+            return part === 'upload';
+          });
+          if (!(uploadIndex === -1)) {
+            _context3.next = 24;
+            break;
+          }
+          return _context3.abrupt("continue", 50);
+        case 24:
+          pathAfterUpload = urlParts.slice(uploadIndex + 1);
+          lastPart = pathAfterUpload[pathAfterUpload.length - 1];
+          publicId = lastPart.split('.')[0];
+          timestamp = Math.floor(Date.now() / 1000);
+          params = {
+            public_id: publicId,
+            timestamp: timestamp,
+            invalidate: true
+          };
+          _context3.next = 31;
+          return generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
+        case 31:
+          signature = _context3.sent;
+          _context3.next = 34;
+          return fetch("https://api.cloudinary.com/v1_1/".concat(configCloudinary.CLOUDINARY_CLOUDNAME, "/image/destroy"), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(_objectSpread(_objectSpread({}, params), {}, {
+              api_key: configCloudinary.CLOUDINARY_APIKEY,
+              signature: signature
+            }))
+          });
+        case 34:
+          response = _context3.sent;
+          _context3.next = 37;
+          return response.json();
+        case 37:
+          data = _context3.sent;
+          if (!(data.result !== 'ok')) {
+            _context3.next = 42;
+            break;
+          }
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, 'Failed to delete image from Cloudinary', _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+          _context3.next = 45;
+          break;
+        case 42:
+          _context3.next = 44;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "note-images/".concat(img.id)));
+        case 44:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, 'Image deleted from Cloudinary successfully', _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+        case 45:
+          _context3.next = 50;
+          break;
+        case 47:
+          _context3.prev = 47;
+          _context3.t0 = _context3["catch"](19);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, 'Error: ' + _context3.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 50:
+          _context3.next = 17;
+          break;
+        case 52:
+          _context3.next = 57;
+          break;
+        case 54:
+          _context3.prev = 54;
+          _context3.t1 = _context3["catch"](15);
+          _iterator.e(_context3.t1);
+        case 57:
+          _context3.prev = 57;
+          _iterator.f();
+          return _context3.finish(57);
+        case 60:
+          _context3.prev = 60;
+          setLoading(false);
+          return _context3.finish(60);
+        case 63:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[13,, 60, 63], [15, 54, 57, 60], [19, 47]]);
+  }));
+  return _handleCleanImagesCloudinary.apply(this, arguments);
+}
+
+/***/ }),
+
+/***/ "./src/managers/env.js":
+/*!*****************************!*\
+  !*** ./src/managers/env.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   handleBackEnv: () => (/* binding */ handleBackEnv),
+/* harmony export */   handleLoadEnv: () => (/* binding */ handleLoadEnv),
+/* harmony export */   handleLoadLogEnvs: () => (/* binding */ handleLoadLogEnvs),
+/* harmony export */   initializeEnvDisplay: () => (/* binding */ initializeEnvDisplay),
+/* harmony export */   removeEnvAction: () => (/* binding */ removeEnvAction),
+/* harmony export */   switchEnvAction: () => (/* binding */ switchEnvAction)
+/* harmony export */ });
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils.js */ "./src/utils.js");
+/* harmony import */ var _firebase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./firebase.js */ "./src/managers/firebase.js");
+/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
+function _regeneratorAsync(n, e, r, t, o) { var a = _regeneratorAsyncGen(n, e, r, t, o); return a.next().then(function (n) { return n.done ? n.value : a.next(); }); }
+function _regeneratorAsyncGen(r, e, t, o, n) { return new _regeneratorAsyncIterator(_regenerator().w(r, e, t, o), n || Promise); }
+function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c = t[r](o), u = c.value; return u instanceof _OverloadYield ? e.resolve(u.v).then(function (t) { n("next", t, i, f); }, function (t) { n("throw", t, i, f); }) : e.resolve(u).then(function (t) { c.value = t, i(c); }, function (t) { return n("throw", t, i, f); }); } catch (t) { f(t); } } var r; this.next || (_regeneratorDefine2(_regeneratorAsyncIterator.prototype), _regeneratorDefine2(_regeneratorAsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () { return this; })), _regeneratorDefine2(this, "_invoke", function (t, o, i) { function f() { return new e(function (e, r) { n(t, i, e, r); }); } return r = r ? r.then(f, f) : f(); }, !0); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _OverloadYield(e, d) { this.v = e, this.k = d; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+function initializeEnvDisplay(dataEnv, localVarCloudinaryConfig) {
+  var configText = Object.entries(localVarCloudinaryConfig).map(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      value = _ref2[1];
+    return "".concat(key, ": \"").concat(value, "\"");
+  }).join(',\n');
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value = (dataEnv[0] ? dataEnv[0] + ',\n' : '') + configText;
+}
+function handleLoadEnv(_x, _x2, _x3, _x4, _x5) {
+  return _handleLoadEnv.apply(this, arguments);
+}
+function _handleLoadEnv() {
+  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(dataEnv, localVarCloudinaryConfig, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
+    var envText, _newCloudinaryConfig$, _newCloudinaryConfig$2, _newCloudinaryConfig$3, _newCloudinaryConfig$4, env, configEnv, newCloudinaryConfig, missingCloudinaryKeys, success;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'block';
+          envText = _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value.trim();
+          if (envText) {
+            _context.next = 6;
+            break;
+          }
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Please enter environment variables", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.SHORT);
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
+          return _context.abrupt("return");
+        case 6:
+          _context.prev = 6;
+          env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.handleTextEnv)(envText, true);
+          configEnv = {
+            APIKEY: env.APIKEY,
+            AUTHDOMAIN: env.AUTHDOMAIN,
+            PROJECTID: env.PROJECTID,
+            STORAGEBUCKET: env.STORAGEBUCKET,
+            MESSAGINGSENDERID: env.MESSAGINGSENDERID,
+            APPID: env.APPID
+          };
+          newCloudinaryConfig = {
+            CLOUDINARY_CLOUDNAME: env.CLOUDINARY_CLOUDNAME,
+            CLOUDINARY_UPLOADPRESET: env.CLOUDINARY_UPLOADPRESET,
+            CLOUDINARY_APIKEY: env.CLOUDINARY_APIKEY,
+            CLOUDINARY_APISECRET: env.CLOUDINARY_APISECRET
+          };
+          missingCloudinaryKeys = [];
+          if (!((_newCloudinaryConfig$ = newCloudinaryConfig.CLOUDINARY_CLOUDNAME) !== null && _newCloudinaryConfig$ !== void 0 && _newCloudinaryConfig$.trim())) {
+            missingCloudinaryKeys.push('CLOUDINARY_CLOUDNAME');
+          }
+          if (!((_newCloudinaryConfig$2 = newCloudinaryConfig.CLOUDINARY_UPLOADPRESET) !== null && _newCloudinaryConfig$2 !== void 0 && _newCloudinaryConfig$2.trim())) {
+            missingCloudinaryKeys.push('CLOUDINARY_UPLOADPRESET');
+          }
+          if (!((_newCloudinaryConfig$3 = newCloudinaryConfig.CLOUDINARY_APIKEY) !== null && _newCloudinaryConfig$3 !== void 0 && _newCloudinaryConfig$3.trim())) {
+            missingCloudinaryKeys.push('CLOUDINARY_APIKEY');
+          }
+          if (!((_newCloudinaryConfig$4 = newCloudinaryConfig.CLOUDINARY_APISECRET) !== null && _newCloudinaryConfig$4 !== void 0 && _newCloudinaryConfig$4.trim())) {
+            missingCloudinaryKeys.push('CLOUDINARY_APISECRET');
+          }
+          if (missingCloudinaryKeys.length > 0) {
+            (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Cloudinary config: ".concat(missingCloudinaryKeys.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+          } else {
+            localStorage.setItem('envCloudinary', JSON.stringify(newCloudinaryConfig));
+          }
+          setLocalVarCloudinaryConfig(newCloudinaryConfig);
+          _context.next = 19;
+          return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(configEnv, false, newCloudinaryConfig, dataEnv, onNotesRendered);
+        case 19:
+          success = _context.sent;
+          if (success) {
+            setDataEnv(dataEnv);
+            _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
+          }
+          _context.next = 26;
+          break;
+        case 23:
+          _context.prev = 23;
+          _context.t0 = _context["catch"](6);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Failed to update configuration: ".concat(_context.t0.message), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 26:
+          _context.prev = 26;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.switchCheckChecked.checked = false;
+          return _context.finish(26);
+        case 30:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[6, 23, 26, 30]]);
+  }));
+  return _handleLoadEnv.apply(this, arguments);
+}
+function handleBackEnv(_x6, _x7) {
+  return _handleBackEnv.apply(this, arguments);
+}
+function _handleBackEnv() {
+  _handleBackEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(localVarCloudinaryConfig, onNotesRendered) {
+    var configText;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.prev = 0;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.switchCheckChecked.checked = false;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.labelSwitch.textContent = "Notes";
+          _context2.next = 5;
+          return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(null, false, localVarCloudinaryConfig, [], onNotesRendered);
+        case 5:
+          configText = Object.entries(localVarCloudinaryConfig).map(function (_ref5) {
+            var _ref6 = _slicedToArray(_ref5, 2),
+              key = _ref6[0],
+              value = _ref6[1];
+            return "".concat(key, ": \"").concat(value, "\"");
+          }).join(',\n');
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value = ',\n' + configText;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Reset App successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.SHORT);
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseBackModalEnv.click();
+          _context2.next = 15;
+          break;
+        case 12:
+          _context2.prev = 12;
+          _context2.t0 = _context2["catch"](0);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Failed to reset Firebase: ".concat(_context2.t0.message), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 15:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2, null, [[0, 12]]);
+  }));
+  return _handleBackEnv.apply(this, arguments);
+}
+function switchEnvAction(envKey, dataEnv, localVarCloudinaryConfig, onSaveEnvClick) {
+  var selectedEnv = dataEnv.find(function (env) {
+    var envObj = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.handleTextEnv)(env, true);
+    return (envObj === null || envObj === void 0 ? void 0 : envObj.APIKEY) === envKey;
+  });
+  if (selectedEnv) {
+    var cloudinaryText = Object.entries(localVarCloudinaryConfig).map(function (_ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+        key = _ref4[0],
+        value = _ref4[1];
+      return "".concat(key, ": \"").concat(value, "\"");
+    }).join(',\n');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value = selectedEnv + ',\n' + cloudinaryText;
+    onSaveEnvClick();
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.switchCheckChecked.checked = false;
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.labelSwitch.textContent = "Notes";
+  }
+}
+function removeEnvAction(envKey, dataEnv, setDataEnv) {
+  var initialLength = dataEnv.length;
+  var filtered = dataEnv.filter(function (env) {
+    var envObj = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.handleTextEnv)(env, true);
+    return (envObj === null || envObj === void 0 ? void 0 : envObj.APIKEY) !== envKey;
+  });
+  if (filtered.length < initialLength) {
+    setDataEnv(filtered);
+    localStorage.setItem('envVariables', JSON.stringify(filtered));
+    handleLoadLogEnvs(filtered);
+  } else {
+    console.warn('Environment not found:', envKey);
+  }
+}
+function handleLoadLogEnvs(dataEnv) {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.containerWords.innerHTML = '';
+  if (dataEnv.length > 0) {
+    dataEnv.forEach(function (env) {
+      var envObj = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.handleTextEnv)(env, true);
+      var divCard = document.createElement('div');
+      divCard.className = 'card mb-2';
+      var divCardBody = document.createElement('div');
+      divCardBody.className = 'card-body';
+      divCard.appendChild(divCardBody);
+      var divCardTitle = document.createElement('div');
+      divCardBody.appendChild(divCardTitle);
+      divCardTitle.className = 'card-title d-flex align-items-center justify-content-between';
+      divCardTitle.innerHTML = "\n        <div class=\"d-flex align-items-center\">\n          <h5 class=\"mb-0 me-2\">".concat(envObj.APIKEY, "</h5>\n        </div>\n        <div class=\"btn-group\">\n          <button type=\"button\" id=\"switchEnv-").concat(envObj.APIKEY, "\" class=\"btn btn-primary btn-move-env\">\n            <img id=\"switchEnvIcon-").concat(envObj.APIKEY, "\" class=\"btn-move-env\" src=\"/icons/move-right.svg\" alt=\"\">\n          </button>\n          <button type=\"button\" id=\"deleteEnv-").concat(envObj.APIKEY, "\" class=\"btn btn-danger btn-delete-env\">\n            <img id=\"deleteEnvIcon-").concat(envObj.APIKEY, "\" class=\"btn-delete-env\" src=\"/icons/trash.svg\" alt=\"\">\n          </button>\n        </div>");
+      var divContent = document.createElement('div');
+      divContent.innerHTML = "\n        AUTHDOMAIN: ".concat(envObj.AUTHDOMAIN, " <br>\n        PROJECTID: ").concat(envObj.PROJECTID, " <br>\n        STORAGEBUCKET: ").concat(envObj.STORAGEBUCKET, " <br>\n        MESSAGINGSENDERID: ").concat(envObj.MESSAGINGSENDERID, " <br>\n        APPID: ").concat(envObj.APPID, "\n      ");
+      divCardBody.appendChild(divContent);
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.containerWords.appendChild(divCard);
+    });
+  } else {
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.containerWords.textContent = 'No environment variables found.';
+  }
+  var buttonSetDefault = document.createElement('button');
+  buttonSetDefault.className = 'btn btn-secondary mt-2 position-fixed bottom-0 start-0 mb-2 ms-2';
+  buttonSetDefault.textContent = 'Set as Default';
+  buttonSetDefault.addEventListener('click', function () {
+    document.getElementById('btn-open-modal-confirm-env').click();
+  });
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.containerWords.appendChild(buttonSetDefault);
+}
+
+/***/ }),
+
+/***/ "./src/managers/firebase.js":
+/*!**********************************!*\
+  !*** ./src/managers/firebase.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getApp: () => (/* binding */ getApp),
+/* harmony export */   getConfigCloudinary: () => (/* binding */ getConfigCloudinary),
+/* harmony export */   getConfigEnv: () => (/* binding */ getConfigEnv),
+/* harmony export */   getDb: () => (/* binding */ getDb),
+/* harmony export */   initFirebase: () => (/* binding */ initFirebase),
+/* harmony export */   resetFirebaseApp: () => (/* binding */ resetFirebaseApp),
+/* harmony export */   setConfigCloudinary: () => (/* binding */ setConfigCloudinary)
+/* harmony export */ });
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils.js */ "./src/utils.js");
+/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -24620,455 +25154,73 @@ function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c 
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function _OverloadYield(e, d) { this.v = e, this.k = d; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
 
-// Cloudinary signature generation
-function generateCloudinarySignature(_x, _x2) {
-  return _generateCloudinarySignature.apply(this, arguments);
-} // Initialize aler
-function _generateCloudinarySignature() {
-  _generateCloudinarySignature = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13(params, apiSecret) {
-    var sortedParams, message, encoder, data, hashBuffer, hashArray, hashHex;
-    return _regeneratorRuntime().wrap(function _callee13$(_context14) {
-      while (1) switch (_context14.prev = _context14.next) {
-        case 0:
-          sortedParams = Object.keys(params).sort().map(function (key) {
-            return "".concat(key, "=").concat(params[key]);
-          }).join('&');
-          message = sortedParams + apiSecret; // Use Web Crypto API to generate SHA-1 hash
-          encoder = new TextEncoder();
-          data = encoder.encode(message);
-          _context14.next = 6;
-          return crypto.subtle.digest('SHA-1', data);
-        case 6:
-          hashBuffer = _context14.sent;
-          hashArray = Array.from(new Uint8Array(hashBuffer));
-          hashHex = hashArray.map(function (b) {
-            return b.toString(16).padStart(2, '0');
-          }).join('');
-          return _context14.abrupt("return", hashHex);
-        case 10:
-        case "end":
-          return _context14.stop();
-      }
-    }, _callee13);
-  }));
-  return _generateCloudinarySignature.apply(this, arguments);
-}
-var alertWarning = document.querySelector('#alert-warning');
-var alertInfo = document.querySelector('#alert-info');
-var alertDanger = document.querySelector('#alert-danger');
-var Alert = {
-  WARNING: "alertWarning",
-  INFO: "alertInfo",
-  DANGER: "alertDanger"
-};
-var COLOR = ['primary', 'secondary', 'success', 'danger', 'dark'];
-var DurationLength = {
-  SHORT: 1000,
-  MEDIUM: 2000,
-  LONG: 3000
-};
-var currentAlert = null;
-var categoryPageSize = 5;
-var currentCategorySelected = null;
-function handleAlert(type, message, duration) {
-  if (currentAlert) {
-    clearTimeout(currentAlert);
-    alertWarning.classList.remove('in');
-    alertInfo.classList.remove('in');
-    alertDanger.classList.remove('in');
-  }
-  switch (type) {
-    case Alert.WARNING:
-      alertWarning.textContent = message;
-      alertWarning.classList.add('in');
-      break;
-    case Alert.INFO:
-      alertInfo.textContent = message;
-      alertInfo.classList.add('in');
-      break;
-    case Alert.DANGER:
-      alertDanger.textContent = message;
-      alertDanger.classList.add('in');
-      break;
-  }
-  currentAlert = setTimeout(function () {
-    alertWarning.classList.remove('in');
-    alertInfo.classList.remove('in');
-    alertDanger.classList.remove('in');
-    currentAlert = null;
-  }, duration);
-}
-// Initialize TinyMCE
-var applyTinyMCETheme = function applyTinyMCETheme(isDarkTheme) {
-  tinymce.init({
-    selector: '#editor',
-    menubar: false,
-    plugins: ['lists', 'table', 'fullscreen'],
-    toolbar: 'bold italic underline | forecolor backcolor | fullscreen | align lineheight | checklist numlist bullist | table',
-    skin: isDarkTheme ? 'oxide-dark' : 'oxide',
-    setup: function setup(editor) {
-      editor.on('init', function () {
-        editor.getBody().style.backgroundColor = isDarkTheme ? '#343a40' : '#ffffff';
-        editor.getBody().style.color = isDarkTheme ? '#ffffff' : '#000000';
-        editor.getBody().style.fontSize = '18px';
-      });
-      editor.on('paste', /*#__PURE__*/function () {
-        var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-          var items, handled, _loop, _ret, i;
-          return _regeneratorRuntime().wrap(function _callee3$(_context4) {
-            while (1) switch (_context4.prev = _context4.next) {
-              case 0:
-                items = e.clipboardData && e.clipboardData.items;
-                if (items) {
-                  _context4.next = 3;
-                  break;
-                }
-                return _context4.abrupt("return");
-              case 3:
-                handled = false;
-                _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
-                  var item, _configCloudinary, _configCloudinary2, _configCloudinary3, file, progressText, formData, cloudName, uploadPreset, api_key, content, updatedContent;
-                  return _regeneratorRuntime().wrap(function _loop$(_context3) {
-                    while (1) switch (_context3.prev = _context3.next) {
-                      case 0:
-                        item = items[i];
-                        if (!item.type.startsWith("image/")) {
-                          _context3.next = 20;
-                          break;
-                        }
-                        handled = true;
-                        e.preventDefault();
-                        file = item.getAsFile();
-                        progressText = '***Image Uploading....***';
-                        editor.insertContent(progressText);
-                        formData = new FormData();
-                        formData.append('file', file);
-                        cloudName = (((_configCloudinary = configCloudinary) === null || _configCloudinary === void 0 ? void 0 : _configCloudinary.CLOUDINARY_CLOUDNAME) || '').trim();
-                        uploadPreset = (((_configCloudinary2 = configCloudinary) === null || _configCloudinary2 === void 0 ? void 0 : _configCloudinary2.CLOUDINARY_UPLOADPRESET) || '').trim();
-                        api_key = (((_configCloudinary3 = configCloudinary) === null || _configCloudinary3 === void 0 ? void 0 : _configCloudinary3.CLOUDINARY_APIKEY) || '').trim();
-                        if (!(!cloudName || !uploadPreset || !api_key)) {
-                          _context3.next = 17;
-                          break;
-                        }
-                        content = editor.getContent();
-                        updatedContent = content.replace(progressText, '***Please configure Cloudinary settings to have best performance***');
-                        editor.setContent(updatedContent);
-                        return _context3.abrupt("return", {
-                          v: void 0
-                        });
-                      case 17:
-                        formData.append("api_key", api_key);
-                        formData.append("upload_preset", uploadPreset);
-                        fetch("https://api.cloudinary.com/v1_1/".concat(cloudName, "/image/upload"), {
-                          method: 'POST',
-                          body: formData
-                        }).then(/*#__PURE__*/function () {
-                          var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
-                            var data, _data;
-                            return _regeneratorRuntime().wrap(function _callee$(_context) {
-                              while (1) switch (_context.prev = _context.next) {
-                                case 0:
-                                  _context.prev = 0;
-                                  _context.next = 3;
-                                  return response.json();
-                                case 3:
-                                  data = _context.sent;
-                                  _context.next = 9;
-                                  break;
-                                case 6:
-                                  _context.prev = 6;
-                                  _context.t0 = _context["catch"](0);
-                                  data = null;
-                                case 9:
-                                  if (response.ok) {
-                                    _context.next = 12;
-                                    break;
-                                  }
-                                  console.error('Cloudinary upload failed', {
-                                    status: response.status,
-                                    data: data
-                                  });
-                                  throw new Error(((_data = data) === null || _data === void 0 || (_data = _data.error) === null || _data === void 0 ? void 0 : _data.message) || "Upload failed with status ".concat(response.status));
-                                case 12:
-                                  return _context.abrupt("return", data);
-                                case 13:
-                                case "end":
-                                  return _context.stop();
-                              }
-                            }, _callee, null, [[0, 6]]);
-                          }));
-                          return function (_x4) {
-                            return _ref2.apply(this, arguments);
-                          };
-                        }()).then(/*#__PURE__*/function () {
-                          var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(data) {
-                            var content, widthAttr, heightAttr, imgTxt, _updatedContent, dataImage, _updatedContent2;
-                            return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-                              while (1) switch (_context2.prev = _context2.next) {
-                                case 0:
-                                  content = editor.getContent();
-                                  if (!(data && data.secure_url)) {
-                                    _context2.next = 12;
-                                    break;
-                                  }
-                                  widthAttr = data.width ? " width=\"".concat(data.width, "\"") : '';
-                                  heightAttr = data.height ? " height=\"".concat(data.height, "\"") : '';
-                                  imgTxt = "<img src=\"".concat(data.secure_url, "\" alt=\"image\"").concat(widthAttr).concat(heightAttr, " />");
-                                  _updatedContent = content.replace(progressText, imgTxt);
-                                  editor.setContent(_updatedContent);
-                                  dataImage = {
-                                    url: data.secure_url,
-                                    signature: data.signature
-                                  };
-                                  _context2.next = 10;
-                                  return handleUploadImageUrl(dataImage);
-                                case 10:
-                                  _context2.next = 14;
-                                  break;
-                                case 12:
-                                  _updatedContent2 = content.replace(progressText, '***Image upload failed***');
-                                  editor.setContent(_updatedContent2);
-                                case 14:
-                                case "end":
-                                  return _context2.stop();
-                              }
-                            }, _callee2);
-                          }));
-                          return function (_x5) {
-                            return _ref3.apply(this, arguments);
-                          };
-                        }())["catch"](function (err) {
-                          console.error('Cloudinary upload error', err);
-                          var content = editor.getContent();
-                          var updatedContent = content.replace(progressText, '***Image upload failed***');
-                          editor.setContent(updatedContent);
-                        });
-                      case 20:
-                      case "end":
-                        return _context3.stop();
-                    }
-                  }, _loop);
-                });
-                i = 0;
-              case 6:
-                if (!(i < items.length)) {
-                  _context4.next = 14;
-                  break;
-                }
-                return _context4.delegateYield(_loop(), "t0", 8);
-              case 8:
-                _ret = _context4.t0;
-                if (!_ret) {
-                  _context4.next = 11;
-                  break;
-                }
-                return _context4.abrupt("return", _ret.v);
-              case 11:
-                i++;
-                _context4.next = 6;
-                break;
-              case 14:
-                if (handled) {
-                  e.preventDefault();
-                }
-              case 15:
-              case "end":
-                return _context4.stop();
-            }
-          }, _callee3);
-        }));
-        return function (_x3) {
-          return _ref.apply(this, arguments);
-        };
-      }());
-    }
-  });
-};
-var handleUploadImageUrl = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data) {
-    return _regeneratorRuntime().wrap(function _callee4$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
-        case 0:
-          _context5.next = 2;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "note-images"), data);
-        case 2:
-        case "end":
-          return _context5.stop();
-      }
-    }, _callee4);
-  }));
-  return function handleUploadImageUrl(_x6) {
-    return _ref4.apply(this, arguments);
-  };
-}();
-// change theme
-var themeSwitcher = document.getElementById('theme-switcher');
-var darkTheme = localStorage.getItem('dark-theme') === 'true';
-themeSwitcher.addEventListener('click', function () {
-  var img = themeSwitcher.querySelector('img');
-  darkTheme = !darkTheme;
-  if (!darkTheme) {
-    document.body.classList.remove('dark-theme');
-    document.body.classList.add('light-theme');
-    document.querySelectorAll('.card-title').forEach(function (el) {
-      el.classList.remove('dark-theme');
-      el.classList.add('light-theme');
-    });
-    img.src = '/icons/brightness-high-fill.svg';
-    themeSwitcher.classList.add('border-dark');
-    themeSwitcher.classList.add('btn-light');
-    themeSwitcher.classList.remove('border-light');
-    themeSwitcher.classList.remove('btn-dark');
-  } else {
-    document.body.classList.remove('light-theme');
-    document.body.classList.add('dark-theme');
-    document.querySelectorAll('.card-title').forEach(function (el) {
-      el.classList.remove('light-theme');
-      el.classList.add('dark-theme');
-    });
-    img.src = '/icons/moon-fill.svg';
-    themeSwitcher.classList.add('border-light');
-    themeSwitcher.classList.remove('border-dark');
-    themeSwitcher.classList.add('btn-dark');
-    themeSwitcher.classList.remove('btn-light');
-  }
-  changeIconCustomTheme(darkTheme);
-  tinymce.remove();
-  localStorage.setItem('dark-theme', darkTheme);
-  applyTinyMCETheme(darkTheme);
-});
-function initTheme() {
-  var img = themeSwitcher.querySelector('img');
-  if (darkTheme) {
-    document.body.classList.add('dark-theme');
-    img.src = '/icons/moon-fill.svg';
-    themeSwitcher.classList.add('border-light');
-    themeSwitcher.classList.remove('border-dark');
-    themeSwitcher.classList.add('btn-dark');
-    themeSwitcher.classList.remove('btn-light');
-  } else {
-    document.body.classList.add('light-theme');
-    img.src = '/icons/brightness-high-fill.svg';
-    themeSwitcher.classList.add('border-dark');
-    themeSwitcher.classList.add('btn-light');
-    themeSwitcher.classList.remove('border-light');
-    themeSwitcher.classList.remove('btn-dark');
-  }
-  applyTinyMCETheme(darkTheme);
-}
-function changeIconCustomTheme(darkTheme) {
-  if (darkTheme) {
-    document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
-      el.src = '/icons/copy-icon-light.svg';
-    });
-    document.querySelectorAll('[id^="pinIcon-"]').forEach(function (el) {
-      var isPinned = el.src.includes('pinned');
-      el.src = isPinned ? '/icons/pinned-icon-yellow.svg' : '/icons/pin-white.svg';
-    });
-    document.querySelectorAll('[id^="deleteIcon-"]').forEach(function (el) {
-      el.src = '/icons/trash.svg';
-    });
-    document.querySelectorAll('[id^="editIcon-"]').forEach(function (el) {
-      el.src = '/icons/pencil-square.svg';
-    });
-  } else {
-    document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
-      el.src = '/icons/copy.svg';
-    });
-    document.querySelectorAll('[id^="pinIcon-"]').forEach(function (el) {
-      var isPinned = el.src.includes('pinned');
-      el.src = isPinned ? '/icons/pinned.svg' : '/icons/pin.svg';
-    });
-    document.querySelectorAll('[id^="deleteIcon-"]').forEach(function (el) {
-      el.src = '/icons/trash-black.svg';
-    });
-    document.querySelectorAll('[id^="editIcon-"]').forEach(function (el) {
-      el.src = '/icons/pencil-square-black.svg';
-    });
-  }
-}
-initTheme();
 
-// Initialize Cloud Firestore through Firebase
-var envVariables = document.querySelector('#env-variables');
-var btnSaveEnv = document.querySelector('#btn-save-env');
-var btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
-var btnBackEnv = document.querySelector('#btn-back-confirm');
-var btnCloseBackModalEnv = document.querySelector('#btn-close-back-modal-confirm');
-var dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
-var localVarCloudinaryConfig = JSON.parse(localStorage.getItem('envCloudinary')) || {};
-var configText = Object.entries(localVarCloudinaryConfig).map(function (_ref5) {
-  var _ref6 = _slicedToArray(_ref5, 2),
-    key = _ref6[0],
-    value = _ref6[1];
-  return "".concat(key, ": \"").concat(value, "\"");
-}).join(',\n');
-envVariables.value = (dataEnv[0] ? dataEnv[0] + ',\n' : '') + configText;
-btnBackEnv.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-  var _configText, env;
-  return _regeneratorRuntime().wrap(function _callee5$(_context6) {
-    while (1) switch (_context6.prev = _context6.next) {
-      case 0:
-        _context6.prev = 0;
-        switchCheckChecked.checked = false;
-        labelSwitch.textContent = "Notes";
-        _context6.next = 5;
-        return resetFirebaseApp();
-      case 5:
-        _configText = Object.entries(localVarCloudinaryConfig).map(function (_ref8) {
-          var _ref9 = _slicedToArray(_ref8, 2),
-            key = _ref9[0],
-            value = _ref9[1];
-          return "".concat(key, ": \"").concat(value, "\"");
-        }).join(',\n');
-        env = Object.entries(configEnv).map(function (_ref10) {
-          var _ref11 = _slicedToArray(_ref10, 2),
-            key = _ref11[0],
-            value = _ref11[1];
-          return "".concat(key, ": \"").concat(value, "\"");
-        }).join(',\n');
-        envVariables.value = env + ',\n' + _configText;
-        btnCloseModalEnv.click();
-        handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
-        btnCloseBackModalEnv.click();
-        _context6.next = 16;
-        break;
-      case 13:
-        _context6.prev = 13;
-        _context6.t0 = _context6["catch"](0);
-        handleAlert(Alert.DANGER, "Failed to reset Firebase: ".concat(_context6.t0.message), DurationLength.LONG);
-      case 16:
-      case "end":
-        return _context6.stop();
-    }
-  }, _callee5, null, [[0, 13]]);
-})));
-var configEnv = {};
-var configCloudinary = {};
-var firebaseConfig = {};
 var app = null;
 var db = null;
-var loadEnv = /*#__PURE__*/function () {
-  var _ref12 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+var configEnv = {};
+var configCloudinary = {};
+function getDb() {
+  return db;
+}
+function getApp() {
+  return app;
+}
+function getConfigEnv() {
+  return _objectSpread({}, configEnv);
+}
+function getConfigCloudinary() {
+  return _objectSpread({}, configCloudinary);
+}
+function setConfigCloudinary(cfg) {
+  configCloudinary = cfg;
+}
+function setupFirebase() {
+  var firebaseConfig = {
+    apiKey: configEnv.APIKEY,
+    authDomain: configEnv.AUTHDOMAIN,
+    projectId: configEnv.PROJECTID,
+    storageBucket: configEnv.STORAGEBUCKET,
+    messagingSenderId: configEnv.MESSAGINGSENDERID,
+    appId: configEnv.APPID
+  };
+  app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
+  db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);
+}
+function validateFirebaseSetup() {
+  if (!app || !db) {
+    throw new Error('Firebase is not properly initialized');
+  }
+}
+function loadEnv(_x) {
+  return _loadEnv.apply(this, arguments);
+}
+function _loadEnv() {
+  _loadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(localVarCloudinaryConfig) {
     var response, text, tempConfigEnv;
-    return _regeneratorRuntime().wrap(function _callee6$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context7.prev = 0;
-          _context7.next = 3;
+          _context.prev = 0;
+          _context.next = 3;
           return fetch('/env');
         case 3:
-          response = _context7.sent;
-          _context7.next = 6;
+          response = _context.sent;
+          _context.next = 6;
           return response.text();
         case 6:
-          text = _context7.sent;
+          text = _context.sent;
           tempConfigEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(text, false);
           configEnv = {
             APIKEY: tempConfigEnv.APIKEY,
@@ -25087,114 +25239,67 @@ var loadEnv = /*#__PURE__*/function () {
               CLOUDINARY_APIKEY: tempConfigEnv.CLOUDINARY_APIKEY,
               CLOUDINARY_APISECRET: tempConfigEnv.CLOUDINARY_APISECRET
             };
-            localVarCloudinaryConfig = _objectSpread({}, configCloudinary);
             localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
           }
-          _context7.next = 15;
+          _context.next = 15;
           break;
         case 12:
-          _context7.prev = 12;
-          _context7.t0 = _context7["catch"](0);
-          throw new Error('Error loading .env file: ' + _context7.t0.message);
+          _context.prev = 12;
+          _context.t0 = _context["catch"](0);
+          throw new Error('Error loading .env file: ' + _context.t0.message);
         case 15:
         case "end":
-          return _context7.stop();
+          return _context.stop();
       }
-    }, _callee6, null, [[0, 12]]);
+    }, _callee, null, [[0, 12]]);
   }));
-  return function loadEnv() {
-    return _ref12.apply(this, arguments);
-  };
-}();
-function setupFirebase() {
-  firebaseConfig = {
-    apiKey: configEnv.APIKEY,
-    authDomain: configEnv.AUTHDOMAIN,
-    projectId: configEnv.PROJECTID,
-    storageBucket: configEnv.STORAGEBUCKET,
-    messagingSenderId: configEnv.MESSAGINGSENDERID,
-    appId: configEnv.APPID
-  };
-  app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
-  db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);
+  return _loadEnv.apply(this, arguments);
 }
-
-// Validate that all required environment variables are loaded
-function validateFirebaseSetup() {
-  if (!app || !db) {
-    throw new Error('Firebase is not properly initialized');
-  }
-}
-function resetFirebaseApp() {
+function resetFirebaseApp(_x2, _x3, _x4, _x5, _x6) {
   return _resetFirebaseApp.apply(this, arguments);
 }
 function _resetFirebaseApp() {
-  _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
-    var newConfig,
-      isLoadInitWeb,
-      cloudinaryText,
-      existingEnvData,
-      isExisted,
-      result,
-      _args15 = arguments;
-    return _regeneratorRuntime().wrap(function _callee14$(_context15) {
-      while (1) switch (_context15.prev = _context15.next) {
+  _resetFirebaseApp = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(newConfig, isLoadInitWeb, localVarCloudinaryConfig, dataEnv, onNotesRendered) {
+    var existingEnvData, isExisted, result;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          newConfig = _args15.length > 0 && _args15[0] !== undefined ? _args15[0] : null;
-          isLoadInitWeb = _args15.length > 1 && _args15[1] !== undefined ? _args15[1] : false;
-          _context15.prev = 2;
-          categoryPageSize = 5;
-          currentCategorySelected = null;
+          _context2.prev = 0;
           if (!app) {
-            _context15.next = 10;
+            _context2.next = 6;
             break;
           }
-          _context15.next = 8;
+          _context2.next = 4;
           return (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.deleteApp)(app);
-        case 8:
+        case 4:
           app = null;
           db = null;
-        case 10:
+        case 6:
           if (!newConfig) {
-            _context15.next = 15;
+            _context2.next = 11;
             break;
           }
           configEnv = newConfig;
           configCloudinary = _objectSpread({}, localVarCloudinaryConfig);
-          _context15.next = 19;
+          _context2.next = 13;
           break;
-        case 15:
-          _context15.next = 17;
-          return loadEnv();
-        case 17:
-          cloudinaryText = Object.entries(configCloudinary).map(function (_ref19) {
-            var _ref20 = _slicedToArray(_ref19, 2),
-              key = _ref20[0],
-              value = _ref20[1];
-            return "".concat(key, ": \"").concat(value, "\"");
-          }).join(',\n');
-          localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
-        case 19:
+        case 11:
+          _context2.next = 13;
+          return loadEnv(localVarCloudinaryConfig);
+        case 13:
           (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.validateEnvVars)(configEnv);
           setupFirebase();
           validateFirebaseSetup();
-          if (isLoadInitWeb) {
-            _context15.next = 25;
-            break;
-          }
-          _context15.next = 25;
-          return renderNotes();
-        case 25:
           existingEnvData = dataEnv.find(function (item) {
             var _handleTextEnv;
             return ((_handleTextEnv = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(item, true)) === null || _handleTextEnv === void 0 ? void 0 : _handleTextEnv.APIKEY) === configEnv.APIKEY;
           });
           isExisted = !!existingEnvData;
           if (!isExisted) {
-            result = Object.entries(configEnv).map(function (_ref21) {
-              var _ref22 = _slicedToArray(_ref21, 2),
-                key = _ref22[0],
-                value = _ref22[1];
+            result = Object.entries(configEnv).map(function (_ref) {
+              var _ref2 = _slicedToArray(_ref, 2),
+                key = _ref2[0],
+                value = _ref2[1];
               return "  ".concat(key, ": \"").concat(value, "\",");
             }).join("\n");
             dataEnv.unshift(result);
@@ -25206,210 +25311,153 @@ function _resetFirebaseApp() {
             dataEnv.unshift(existingEnvData);
           }
           localStorage.setItem('envVariables', JSON.stringify(dataEnv));
-          handleAlert(Alert.INFO, "Firebase configuration updated successfully!", DurationLength.SHORT);
-          return _context15.abrupt("return", true);
-        case 33:
-          _context15.prev = 33;
-          _context15.t0 = _context15["catch"](2);
-          throw _context15.t0;
-        case 36:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.INFO, "Firebase configuration updated successfully!", _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.SHORT);
+          if (!(!isLoadInitWeb && onNotesRendered)) {
+            _context2.next = 24;
+            break;
+          }
+          _context2.next = 24;
+          return onNotesRendered();
+        case 24:
+          return _context2.abrupt("return", true);
+        case 27:
+          _context2.prev = 27;
+          _context2.t0 = _context2["catch"](0);
+          throw _context2.t0;
+        case 30:
         case "end":
-          return _context15.stop();
+          return _context2.stop();
       }
-    }, _callee14, null, [[2, 33]]);
+    }, _callee2, null, [[0, 27]]);
   }));
   return _resetFirebaseApp.apply(this, arguments);
 }
-function initFirebase() {
+function initFirebase(_x7, _x8, _x9) {
   return _initFirebase.apply(this, arguments);
 }
 function _initFirebase() {
-  _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
-    return _regeneratorRuntime().wrap(function _callee15$(_context16) {
-      while (1) switch (_context16.prev = _context16.next) {
+  _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(localVarCloudinaryConfig, dataEnv, onNotesRendered) {
+    var envText;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
-          _context16.prev = 0;
-          if (!(envVariables.value && envVariables.value.trim())) {
-            _context16.next = 6;
+          _context3.prev = 0;
+          envText = _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.envVariables.value.trim();
+          if (!envText) {
+            _context3.next = 7;
             break;
           }
-          _context16.next = 4;
-          return resetFirebaseApp((0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envVariables.value, true), true);
-        case 4:
-          _context16.next = 8;
+          _context3.next = 5;
+          return resetFirebaseApp((0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envText, true), true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
+        case 5:
+          _context3.next = 9;
           break;
-        case 6:
-          _context16.next = 8;
-          return resetFirebaseApp(null, true);
-        case 8:
-          _context16.next = 13;
+        case 7:
+          _context3.next = 9;
+          return resetFirebaseApp(null, true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
+        case 9:
+          _context3.next = 14;
           break;
-        case 10:
-          _context16.prev = 10;
-          _context16.t0 = _context16["catch"](0);
-          handleAlert(Alert.DANGER, _context16.t0.message, DurationLength.LONG);
-        case 13:
+        case 11:
+          _context3.prev = 11;
+          _context3.t0 = _context3["catch"](0);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.DANGER, _context3.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.LONG);
+        case 14:
         case "end":
-          return _context16.stop();
+          return _context3.stop();
       }
-    }, _callee15, null, [[0, 10]]);
+    }, _callee3, null, [[0, 11]]);
   }));
   return _initFirebase.apply(this, arguments);
 }
-await initFirebase();
 
-// CRUD
+/***/ }),
+
+/***/ "./src/managers/notes.js":
+/*!*******************************!*\
+  !*** ./src/managers/notes.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   deleteNote: () => (/* binding */ deleteNote),
+/* harmony export */   expandCategoryPageSize: () => (/* binding */ expandCategoryPageSize),
+/* harmony export */   getListCategories: () => (/* binding */ getListCategories),
+/* harmony export */   getListItem: () => (/* binding */ getListItem),
+/* harmony export */   getListItemTemp: () => (/* binding */ getListItemTemp),
+/* harmony export */   getNoteById: () => (/* binding */ getNoteById),
+/* harmony export */   handleCategoryClick: () => (/* binding */ handleCategoryClick),
+/* harmony export */   handleInputSearch: () => (/* binding */ handleInputSearch),
+/* harmony export */   handleUpsertNote: () => (/* binding */ handleUpsertNote),
+/* harmony export */   renderNotes: () => (/* binding */ renderNotes),
+/* harmony export */   stripHtmlAdvanced: () => (/* binding */ stripHtmlAdvanced),
+/* harmony export */   stripHtmlAdvancedToCopy: () => (/* binding */ stripHtmlAdvancedToCopy),
+/* harmony export */   togglePin: () => (/* binding */ togglePin)
+/* harmony export */ });
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+/* harmony import */ var _firebase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./firebase.js */ "./src/managers/firebase.js");
+/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
+/* harmony import */ var _ui_theme_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/theme.js */ "./src/ui/theme.js");
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
+function _regeneratorAsync(n, e, r, t, o) { var a = _regeneratorAsyncGen(n, e, r, t, o); return a.next().then(function (n) { return n.done ? n.value : a.next(); }); }
+function _regeneratorAsyncGen(r, e, t, o, n) { return new _regeneratorAsyncIterator(_regenerator().w(r, e, t, o), n || Promise); }
+function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c = t[r](o), u = c.value; return u instanceof _OverloadYield ? e.resolve(u.v).then(function (t) { n("next", t, i, f); }, function (t) { n("throw", t, i, f); }) : e.resolve(u).then(function (t) { c.value = t, i(c); }, function (t) { return n("throw", t, i, f); }); } catch (t) { f(t); } } var r; this.next || (_regeneratorDefine2(_regeneratorAsyncIterator.prototype), _regeneratorDefine2(_regeneratorAsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () { return this; })), _regeneratorDefine2(this, "_invoke", function (t, o, i) { function f() { return new e(function (e, r) { n(t, i, e, r); }); } return r = r ? r.then(f, f) : f(); }, !0); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _OverloadYield(e, d) { this.v = e, this.k = d; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+
+
+
 var listItem = [];
 var listItemTemp = [];
 var listCategories = [];
-var isClickNewButton = true;
-var currentNoteId = null;
-var createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
-var searchInput = document.querySelector('#search');
-var containerWords = document.querySelector('.container-word');
-var loadingOverlay = document.querySelector('#loadingOverlay');
-var createNote = document.querySelector('#createNote');
-var btnCloseModal = document.querySelector('#btn-close-modal');
-var btnOpenModal = document.querySelector('#btn-open-modal');
-var btnDelete = document.querySelector('#btn-delete-confirm');
-var btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
-var btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
-var scrollToTopBtn = document.querySelector('#scrollToTopBtn');
-var btnRefresh = document.getElementById("btn-refresh");
-var switchCheckChecked = document.getElementById("switchCheckChecked");
-var labelSwitch = document.querySelector("label[for='switchCheckChecked']");
-var categoriesListItemDom = document.getElementById("categoriesList");
-var containerCategory = document.querySelector('.container-category');
-var btnCleanImagesCloudinary = document.getElementById('btn-clean-images');
-btnRefresh.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-  return _regeneratorRuntime().wrap(function _callee7$(_context8) {
-    while (1) switch (_context8.prev = _context8.next) {
-      case 0:
-        _context8.next = 2;
-        return renderNotes();
-      case 2:
-      case "end":
-        return _context8.stop();
-    }
-  }, _callee7);
-})));
-createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
-btnCloseModal.addEventListener('click', handleReset);
-searchInput.addEventListener('input', handleInputSearch);
-containerWords.addEventListener('click', handleContainerEventClick);
-containerWords.addEventListener('scroll', handleContainerScroll);
-scrollToTopBtn.addEventListener('click', scrollToTop);
-btnSaveEnv.addEventListener('click', handleLoadEnv);
-containerCategory.addEventListener('click', handleClickInContainer);
-btnCleanImagesCloudinary.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-  return _regeneratorRuntime().wrap(function _callee8$(_context9) {
-    while (1) switch (_context9.prev = _context9.next) {
-      case 0:
-        btnCleanImagesCloudinary.disabled = true;
-        _context9.next = 3;
-        return handleCleanImagesCloudinary();
-      case 3:
-        btnCleanImagesCloudinary.disabled = false;
-      case 4:
-      case "end":
-        return _context9.stop();
-    }
-  }, _callee8);
-})));
-createNote.addEventListener('click', function (e) {
-  if (e.target !== e.currentTarget) {
-    e.stopPropagation();
-    return;
-  }
-  handleReset();
-});
-function handleReset() {
-  isClickNewButton = true;
-  currentNoteId = null;
-  createOrUpdateNoteForm.reset();
+function getListItem() {
+  return _toConsumableArray(listItem);
 }
-function LoadCategory() {
-  categoriesListItemDom.innerHTML = '';
-  containerCategory.innerHTML = '';
-  if (listCategories.length > 0) {
-    var badges = '';
-    for (var i = 0; i < categoryPageSize && i < listCategories.length; i++) {
-      var category = listCategories[i];
-      categoriesListItemDom.innerHTML += "<option value=\"".concat(category, "\">").concat(category, "</option>");
-      var colorClass = COLOR[i % COLOR.length];
-      var isSelected = currentCategorySelected === category ? 'selected' : '';
-      badges += "\n          <span class=\"badge rounded-pill bg-".concat(colorClass, " me-1 mb-2 button-click-category user-select-none ").concat(isSelected, "\">").concat(category, "</span>\n        ");
-    }
-    if (categoryPageSize < listCategories.length) {
-      badges += "\n          <span class=\"badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark\">...+".concat(Math.min(listCategories.length - categoryPageSize, 5), "</span>\n        ");
-    }
-    containerCategory.innerHTML = badges;
-  }
+function getListItemTemp() {
+  return _toConsumableArray(listItemTemp);
 }
-var loadData = /*#__PURE__*/function () {
-  var _ref15 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-    var html, exampleWrappers;
-    return _regeneratorRuntime().wrap(function _callee9$(_context10) {
-      while (1) switch (_context10.prev = _context10.next) {
+function getListCategories() {
+  return _toConsumableArray(listCategories);
+}
+function renderNotes(_x, _x2) {
+  return _renderNotes.apply(this, arguments);
+}
+function _renderNotes() {
+  _renderNotes = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(categoryPageSize, currentCategorySelected) {
+    var db, querySnapshot;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
         case 0:
-          containerWords.innerHTML = '';
-          listItem.sort(function (a, b) {
-            if (currentCategorySelected) {
-              var aMatchesCategory = a.category === currentCategorySelected;
-              var bMatchesCategory = b.category === currentCategorySelected;
-              if (aMatchesCategory && !bMatchesCategory) return -1;
-              if (!aMatchesCategory && bMatchesCategory) return 1;
-            }
-            if (a.isPinned && !b.isPinned) return -1;
-            if (!a.isPinned && b.isPinned) return 1;
-            return b.timestamp - a.timestamp;
-          });
-          LoadCategory();
-          html = '';
-          listItem.forEach(function (item) {
-            html += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
-          });
-          containerWords.innerHTML = html;
-          changeIconCustomTheme(darkTheme);
-          exampleWrappers = document.querySelectorAll('.example-wrapper');
-          exampleWrappers.forEach(function (exampleDiv) {
-            var readMoreBtn = exampleDiv.nextElementSibling;
-            if (exampleDiv.scrollHeight > 350) {
-              readMoreBtn.style.display = "inline-block";
-            }
-          });
-        case 9:
-        case "end":
-          return _context10.stop();
-      }
-    }, _callee9);
-  }));
-  return function loadData() {
-    return _ref15.apply(this, arguments);
-  };
-}();
-var backUpdata = function backUpdata() {
-  localStorage.setItem('NotesBackups', JSON.stringify(listItem));
-};
-var renderNotes = /*#__PURE__*/function () {
-  var _ref16 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-    var querySnapshot;
-    return _regeneratorRuntime().wrap(function _callee10$(_context11) {
-      while (1) switch (_context11.prev = _context11.next) {
-        case 0:
-          containerWords.innerHTML = '';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerWords.innerHTML = '';
           listItem = [];
           listItemTemp = [];
-          _context11.prev = 3;
-          loadingOverlay.style.display = '';
-          _context11.next = 7;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "Notes"));
-        case 7:
-          querySnapshot = _context11.sent;
-          querySnapshot.forEach(function (doc) {
-            var data = doc.data();
+          _context.prev = 3;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          _context.next = 8;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "Notes"));
+        case 8:
+          querySnapshot = _context.sent;
+          querySnapshot.forEach(function (d) {
+            var data = d.data();
             listItem.push({
-              id: doc.id,
+              id: d.id,
               Note: data.Note,
               example: data.example,
               isPinned: data === null || data === void 0 ? void 0 : data.isPinned,
@@ -25428,233 +25476,125 @@ var renderNotes = /*#__PURE__*/function () {
               return cat !== currentCategorySelected;
             })));
           }
-          loadData();
+          loadData(categoryPageSize, currentCategorySelected);
           listItemTemp = _toConsumableArray(listItem);
           backUpdata();
-          _context11.next = 21;
+          _context.next = 22;
           break;
-        case 16:
-          _context11.prev = 16;
-          _context11.t0 = _context11["catch"](3);
-          handleAlert(Alert.DANGER, "Error getting documents: " + _context11.t0.message, DurationLength.LONG);
+        case 17:
+          _context.prev = 17;
+          _context.t0 = _context["catch"](3);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error getting documents: " + _context.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           listItemTemp = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
           listItem = _toConsumableArray(listItemTemp);
-        case 21:
-          _context11.prev = 21;
-          loadingOverlay.style.display = 'none';
-          return _context11.finish(21);
-        case 24:
+        case 22:
+          _context.prev = 22;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
+          return _context.finish(22);
+        case 25:
         case "end":
-          return _context11.stop();
+          return _context.stop();
       }
-    }, _callee10, null, [[3, 16, 21, 24]]);
+    }, _callee, null, [[3, 17, 22, 25]]);
   }));
-  return function renderNotes() {
-    return _ref16.apply(this, arguments);
-  };
-}();
-await renderNotes();
-function handleCleanImagesCloudinary() {
-  return _handleCleanImagesCloudinary.apply(this, arguments);
+  return _renderNotes.apply(this, arguments);
 }
-function _handleCleanImagesCloudinary() {
-  _handleCleanImagesCloudinary = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
-    var listImage, querySnapshotImages, unusedImages, _iterator, _step, img, urlParts, uploadIndex, pathAfterUpload, lastPart, publicId, timestamp, params, signature, response, data;
-    return _regeneratorRuntime().wrap(function _callee16$(_context17) {
-      while (1) switch (_context17.prev = _context17.next) {
-        case 0:
-          listImage = [];
-          _context17.next = 3;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "note-images"));
-        case 3:
-          querySnapshotImages = _context17.sent;
-          querySnapshotImages.forEach(function (doc) {
-            var data = doc.data();
-            listImage.push({
-              id: doc.id,
-              url: data.url,
-              signature: data.signature
-            });
-          });
-          if (!(listImage.length === 0)) {
-            _context17.next = 7;
-            break;
-          }
-          return _context17.abrupt("return");
-        case 7:
-          unusedImages = listImage.filter(function (img) {
-            return !listItem.some(function (item) {
-              return item.example.includes(img.url);
-            });
-          });
-          if (!(unusedImages.length && configCloudinary.CLOUDINARY_APISECRET)) {
-            _context17.next = 60;
-            break;
-          }
-          loadingOverlay.style.display = '';
-          _context17.prev = 10;
-          _iterator = _createForOfIteratorHelper(unusedImages);
-          _context17.prev = 12;
-          _iterator.s();
-        case 14:
-          if ((_step = _iterator.n()).done) {
-            _context17.next = 49;
-            break;
-          }
-          img = _step.value;
-          _context17.prev = 16;
-          urlParts = img.url.split('/');
-          uploadIndex = urlParts.findIndex(function (part) {
-            return part === 'upload';
-          });
-          if (!(uploadIndex === -1)) {
-            _context17.next = 21;
-            break;
-          }
-          return _context17.abrupt("continue", 47);
-        case 21:
-          pathAfterUpload = urlParts.slice(uploadIndex + 1);
-          lastPart = pathAfterUpload[pathAfterUpload.length - 1];
-          publicId = lastPart.split('.')[0];
-          timestamp = Math.floor(Date.now() / 1000);
-          params = {
-            public_id: publicId,
-            timestamp: timestamp,
-            invalidate: true
-          };
-          _context17.next = 28;
-          return generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
-        case 28:
-          signature = _context17.sent;
-          _context17.next = 31;
-          return fetch("https://api.cloudinary.com/v1_1/".concat(configCloudinary.CLOUDINARY_CLOUDNAME, "/image/destroy"), {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(_objectSpread(_objectSpread({}, params), {}, {
-              api_key: configCloudinary.CLOUDINARY_APIKEY,
-              signature: signature
-            }))
-          });
-        case 31:
-          response = _context17.sent;
-          _context17.next = 34;
-          return response.json();
-        case 34:
-          data = _context17.sent;
-          if (!(data.result !== 'ok')) {
-            _context17.next = 39;
-            break;
-          }
-          handleAlert(Alert.DANGER, 'Failed to delete image from Cloudinary', DurationLength.LONG);
-          _context17.next = 42;
-          break;
-        case 39:
-          _context17.next = 41;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "note-images/".concat(img.id)));
-        case 41:
-          handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
-        case 42:
-          _context17.next = 47;
-          break;
-        case 44:
-          _context17.prev = 44;
-          _context17.t0 = _context17["catch"](16);
-          handleAlert(Alert.DANGER, 'Error: ' + _context17.t0.message, DurationLength.LONG);
-        case 47:
-          _context17.next = 14;
-          break;
-        case 49:
-          _context17.next = 54;
-          break;
-        case 51:
-          _context17.prev = 51;
-          _context17.t1 = _context17["catch"](12);
-          _iterator.e(_context17.t1);
-        case 54:
-          _context17.prev = 54;
-          _iterator.f();
-          return _context17.finish(54);
-        case 57:
-          _context17.prev = 57;
-          loadingOverlay.style.display = 'none';
-          return _context17.finish(57);
-        case 60:
-        case "end":
-          return _context17.stop();
-      }
-    }, _callee16, null, [[10,, 57, 60], [12, 51, 54, 57], [16, 44]]);
-  }));
-  return _handleCleanImagesCloudinary.apply(this, arguments);
+function backUpdata() {
+  localStorage.setItem('NotesBackups', JSON.stringify(listItem));
 }
-function handleSubmit(_x7) {
-  return _handleSubmit.apply(this, arguments);
+function loadData(categoryPageSize, currentCategorySelected) {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerWords.innerHTML = '';
+  listItem.sort(function (a, b) {
+    if (currentCategorySelected) {
+      var aMatchesCategory = a.category === currentCategorySelected;
+      var bMatchesCategory = b.category === currentCategorySelected;
+      if (aMatchesCategory && !bMatchesCategory) return -1;
+      if (!aMatchesCategory && bMatchesCategory) return 1;
+    }
+    if (a.isPinned && !b.isPinned) return -1;
+    if (!a.isPinned && b.isPinned) return 1;
+    return b.timestamp - a.timestamp;
+  });
+  LoadCategory(categoryPageSize, currentCategorySelected);
+  var html = '';
+  listItem.forEach(function (item) {
+    html += "\n    <div class=\"card mb-2\">\n      <div class=\"card-body\">\n        <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n          <div class=\"d-flex align-items-center\">\n            <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n            <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n              <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n            </button>\n          </div>\n          <div class=\"btn-group\">\n            <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-edit\">\n              <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n            </button>\n            <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-delete\">\n              <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n            </button>\n          </div>\n        </div>\n\n        <div class=\"d-flex align-items-center justify-content-between mt-2\">\n          <div class=\"d-flex gap-2\">\n            <p class=\"card-text font-monospace fst-italic small mb-0\">\n              ").concat(item.timestamp.toDate().toLocaleString(), "\n            </p>\n            ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n          </div>\n          <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n            <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n          </button>\n        </div>\n      <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n        ").concat(item.example, "\n      </div>\n      <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n        more...\n      </button>\n      </div>\n    </div>\n    ");
+  });
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerWords.innerHTML = html;
+  (0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_3__.changeIconCustomTheme)((0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_3__.isDarkTheme)());
+  var exampleWrappers = document.querySelectorAll('.example-wrapper');
+  exampleWrappers.forEach(function (exampleDiv) {
+    var readMoreBtn = exampleDiv.nextElementSibling;
+    if (exampleDiv.scrollHeight > 350) {
+      readMoreBtn.style.display = "inline-block";
+    }
+  });
 }
-function _handleSubmit() {
-  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17(e) {
-    return _regeneratorRuntime().wrap(function _callee17$(_context18) {
-      while (1) switch (_context18.prev = _context18.next) {
-        case 0:
-          e.preventDefault();
-          e.stopPropagation();
-          _context18.next = 4;
-          return handleUpsertNote(e, currentNoteId);
-        case 4:
-        case "end":
-          return _context18.stop();
-      }
-    }, _callee17);
-  }));
-  return _handleSubmit.apply(this, arguments);
+function LoadCategory(categoryPageSize, currentCategorySelected) {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.categoriesList.innerHTML = '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.innerHTML = '';
+  var COLOR = ['primary', 'secondary', 'success', 'danger', 'dark'];
+  if (listCategories.length > 0) {
+    var badges = '';
+    for (var i = 0; i < categoryPageSize && i < listCategories.length; i++) {
+      var category = listCategories[i];
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.categoriesList.innerHTML += "<option value=\"".concat(category, "\">").concat(category, "</option>");
+      var colorClass = COLOR[i % COLOR.length];
+      var isSelected = currentCategorySelected === category ? 'selected' : '';
+      badges += "\n        <span class=\"badge rounded-pill bg-".concat(colorClass, " me-1 mb-2 button-click-category user-select-none ").concat(isSelected, "\">").concat(category, "</span>\n      ");
+    }
+    if (categoryPageSize < listCategories.length) {
+      badges += "\n        <span class=\"badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark\">...+".concat(Math.min(listCategories.length - categoryPageSize, 5), "</span>\n      ");
+    }
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.innerHTML = badges;
+  }
 }
-;
-function handleUpsertNote(_x8, _x9) {
+function handleUpsertNote(_x3, _x4, _x5, _x6) {
   return _handleUpsertNote.apply(this, arguments);
 }
 function _handleUpsertNote() {
-  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee18(e, idNote) {
-    var id, Note, example, category, data;
-    return _regeneratorRuntime().wrap(function _callee18$(_context19) {
-      while (1) switch (_context19.prev = _context19.next) {
+  _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e, idNote, isClickNewButton, onCleanImages) {
+    var id, Note, example, category, data, db;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
           id = idNote;
           Note = e.target.Note.value;
           example = tinymce.get('editor').getContent();
           category = e.target.category.value.trim();
-          loadingOverlay.style.display = '';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
           data = {
             Note: Note,
             example: example,
             timestamp: new Date(),
             category: category
           };
-          _context19.prev = 6;
+          _context2.prev = 6;
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
           if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
-            _context19.next = 12;
+            _context2.next = 13;
             break;
           }
-          _context19.next = 10;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "Notes"), data);
-        case 10:
-          _context19.next = 14;
+          _context2.next = 11;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "Notes"), data);
+        case 11:
+          _context2.next = 15;
           break;
-        case 12:
-          _context19.next = 14;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "Notes/".concat(id)), data);
-        case 14:
-          currentCategorySelected = category;
-          _context19.next = 17;
-          return renderNotes();
+        case 13:
+          _context2.next = 15;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(id)), data);
+        case 15:
+          _context2.next = 17;
+          return renderNotes(5, category);
         case 17:
-          handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
-          btnCleanImagesCloudinary.click();
-          _context19.next = 27;
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, "Note added successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+          if (onCleanImages) onCleanImages();
+          _context2.next = 27;
           break;
         case 21:
-          _context19.prev = 21;
-          _context19.t0 = _context19["catch"](6);
-          handleAlert(Alert.DANGER, "Error adding document: " + _context19.t0.message, DurationLength.LONG);
+          _context2.prev = 21;
+          _context2.t0 = _context2["catch"](6);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error adding document: " + _context2.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           listItemTemp.push({
             Note: Note,
             example: example,
@@ -25663,26 +25603,138 @@ function _handleUpsertNote() {
           listItem = _toConsumableArray(listItemTemp);
           backUpdata();
         case 27:
-          _context19.prev = 27;
-          loadingOverlay.style.display = 'none';
-          btnCloseModal.click();
-          return _context19.finish(27);
+          _context2.prev = 27;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.btnCloseModal.click();
+          return _context2.finish(27);
         case 31:
         case "end":
-          return _context19.stop();
+          return _context2.stop();
       }
-    }, _callee18, null, [[6, 21, 27, 31]]);
+    }, _callee2, null, [[6, 21, 27, 31]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }
-function handleInputSearch(e) {
-  var value = e.target.value.toLowerCase();
-  labelSwitch.textContent = "Notes";
-  switchCheckChecked.checked = false;
+function deleteNote(_x7, _x8) {
+  return _deleteNote.apply(this, arguments);
+}
+function _deleteNote() {
+  _deleteNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(NoteId, switchCheckChecked) {
+    var db;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          if (!switchCheckChecked.checked) {
+            _context3.next = 3;
+            break;
+          }
+          return _context3.abrupt("return");
+        case 3:
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          _context3.next = 7;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(NoteId)));
+        case 7:
+          _context3.next = 9;
+          return renderNotes(5, null);
+        case 9:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Note removed successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+          _context3.next = 15;
+          break;
+        case 12:
+          _context3.prev = 12;
+          _context3.t0 = _context3["catch"](0);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error removing document: " + _context3.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 15:
+          _context3.prev = 15;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.btnModalConfirmClose.click();
+          return _context3.finish(15);
+        case 19:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[0, 12, 15, 19]]);
+  }));
+  return _deleteNote.apply(this, arguments);
+}
+function togglePin(_x9) {
+  return _togglePin.apply(this, arguments);
+}
+function _togglePin() {
+  _togglePin = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(NoteId) {
+    var note, isPinned, db;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          note = listItem.find(function (item) {
+            return item.id === NoteId;
+          });
+          note.isPinned = !note.isPinned;
+          isPinned = note.isPinned;
+          _context4.prev = 3;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          _context4.next = 8;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(NoteId)), {
+            isPinned: note.isPinned
+          });
+        case 8:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.SHORT);
+          loadData(5, null);
+          _context4.next = 15;
+          break;
+        case 12:
+          _context4.prev = 12;
+          _context4.t0 = _context4["catch"](3);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error pinning note: " + _context4.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 15:
+          _context4.prev = 15;
+          backUpdata();
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
+          return _context4.finish(15);
+        case 19:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4, null, [[3, 12, 15, 19]]);
+  }));
+  return _togglePin.apply(this, arguments);
+}
+function handleInputSearch(value) {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.labelSwitch.textContent = "Notes";
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.switchCheckChecked.checked = false;
   listItem = listItemTemp.filter(function (item) {
     return item.Note.toLowerCase().includes(value) || item.otherExample.toLowerCase().includes(value);
   });
-  loadData();
+  loadData(5, null);
+}
+function handleCategoryClick(clickedCategory, currentCategorySelected) {
+  var newCategory = currentCategorySelected;
+  if (newCategory === clickedCategory) {
+    newCategory = null;
+  } else {
+    newCategory = clickedCategory;
+  }
+  listItem = _toConsumableArray(listItemTemp);
+  loadData(5, newCategory);
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.scrollToTopBtn.click();
+  return newCategory;
+}
+function expandCategoryPageSize(categoryPageSize) {
+  categoryPageSize += 5;
+  LoadCategory(categoryPageSize, null);
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.scrollTo({
+    top: _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.scrollHeight,
+    behavior: 'smooth'
+  });
+  return categoryPageSize;
+}
+function getNoteById(id) {
+  return listItem.find(function (item) {
+    return item.id === id;
+  });
 }
 function stripHtmlAdvanced(html) {
   html = html.replace(/<\s*br\s*\/?>/gi, '\n').replace(/<\/p\s*>/gi, '\n');
@@ -25700,139 +25752,11 @@ function stripHtmlAdvanced(html) {
     return l;
   }).join('\n');
 }
-function handleClickInContainer(e) {
-  var target = e.target;
-  if (target.matches('.button-click-category')) {
-    var clickedCategory = target.textContent.trim();
-    if (currentCategorySelected === clickedCategory) {
-      currentCategorySelected = null;
-    } else {
-      currentCategorySelected = clickedCategory;
-    }
-    listItem = _toConsumableArray(listItemTemp);
-    loadData();
-    scrollToTopBtn.click();
-  } else if (target.matches('.button-click-category-more')) {
-    categoryPageSize += 5;
-    LoadCategory();
-    containerCategory.scrollTo({
-      top: containerCategory.scrollHeight,
-      behavior: 'smooth'
-    });
-  }
-}
-function handleContainerEventClick(_x10) {
-  return _handleContainerEventClick.apply(this, arguments);
-}
-function _handleContainerEventClick() {
-  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee19(e) {
-    var id, NoteId, Note, _NoteId, _NoteId2, _Note, isPinned, _NoteId3, exampleWrapper, readMoreButton;
-    return _regeneratorRuntime().wrap(function _callee19$(_context20) {
-      while (1) switch (_context20.prev = _context20.next) {
-        case 0:
-          id = e.target.id;
-          if (!id.includes('edit')) {
-            _context20.next = 12;
-            break;
-          }
-          NoteId = id.split('-')[1];
-          Note = listItem.find(function (item) {
-            return item.id === NoteId;
-          });
-          document.querySelector('#Note').value = Note.Note;
-          tinymce.get('editor').setContent(Note.example);
-          document.querySelector('#category').value = Note.category || '';
-          isClickNewButton = false;
-          currentNoteId = NoteId;
-          btnOpenModal.click();
-          _context20.next = 47;
-          break;
-        case 12:
-          if (!id.includes('delete')) {
-            _context20.next = 19;
-            break;
-          }
-          currentNoteId = id.split('-')[1];
-          isClickNewButton = true;
-          btnModalConfirm.click();
-          btnDelete.addEventListener('click', _handleDeleteNote, {
-            once: true
-          });
-          _context20.next = 47;
-          break;
-        case 19:
-          if (!id.includes('copy')) {
-            _context20.next = 24;
-            break;
-          }
-          _NoteId = id.split('-')[1];
-          onClickCopy(_NoteId);
-          _context20.next = 47;
-          break;
-        case 24:
-          if (!id.includes('pin')) {
-            _context20.next = 46;
-            break;
-          }
-          _NoteId2 = id.split('-')[1];
-          _Note = listItem.find(function (item) {
-            return item.id === _NoteId2;
-          });
-          _Note.isPinned = !_Note.isPinned;
-          isPinned = _Note.isPinned;
-          _context20.prev = 29;
-          loadingOverlay.style.display = '';
-          _context20.next = 33;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "Notes/".concat(_NoteId2)), {
-            isPinned: _Note.isPinned
-          });
-        case 33:
-          handleAlert(Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), DurationLength.SHORT);
-          loadData();
-          _context20.next = 40;
-          break;
-        case 37:
-          _context20.prev = 37;
-          _context20.t0 = _context20["catch"](29);
-          handleAlert(Alert.DANGER, "Error pinning note: " + _context20.t0.message, DurationLength.LONG);
-        case 40:
-          _context20.prev = 40;
-          backUpdata();
-          loadingOverlay.style.display = 'none';
-          return _context20.finish(40);
-        case 44:
-          _context20.next = 47;
-          break;
-        case 46:
-          if (id.includes('readMore')) {
-            _NoteId3 = id.split('-')[1];
-            exampleWrapper = document.querySelector("#example-".concat(_NoteId3));
-            readMoreButton = document.querySelector("#readMore-".concat(_NoteId3));
-            exampleWrapper.classList.toggle("expanded");
-            if (exampleWrapper.classList.contains("expanded")) {
-              readMoreButton.textContent = 'less';
-            } else {
-              readMoreButton.textContent = 'more...';
-              readMoreButton.scrollIntoView({
-                behavior: 'smooth'
-              });
-            }
-          }
-        case 47:
-        case "end":
-          return _context20.stop();
-      }
-    }, _callee19, null, [[29, 37, 40, 44]]);
-  }));
-  return _handleContainerEventClick.apply(this, arguments);
-}
 function stripHtmlAdvancedToCopy(html) {
   html = html.replace(/<\s*br\s*\/?>/gi, '\n').replace(/<\/p\s*>/gi, '\n');
   var temp = document.createElement("div");
   temp.innerHTML = html;
   function processNode(node) {
-    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var text = '';
     if (node.nodeType === Node.TEXT_NODE) {
       return node.nodeValue;
     }
@@ -25862,7 +25786,7 @@ function stripHtmlAdvancedToCopy(html) {
         return processNode(child);
       }).join('');
     }
-    return text;
+    return '';
   }
   var text = processNode(temp);
   var lines = text.split(/\n+/).map(function (line) {
@@ -25880,177 +25804,353 @@ function stripHtmlAdvancedToCopy(html) {
     return l;
   }).join('\n');
 }
-function onClickCopy(id) {
-  var item = listItem.find(function (item) {
-    return item.id === id;
-  });
-  handleAlert(Alert.INFO, "Text copied to clipboard", DurationLength.SHORT);
-  navigator.clipboard.writeText(stripHtmlAdvancedToCopy(item.example));
+
+/***/ }),
+
+/***/ "./src/script.js":
+/*!***********************!*\
+  !*** ./src/script.js ***!
+  \***********************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config/dom.js */ "./src/config/dom.js");
+/* harmony import */ var _ui_theme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/theme.js */ "./src/ui/theme.js");
+/* harmony import */ var _managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./managers/firebase.js */ "./src/managers/firebase.js");
+/* harmony import */ var _managers_notes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./managers/notes.js */ "./src/managers/notes.js");
+/* harmony import */ var _managers_cloudinary_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./managers/cloudinary.js */ "./src/managers/cloudinary.js");
+/* harmony import */ var _managers_env_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./managers/env.js */ "./src/managers/env.js");
+/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/alert.js */ "./src/ui/alert.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
+function _regeneratorAsync(n, e, r, t, o) { var a = _regeneratorAsyncGen(n, e, r, t, o); return a.next().then(function (n) { return n.done ? n.value : a.next(); }); }
+function _regeneratorAsyncGen(r, e, t, o, n) { return new _regeneratorAsyncIterator(_regenerator().w(r, e, t, o), n || Promise); }
+function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c = t[r](o), u = c.value; return u instanceof _OverloadYield ? e.resolve(u.v).then(function (t) { n("next", t, i, f); }, function (t) { n("throw", t, i, f); }) : e.resolve(u).then(function (t) { c.value = t, i(c); }, function (t) { return n("throw", t, i, f); }); } catch (t) { f(t); } } var r; this.next || (_regeneratorDefine2(_regeneratorAsyncIterator.prototype), _regeneratorDefine2(_regeneratorAsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () { return this; })), _regeneratorDefine2(this, "_invoke", function (t, o, i) { function f() { return new e(function (e, r) { n(t, i, e, r); }); } return r = r ? r.then(f, f) : f(); }, !0); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _OverloadYield(e, d) { this.v = e, this.k = d; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+
+
+
+
+(0,_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.initDOM)();
+var isClickNewButton = true;
+var currentNoteId = null;
+var currentCategorySelected = null;
+var categoryPageSize = 5;
+var dataEnv = JSON.parse(localStorage.getItem('envVariables')) || [];
+var localVarCloudinaryConfig = JSON.parse(localStorage.getItem('envCloudinary')) || {};
+function setDataEnv(newData) {
+  dataEnv = newData;
 }
-var _handleDeleteNote = /*#__PURE__*/function () {
-  var _ref17 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+function setLocalVarCloudinaryConfig(cfg) {
+  localVarCloudinaryConfig = cfg;
+  localStorage.setItem('envCloudinary', JSON.stringify(cfg));
+}
+function onNotesRendered() {
+  return _onNotesRendered.apply(this, arguments);
+}
+function _onNotesRendered() {
+  _onNotesRendered = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+    return _regeneratorRuntime().wrap(function _callee6$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
+        case 0:
+          _context7.next = 2;
+          return (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.renderNotes)(categoryPageSize, currentCategorySelected);
+        case 2:
+        case "end":
+          return _context7.stop();
+      }
+    }, _callee6);
+  }));
+  return _onNotesRendered.apply(this, arguments);
+}
+(0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_1__.initTheme)(function (editor) {
+  setupTinyMCEPasteHandler(editor);
+});
+await (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.initFirebase)(localVarCloudinaryConfig, dataEnv, onNotesRendered);
+(0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.initializeEnvDisplay)(dataEnv, localVarCloudinaryConfig);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.addEventListener('click', function () {
+  return (0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_1__.toggleTheme)(function (editor) {
+    setupTinyMCEPasteHandler(editor);
+  });
+});
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnRefresh.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+  return _regeneratorRuntime().wrap(function _callee$(_context) {
+    while (1) switch (_context.prev = _context.next) {
+      case 0:
+        _context.next = 2;
+        return (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.renderNotes)(categoryPageSize, currentCategorySelected);
+      case 2:
+      case "end":
+        return _context.stop();
+    }
+  }, _callee);
+})));
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.createOrUpdateNoteForm.addEventListener('submit', handleSubmit);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnCloseModal.addEventListener('click', handleReset);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.searchInput.addEventListener('input', handleInputSearchWrapper);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.containerWords.addEventListener('click', handleContainerEventClick);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.containerWords.addEventListener('scroll', handleContainerScroll);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.scrollToTopBtn.addEventListener('click', scrollToTop);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnSaveEnv.addEventListener('click', handleLoadEnvWrapper);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.containerCategory.addEventListener('click', handleClickInContainer);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnCleanImagesCloudinary.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+  return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+    while (1) switch (_context2.prev = _context2.next) {
+      case 0:
+        _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnCleanImagesCloudinary.disabled = true;
+        _context2.next = 3;
+        return (0,_managers_cloudinary_js__WEBPACK_IMPORTED_MODULE_4__.handleCleanImagesCloudinary)((0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.getListItem)(), function (loading) {
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.loadingOverlay.style.display = loading ? '' : 'none';
+        });
+      case 3:
+        _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnCleanImagesCloudinary.disabled = false;
+      case 4:
+      case "end":
+        return _context2.stop();
+    }
+  }, _callee2);
+})));
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnBackEnv.addEventListener('click', handleBackEnvWrapper);
+_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.createNote.addEventListener('click', function (e) {
+  if (e.target !== e.currentTarget) {
+    e.stopPropagation();
+    return;
+  }
+  handleReset();
+});
+function handleReset() {
+  isClickNewButton = true;
+  currentNoteId = null;
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.createOrUpdateNoteForm.reset();
+}
+function handleSubmit(_x) {
+  return _handleSubmit.apply(this, arguments);
+}
+function _handleSubmit() {
+  _handleSubmit = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7(e) {
+    return _regeneratorRuntime().wrap(function _callee7$(_context8) {
+      while (1) switch (_context8.prev = _context8.next) {
+        case 0:
+          e.preventDefault();
+          e.stopPropagation();
+          _context8.next = 4;
+          return (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.handleUpsertNote)(e, currentNoteId, isClickNewButton, function () {
+            _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnCleanImagesCloudinary.click();
+          });
+        case 4:
+        case "end":
+          return _context8.stop();
+      }
+    }, _callee7);
+  }));
+  return _handleSubmit.apply(this, arguments);
+}
+function handleContainerEventClick(_x2) {
+  return _handleContainerEventClick.apply(this, arguments);
+}
+function _handleContainerEventClick() {
+  _handleContainerEventClick = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8(e) {
+    var id, NoteId, note, _NoteId, _NoteId2, _NoteId3, exampleWrapper, readMoreButton;
+    return _regeneratorRuntime().wrap(function _callee8$(_context9) {
+      while (1) switch (_context9.prev = _context9.next) {
+        case 0:
+          id = e.target.id;
+          if (!id.includes('edit')) {
+            _context9.next = 12;
+            break;
+          }
+          NoteId = id.split('-')[1];
+          note = (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.getNoteById)(NoteId);
+          document.querySelector('#Note').value = note.Note;
+          tinymce.get('editor').setContent(note.example);
+          document.querySelector('#category').value = note.category || '';
+          isClickNewButton = false;
+          currentNoteId = NoteId;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnOpenModal.click();
+          _context9.next = 31;
+          break;
+        case 12:
+          if (!id.includes('delete')) {
+            _context9.next = 19;
+            break;
+          }
+          currentNoteId = id.split('-')[1];
+          isClickNewButton = true;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnModalConfirm.click();
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete.addEventListener('click', handleDeleteNote, {
+            once: true
+          });
+          _context9.next = 31;
+          break;
+        case 19:
+          if (!id.includes('copy')) {
+            _context9.next = 24;
+            break;
+          }
+          _NoteId = id.split('-')[1];
+          onClickCopy(_NoteId);
+          _context9.next = 31;
+          break;
+        case 24:
+          if (!id.includes('pin')) {
+            _context9.next = 30;
+            break;
+          }
+          _NoteId2 = id.split('-')[1];
+          _context9.next = 28;
+          return (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.togglePin)(_NoteId2);
+        case 28:
+          _context9.next = 31;
+          break;
+        case 30:
+          if (id.includes('readMore')) {
+            _NoteId3 = id.split('-')[1];
+            exampleWrapper = document.querySelector("#example-".concat(_NoteId3));
+            readMoreButton = document.querySelector("#readMore-".concat(_NoteId3));
+            exampleWrapper.classList.toggle("expanded");
+            if (exampleWrapper.classList.contains("expanded")) {
+              readMoreButton.textContent = 'less';
+            } else {
+              readMoreButton.textContent = 'more...';
+              readMoreButton.scrollIntoView({
+                behavior: 'smooth'
+              });
+            }
+          }
+        case 31:
+        case "end":
+          return _context9.stop();
+      }
+    }, _callee8);
+  }));
+  return _handleContainerEventClick.apply(this, arguments);
+}
+function handleDeleteNote() {
+  return _handleDeleteNote.apply(this, arguments);
+}
+function _handleDeleteNote() {
+  _handleDeleteNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+    return _regeneratorRuntime().wrap(function _callee9$(_context10) {
+      while (1) switch (_context10.prev = _context10.next) {
+        case 0:
+          if (!currentNoteId) {
+            _context10.next = 4;
+            break;
+          }
+          _context10.next = 3;
+          return (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.deleteNote)(currentNoteId, _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.switchCheckChecked);
+        case 3:
+          currentNoteId = null;
+        case 4:
+        case "end":
+          return _context10.stop();
+      }
+    }, _callee9);
+  }));
+  return _handleDeleteNote.apply(this, arguments);
+}
+function handleClickInContainer(e) {
+  var target = e.target;
+  if (target.matches('.button-click-category')) {
+    var clickedCategory = target.textContent.trim();
+    currentCategorySelected = (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.handleCategoryClick)(clickedCategory, currentCategorySelected);
+  } else if (target.matches('.button-click-category-more')) {
+    categoryPageSize = (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.expandCategoryPageSize)(categoryPageSize);
+  } else if (target.matches('.btn-move-env') || target.closest('.btn-move-env')) {
+    var envKey = target.closest('.card').querySelector('.card-title h5').textContent;
+    (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.switchEnvAction)(envKey, dataEnv, localVarCloudinaryConfig, function () {
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnSaveEnv.click();
+    });
+  } else if (target.matches('.btn-delete-env') || target.closest('.btn-delete-env')) {
+    var _envKey = target.closest('.card').querySelector('.card-title h5').textContent;
+    var btnConfirmDelete = _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete;
+    btnConfirmDelete.removeEventListener('click', handleDeleteEnvConfirm);
+    btnConfirmDelete.envKeyToDelete = _envKey;
+    btnConfirmDelete.addEventListener('click', handleDeleteEnvConfirm, {
+      once: true
+    });
+  }
+}
+function handleDeleteEnvConfirm() {
+  if (_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete.envKeyToDelete) {
+    (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.removeEnvAction)(_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete.envKeyToDelete, dataEnv, setDataEnv);
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete.envKeyToDelete = null;
+  }
+}
+function handleInputSearchWrapper(e) {
+  var value = e.target.value.toLowerCase();
+  (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.handleInputSearch)(value);
+}
+function onClickCopy(id) {
+  var item = (0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.getNoteById)(id);
+  (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.Alert.INFO, "Text copied to clipboard", _ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.DurationLength.SHORT);
+  navigator.clipboard.writeText((0,_managers_notes_js__WEBPACK_IMPORTED_MODULE_3__.stripHtmlAdvancedToCopy)(item.example));
+}
+function handleContainerScroll() {
+  if (_config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.containerWords.scrollTop > 100) {
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.scrollToTopBtn.style.display = 'block';
+  } else {
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.scrollToTopBtn.style.display = 'none';
+  }
+}
+function scrollToTop() {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.containerWords.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+function handleLoadEnvWrapper() {
+  return _handleLoadEnvWrapper.apply(this, arguments);
+}
+function _handleLoadEnvWrapper() {
+  _handleLoadEnvWrapper = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+    return _regeneratorRuntime().wrap(function _callee10$(_context11) {
+      while (1) switch (_context11.prev = _context11.next) {
+        case 0:
+          _context11.next = 2;
+          return (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.handleLoadEnv)(dataEnv, localVarCloudinaryConfig, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered);
+        case 2:
+        case "end":
+          return _context11.stop();
+      }
+    }, _callee10);
+  }));
+  return _handleLoadEnvWrapper.apply(this, arguments);
+}
+function handleBackEnvWrapper() {
+  return _handleBackEnvWrapper.apply(this, arguments);
+}
+function _handleBackEnvWrapper() {
+  _handleBackEnvWrapper = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
     return _regeneratorRuntime().wrap(function _callee11$(_context12) {
       while (1) switch (_context12.prev = _context12.next) {
         case 0:
-          if (!currentNoteId) {
-            _context12.next = 5;
-            break;
-          }
-          _context12.next = 3;
-          return deleteNote(currentNoteId);
-        case 3:
-          currentNoteId = null;
-          btnDelete.removeEventListener('click', _handleDeleteNote);
-        case 5:
+          _context12.next = 2;
+          return (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.handleBackEnv)(localVarCloudinaryConfig, onNotesRendered);
+        case 2:
         case "end":
           return _context12.stop();
       }
     }, _callee11);
   }));
-  return function handleDeleteNote() {
-    return _ref17.apply(this, arguments);
-  };
-}();
-var deleteNote = /*#__PURE__*/function () {
-  var _ref18 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12(NoteId) {
-    return _regeneratorRuntime().wrap(function _callee12$(_context13) {
-      while (1) switch (_context13.prev = _context13.next) {
-        case 0:
-          _context13.prev = 0;
-          if (!switchCheckChecked.checked) {
-            _context13.next = 3;
-            break;
-          }
-          return _context13.abrupt("return");
-        case 3:
-          loadingOverlay.style.display = '';
-          _context13.next = 6;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "Notes/".concat(NoteId)));
-        case 6:
-          _context13.next = 8;
-          return renderNotes();
-        case 8:
-          handleAlert(Alert.WARNING, "Note removed successfully", DurationLength.MEDIUM);
-          _context13.next = 14;
-          break;
-        case 11:
-          _context13.prev = 11;
-          _context13.t0 = _context13["catch"](0);
-          handleAlert(Alert.DANGER, "Error removing document: " + _context13.t0.message, DurationLength.LONG);
-        case 14:
-          _context13.prev = 14;
-          loadingOverlay.style.display = 'none';
-          btnModalConfirmClose.click();
-          return _context13.finish(14);
-        case 18:
-        case "end":
-          return _context13.stop();
-      }
-    }, _callee12, null, [[0, 11, 14, 18]]);
-  }));
-  return function deleteNote(_x11) {
-    return _ref18.apply(this, arguments);
-  };
-}();
-function handleContainerScroll() {
-  if (containerWords.scrollTop > 100) {
-    scrollToTopBtn.style.display = 'block';
-  } else {
-    scrollToTopBtn.style.display = 'none';
-  }
-}
-function scrollToTop() {
-  containerWords.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-}
-function handleLoadEnv() {
-  return _handleLoadEnv.apply(this, arguments);
-}
-function _handleLoadEnv() {
-  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
-    var envText, env, missingCloudinaryKeys, success;
-    return _regeneratorRuntime().wrap(function _callee20$(_context21) {
-      while (1) switch (_context21.prev = _context21.next) {
-        case 0:
-          loadingOverlay.style.display = 'block';
-          envText = envVariables.value.trim();
-          if (envText) {
-            _context21.next = 6;
-            break;
-          }
-          handleAlert(Alert.WARNING, "Please enter environment variables", DurationLength.SHORT);
-          loadingOverlay.style.display = 'none';
-          return _context21.abrupt("return");
-        case 6:
-          _context21.prev = 6;
-          env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envText, true);
-          configEnv = {
-            APIKEY: env.APIKEY,
-            AUTHDOMAIN: env.AUTHDOMAIN,
-            PROJECTID: env.PROJECTID,
-            STORAGEBUCKET: env.STORAGEBUCKET,
-            MESSAGINGSENDERID: env.MESSAGINGSENDERID,
-            APPID: env.APPID
-          };
-          localVarCloudinaryConfig = {
-            CLOUDINARY_CLOUDNAME: env.CLOUDINARY_CLOUDNAME,
-            CLOUDINARY_UPLOADPRESET: env.CLOUDINARY_UPLOADPRESET,
-            CLOUDINARY_APIKEY: env.CLOUDINARY_APIKEY,
-            CLOUDINARY_APISECRET: env.CLOUDINARY_APISECRET
-          };
-          missingCloudinaryKeys = [];
-          if (!localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME || typeof localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_CLOUDNAME.trim()) {
-            missingCloudinaryKeys.push('CLOUDINARY_CLOUDNAME');
-          }
-          if (!localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET || typeof localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_UPLOADPRESET.trim()) {
-            missingCloudinaryKeys.push('CLOUDINARY_UPLOADPRESET');
-          }
-          if (!localVarCloudinaryConfig.CLOUDINARY_APIKEY || typeof localVarCloudinaryConfig.CLOUDINARY_APIKEY !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_APIKEY.trim()) {
-            missingCloudinaryKeys.push('CLOUDINARY_APIKEY');
-          }
-          if (!localVarCloudinaryConfig.CLOUDINARY_APISECRET || typeof localVarCloudinaryConfig.CLOUDINARY_APISECRET !== 'string' || !localVarCloudinaryConfig.CLOUDINARY_APISECRET.trim()) {
-            missingCloudinaryKeys.push('CLOUDINARY_APISECRET');
-          }
-          if (missingCloudinaryKeys.length > 0) {
-            handleAlert(Alert.WARNING, "Missing Cloudinary config: ".concat(missingCloudinaryKeys.join(', ')), DurationLength.LONG);
-          } else {
-            localStorage.setItem('envCloudinary', JSON.stringify(localVarCloudinaryConfig));
-          }
-          _context21.next = 18;
-          return resetFirebaseApp(configEnv);
-        case 18:
-          success = _context21.sent;
-          if (success) {
-            btnCloseModalEnv.click();
-          }
-          _context21.next = 25;
-          break;
-        case 22:
-          _context21.prev = 22;
-          _context21.t0 = _context21["catch"](6);
-          handleAlert(Alert.DANGER, "Failed to update configuration: ".concat(_context21.t0.message), DurationLength.LONG);
-        case 25:
-          _context21.prev = 25;
-          loadingOverlay.style.display = 'none';
-          switchCheckChecked.checked = false;
-          return _context21.finish(25);
-        case 29:
-        case "end":
-          return _context21.stop();
-      }
-    }, _callee20, null, [[6, 22, 25, 29]]);
-  }));
-  return _handleLoadEnv.apply(this, arguments);
+  return _handleBackEnvWrapper.apply(this, arguments);
 }
 function AutoUpdateEditorContent() {
   chrome.storage.local.get(['selectedText', 'addToNote', 'category', 'title'], function (result) {
     if (result.addToNote && result.selectedText) {
       try {
         if (tinymce.get('editor')) {
-          var newContent = result.selectedText;
-          tinymce.get('editor').setContent(newContent);
+          tinymce.get('editor').setContent(result.selectedText);
           document.getElementById('category').value = result.category || '';
           document.getElementById('Note').value = result.title || '';
           var submitButton = document.getElementById('submit-note');
@@ -26058,11 +26158,11 @@ function AutoUpdateEditorContent() {
             submitButton.click();
             currentCategorySelected = result.category || null;
           }
-          handleAlert(Alert.INFO, 'Selected text added to editor, now saving to Notes...', DurationLength.MEDIUM);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.Alert.INFO, 'Selected text added to editor, now saving to Notes...', _ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.DurationLength.MEDIUM);
         }
         chrome.storage.local.remove(['selectedText', 'addToNote']);
       } catch (error) {
-        handleAlert(Alert.DANGER, 'Failed to add text to note', DurationLength.SHORT);
+        (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.Alert.DANGER, 'Failed to add text to note', _ui_alert_js__WEBPACK_IMPORTED_MODULE_6__.DurationLength.SHORT);
       }
     }
   });
@@ -26079,8 +26179,350 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     return true;
   }
 });
+function setupTinyMCEPasteHandler(editor) {
+  editor.on('paste', /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(e) {
+      var items, handled, _loop, _ret, i;
+      return _regeneratorRuntime().wrap(function _callee5$(_context6) {
+        while (1) switch (_context6.prev = _context6.next) {
+          case 0:
+            items = e.clipboardData && e.clipboardData.items;
+            if (items) {
+              _context6.next = 3;
+              break;
+            }
+            return _context6.abrupt("return");
+          case 3:
+            handled = false;
+            _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
+              var item, file, progressText, formData, configCloudinary, cloudName, uploadPreset, api_key, content, updatedContent;
+              return _regeneratorRuntime().wrap(function _loop$(_context5) {
+                while (1) switch (_context5.prev = _context5.next) {
+                  case 0:
+                    item = items[i];
+                    if (!item.type.startsWith("image/")) {
+                      _context5.next = 21;
+                      break;
+                    }
+                    handled = true;
+                    e.preventDefault();
+                    file = item.getAsFile();
+                    progressText = '***Image Uploading....***';
+                    editor.insertContent(progressText);
+                    formData = new FormData();
+                    formData.append('file', file);
+                    configCloudinary = (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.getConfigCloudinary)();
+                    cloudName = ((configCloudinary === null || configCloudinary === void 0 ? void 0 : configCloudinary.CLOUDINARY_CLOUDNAME) || '').trim();
+                    uploadPreset = ((configCloudinary === null || configCloudinary === void 0 ? void 0 : configCloudinary.CLOUDINARY_UPLOADPRESET) || '').trim();
+                    api_key = ((configCloudinary === null || configCloudinary === void 0 ? void 0 : configCloudinary.CLOUDINARY_APIKEY) || '').trim();
+                    if (!(!cloudName || !uploadPreset || !api_key)) {
+                      _context5.next = 18;
+                      break;
+                    }
+                    content = editor.getContent();
+                    updatedContent = content.replace(progressText, '***Please configure Cloudinary settings to have best performance***');
+                    editor.setContent(updatedContent);
+                    return _context5.abrupt("return", {
+                      v: void 0
+                    });
+                  case 18:
+                    formData.append("api_key", api_key);
+                    formData.append("upload_preset", uploadPreset);
+                    fetch("https://api.cloudinary.com/v1_1/".concat(cloudName, "/image/upload"), {
+                      method: 'POST',
+                      body: formData
+                    }).then(/*#__PURE__*/function () {
+                      var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
+                        var data, _data;
+                        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                          while (1) switch (_context3.prev = _context3.next) {
+                            case 0:
+                              _context3.prev = 0;
+                              _context3.next = 3;
+                              return response.json();
+                            case 3:
+                              data = _context3.sent;
+                              _context3.next = 9;
+                              break;
+                            case 6:
+                              _context3.prev = 6;
+                              _context3.t0 = _context3["catch"](0);
+                              data = null;
+                            case 9:
+                              if (response.ok) {
+                                _context3.next = 12;
+                                break;
+                              }
+                              console.error('Cloudinary upload failed', {
+                                status: response.status,
+                                data: data
+                              });
+                              throw new Error(((_data = data) === null || _data === void 0 || (_data = _data.error) === null || _data === void 0 ? void 0 : _data.message) || "Upload failed with status ".concat(response.status));
+                            case 12:
+                              return _context3.abrupt("return", data);
+                            case 13:
+                            case "end":
+                              return _context3.stop();
+                          }
+                        }, _callee3, null, [[0, 6]]);
+                      }));
+                      return function (_x4) {
+                        return _ref4.apply(this, arguments);
+                      };
+                    }()).then(/*#__PURE__*/function () {
+                      var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data) {
+                        var content, widthAttr, heightAttr, imgTxt, _updatedContent, _updatedContent2;
+                        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+                          while (1) switch (_context4.prev = _context4.next) {
+                            case 0:
+                              content = editor.getContent();
+                              if (!(data && data.secure_url)) {
+                                _context4.next = 11;
+                                break;
+                              }
+                              widthAttr = data.width ? " width=\"".concat(data.width, "\"") : '';
+                              heightAttr = data.height ? " height=\"".concat(data.height, "\"") : '';
+                              imgTxt = "<img src=\"".concat(data.secure_url, "\" alt=\"image\"").concat(widthAttr).concat(heightAttr, " />");
+                              _updatedContent = content.replace(progressText, imgTxt);
+                              editor.setContent(_updatedContent);
+                              _context4.next = 9;
+                              return (0,_managers_cloudinary_js__WEBPACK_IMPORTED_MODULE_4__.handleUploadImageUrl)({
+                                url: data.secure_url,
+                                signature: data.signature
+                              });
+                            case 9:
+                              _context4.next = 13;
+                              break;
+                            case 11:
+                              _updatedContent2 = content.replace(progressText, '***Image upload failed***');
+                              editor.setContent(_updatedContent2);
+                            case 13:
+                            case "end":
+                              return _context4.stop();
+                          }
+                        }, _callee4);
+                      }));
+                      return function (_x5) {
+                        return _ref5.apply(this, arguments);
+                      };
+                    }())["catch"](function (err) {
+                      console.error('Cloudinary upload error', err);
+                      var content = editor.getContent();
+                      var updatedContent = content.replace(progressText, '***Image upload failed***');
+                      editor.setContent(updatedContent);
+                    });
+                  case 21:
+                  case "end":
+                    return _context5.stop();
+                }
+              }, _loop);
+            });
+            i = 0;
+          case 6:
+            if (!(i < items.length)) {
+              _context6.next = 14;
+              break;
+            }
+            return _context6.delegateYield(_loop(), "t0", 8);
+          case 8:
+            _ret = _context6.t0;
+            if (!_ret) {
+              _context6.next = 11;
+              break;
+            }
+            return _context6.abrupt("return", _ret.v);
+          case 11:
+            i++;
+            _context6.next = 6;
+            break;
+          case 14:
+            if (handled) {
+              e.preventDefault();
+            }
+          case 15:
+          case "end":
+            return _context6.stop();
+        }
+      }, _callee5);
+    }));
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
+    };
+  }());
+}
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ "./src/ui/alert.js":
+/*!*************************!*\
+  !*** ./src/ui/alert.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Alert: () => (/* binding */ Alert),
+/* harmony export */   DurationLength: () => (/* binding */ DurationLength),
+/* harmony export */   handleAlert: () => (/* binding */ handleAlert)
+/* harmony export */ });
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
+
+var Alert = {
+  WARNING: "alertWarning",
+  INFO: "alertInfo",
+  DANGER: "alertDanger"
+};
+var DurationLength = {
+  SHORT: 1000,
+  MEDIUM: 2000,
+  LONG: 3000
+};
+var currentAlert = null;
+function handleAlert(type, message, duration) {
+  if (currentAlert) {
+    clearTimeout(currentAlert);
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertWarning.classList.remove('in');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertInfo.classList.remove('in');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertDanger.classList.remove('in');
+  }
+  switch (type) {
+    case Alert.WARNING:
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertWarning.textContent = message;
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertWarning.classList.add('in');
+      break;
+    case Alert.INFO:
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertInfo.textContent = message;
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertInfo.classList.add('in');
+      break;
+    case Alert.DANGER:
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertDanger.textContent = message;
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertDanger.classList.add('in');
+      break;
+  }
+  currentAlert = setTimeout(function () {
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertWarning.classList.remove('in');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertInfo.classList.remove('in');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.alertDanger.classList.remove('in');
+    currentAlert = null;
+  }, duration);
+}
+
+/***/ }),
+
+/***/ "./src/ui/theme.js":
+/*!*************************!*\
+  !*** ./src/ui/theme.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   applyTinyMCETheme: () => (/* binding */ applyTinyMCETheme),
+/* harmony export */   changeIconCustomTheme: () => (/* binding */ changeIconCustomTheme),
+/* harmony export */   initTheme: () => (/* binding */ initTheme),
+/* harmony export */   isDarkTheme: () => (/* binding */ isDarkTheme),
+/* harmony export */   toggleTheme: () => (/* binding */ toggleTheme)
+/* harmony export */ });
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
+
+var darkTheme = localStorage.getItem('dark-theme') === 'true';
+function isDarkTheme() {
+  return darkTheme;
+}
+function applyTinyMCETheme(isDark, onEditorInit) {
+  tinymce.init({
+    selector: '#editor',
+    menubar: false,
+    plugins: ['lists', 'table', 'fullscreen'],
+    toolbar: 'bold italic underline | forecolor backcolor | fullscreen | align lineheight | checklist numlist bullist | table',
+    skin: isDark ? 'oxide-dark' : 'oxide',
+    setup: function setup(editor) {
+      editor.on('init', function () {
+        editor.getBody().style.backgroundColor = isDark ? '#343a40' : '#ffffff';
+        editor.getBody().style.color = isDark ? '#ffffff' : '#000000';
+        editor.getBody().style.fontSize = '18px';
+        if (onEditorInit) onEditorInit(editor);
+      });
+    }
+  });
+}
+function changeIconCustomTheme(isDark) {
+  if (isDark) {
+    document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
+      el.src = '/icons/copy-icon-light.svg';
+    });
+    document.querySelectorAll('[id^="pinIcon-"]').forEach(function (el) {
+      var isPinned = el.src.includes('pinned');
+      el.src = isPinned ? '/icons/pinned-icon-yellow.svg' : '/icons/pin-white.svg';
+    });
+    document.querySelectorAll('[id^="deleteIcon-"]').forEach(function (el) {
+      el.src = '/icons/trash.svg';
+    });
+    document.querySelectorAll('[id^="editIcon-"]').forEach(function (el) {
+      el.src = '/icons/pencil-square.svg';
+    });
+  } else {
+    document.querySelectorAll('[id^="copyIcon-"]').forEach(function (el) {
+      el.src = '/icons/copy.svg';
+    });
+    document.querySelectorAll('[id^="pinIcon-"]').forEach(function (el) {
+      var isPinned = el.src.includes('pinned');
+      el.src = isPinned ? '/icons/pinned.svg' : '/icons/pin.svg';
+    });
+    document.querySelectorAll('[id^="deleteIcon-"]').forEach(function (el) {
+      el.src = '/icons/trash-black.svg';
+    });
+    document.querySelectorAll('[id^="editIcon-"]').forEach(function (el) {
+      el.src = '/icons/pencil-square-black.svg';
+    });
+  }
+}
+function toggleTheme(onEditorReady) {
+  var img = _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.querySelector('img');
+  darkTheme = !darkTheme;
+  if (!darkTheme) {
+    document.body.classList.remove('dark-theme');
+    document.body.classList.add('light-theme');
+    document.querySelectorAll('.card-title').forEach(function (el) {
+      el.classList.remove('dark-theme');
+      el.classList.add('light-theme');
+    });
+    img.src = '/icons/brightness-high-fill.svg';
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.add('border-dark', 'btn-light');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.remove('border-light', 'btn-dark');
+  } else {
+    document.body.classList.remove('light-theme');
+    document.body.classList.add('dark-theme');
+    document.querySelectorAll('.card-title').forEach(function (el) {
+      el.classList.remove('light-theme');
+      el.classList.add('dark-theme');
+    });
+    img.src = '/icons/moon-fill.svg';
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.add('border-light', 'btn-dark');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.remove('border-dark', 'btn-light');
+  }
+  changeIconCustomTheme(darkTheme);
+  tinymce.remove();
+  localStorage.setItem('dark-theme', darkTheme);
+  applyTinyMCETheme(darkTheme, onEditorReady);
+}
+function initTheme(onEditorReady) {
+  var img = _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.querySelector('img');
+  if (darkTheme) {
+    document.body.classList.add('dark-theme');
+    img.src = '/icons/moon-fill.svg';
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.add('border-light', 'btn-dark');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.remove('border-dark', 'btn-light');
+  } else {
+    document.body.classList.add('light-theme');
+    img.src = '/icons/brightness-high-fill.svg';
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.add('border-dark', 'btn-light');
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.classList.remove('border-light', 'btn-dark');
+  }
+  applyTinyMCETheme(darkTheme, onEditorReady);
+}
 
 /***/ }),
 
