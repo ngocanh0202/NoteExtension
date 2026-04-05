@@ -1,28 +1,53 @@
-import { collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "firebase/firestore";
-import { getDb, getConfigCloudinary } from './firebase.js';
+import { collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, where } from "firebase/firestore";
+import { getDb, getConfigCloudinary, getCurrentUser } from './firebase.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 import { changeIconCustomTheme, isDarkTheme } from '../ui/theme.js';
 import { DOM } from '../config/dom.js';
 
+function formatTimestamp(ts) {
+  if (!ts) return '';
+  let date;
+  if (typeof ts.toDate === 'function') {
+    date = ts.toDate();
+  } else if (ts instanceof Date) {
+    date = ts;
+  } else if (typeof ts === 'string' || typeof ts === 'number') {
+    date = new Date(ts);
+  } else {
+    return '';
+  }
+  return date.toLocaleString();
+}
+
 let listItem = [];
-let listItemTemp = [];
 let listCategories = [];
 
 export function getListItem() { return [...listItem]; }
-export function getListItemTemp() { return [...listItemTemp]; }
 export function getListCategories() { return [...listCategories]; }
 
 export async function renderNotes(categoryPageSize, currentCategorySelected) {
   DOM.containerWords.innerHTML = '';
   listItem = [];
-  listItemTemp = [];
 
   try {
     DOM.loadingOverlay.style.display = '';
     const db = getDb();
-    const querySnapshot = await getDocs(collection(db, "Notes"));
+    const user = getCurrentUser();
+    let querySnapshot;
+    if (user) {
+      const q = query(collection(db, "Notes"), where("userId", "==", user.uid));
+      querySnapshot = await getDocs(q);
+    } else {
+      querySnapshot = await getDocs(collection(db, "Notes"));
+    }
     querySnapshot.forEach((d) => {
       const data = d.data();
+      let timestamp = data.timestamp;
+      if (timestamp && typeof timestamp.toDate === 'function') {
+        timestamp = timestamp.toDate();
+      } else if (timestamp && typeof timestamp === 'string') {
+        timestamp = new Date(timestamp);
+      }
       listItem.push({
         id: d.id,
         Note: data.Note,
@@ -30,7 +55,7 @@ export async function renderNotes(categoryPageSize, currentCategorySelected) {
         isPinned: data?.isPinned,
         category: data?.category,
         otherExample: stripHtmlAdvanced(data.example),
-        timestamp: data.timestamp
+        timestamp: timestamp
       });
     });
 
@@ -40,56 +65,64 @@ export async function renderNotes(categoryPageSize, currentCategorySelected) {
     }
 
     loadData(categoryPageSize, currentCategorySelected);
-    listItemTemp = [...listItem];
-    backUpdata();
+    backupData();
   } catch (e) {
     handleAlert(Alert.DANGER, "Error getting documents: " + e.message, DurationLength.LONG);
-    listItemTemp = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
-    listItem = [...listItemTemp];
+    listItem = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
   } finally {
     DOM.loadingOverlay.style.display = 'none';
   }
 }
 
-function backUpdata() {
+function backupData() {
   localStorage.setItem('NotesBackups', JSON.stringify(listItem));
 }
 
-function loadData(categoryPageSize, currentCategorySelected) {
-  DOM.containerWords.innerHTML = '';
-  listItem.sort((a, b) => {
-    if (currentCategorySelected) {
-      const aMatchesCategory = a.category === currentCategorySelected;
-      const bMatchesCategory = b.category === currentCategorySelected;
-      if (aMatchesCategory && !bMatchesCategory) return -1;
-      if (!aMatchesCategory && bMatchesCategory) return 1;
-    }
+function getFilteredItems(searchTerm, category) {
+  let items = [...listItem];
 
+  if (category) {
+    items = items.filter(item => item.category === category);
+  }
+
+  if (searchTerm) {
+    const term = searchTerm.toLowerCase();
+    items = items.filter(item =>
+      item.Note.toLowerCase().includes(term) ||
+      item.otherExample.toLowerCase().includes(term)
+    );
+  }
+
+  return items;
+}
+
+function renderItems(items, categoryPageSize, currentCategorySelected) {
+  DOM.containerWords.innerHTML = '';
+  loadCategory(categoryPageSize, currentCategorySelected);
+
+  items.sort((a, b) => {
     if (a.isPinned && !b.isPinned) return -1;
     if (!a.isPinned && b.isPinned) return 1;
-
     return b.timestamp - a.timestamp;
   });
 
-  LoadCategory(categoryPageSize, currentCategorySelected);
-
   let html = '';
-  listItem.forEach(item => {
+  items.forEach(item => {
     html += `
     <div class="card mb-2">
       <div class="card-body">
         <div class="card-title d-flex align-items-center justify-content-between sticky-top" style="z-index:1;">
           <div class="d-flex align-items-center">
             <h5 class="mb-0 me-2">${item.Note}</h5>
-            <button type="button" id="pin-${item.id}" class="btn">
+            <button type="button" data-action="pin" data-id="${item.id}" class="btn">
               <img id="pinIcon-${item.id}" src="${item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg'}" alt="">
             </button>
           </div>
           <div class="btn-group">
-            <button type="button" id="edit-${item.id}" class="btn btn-edit">
+            <button type="button" data-action="edit" data-id="${item.id}" class="btn btn-edit">
               <img id="editIcon-${item.id}" src="/icons/pencil-square.svg" alt="">
             </button>
-            <button type="button" id="delete-${item.id}" class="btn btn-delete">
+            <button type="button" data-action="delete" data-id="${item.id}" class="btn btn-delete">
               <img id="deleteIcon-${item.id}" src="/icons/trash.svg" alt="">
             </button>
           </div>
@@ -98,18 +131,18 @@ function loadData(categoryPageSize, currentCategorySelected) {
         <div class="d-flex align-items-center justify-content-between mt-2">
           <div class="d-flex gap-2">
             <p class="card-text font-monospace fst-italic small mb-0">
-              ${item.timestamp.toDate().toLocaleString()}
+              ${formatTimestamp(item.timestamp)}
             </p>
             ${item.category ? `<span class="badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary">${item.category}</span>` : ''}
           </div>
-          <button type="button" id="copy-${item.id}" class="btn btn-copy">
+          <button type="button" data-action="copy" data-id="${item.id}" class="btn btn-copy">
             <img id="copyIcon-${item.id}" src="" alt="">
           </button>
         </div>
       <div class="example-wrapper" id="example-${item.id}">
         ${item.example}
       </div>
-      <button type="button" id="readMore-${item.id}" class="btn btn-link fw-bold btn-sm" style="display: none;">
+      <button type="button" data-action="readMore" data-id="${item.id}" class="btn btn-link fw-bold btn-sm" style="display: none;">
         more...
       </button>
       </div>
@@ -129,32 +162,52 @@ function loadData(categoryPageSize, currentCategorySelected) {
   });
 }
 
-function LoadCategory(categoryPageSize, currentCategorySelected) {
+function loadData(categoryPageSize, currentCategorySelected, searchTerm) {
+  const items = getFilteredItems(searchTerm, currentCategorySelected);
+  renderItems(items, categoryPageSize, currentCategorySelected);
+}
+
+function loadCategory(categoryPageSize, currentCategorySelected) {
   DOM.categoriesList.innerHTML = '';
   DOM.containerCategory.innerHTML = '';
   const COLOR = ['primary', 'secondary', 'success', 'danger', 'dark'];
 
   if (listCategories.length > 0) {
+    let sortedCategories = [...listCategories];
+    if (currentCategorySelected && sortedCategories.includes(currentCategorySelected)) {
+      sortedCategories = [currentCategorySelected, ...sortedCategories.filter(c => c !== currentCategorySelected)];
+    }
+    
     let badges = '';
-    for (let i = 0; i < categoryPageSize && i < listCategories.length; i++) {
-      const category = listCategories[i];
+    for (let i = 0; i < categoryPageSize && i < sortedCategories.length; i++) {
+      const category = sortedCategories[i];
       DOM.categoriesList.innerHTML += `<option value="${category}">${category}</option>`;
       const colorClass = COLOR[i % COLOR.length];
       const isSelected = currentCategorySelected === category ? 'selected' : '';
       badges += `
-        <span class="badge rounded-pill bg-${colorClass} me-1 mb-2 button-click-category user-select-none ${isSelected}">${category}</span>
+        <span class="badge rounded-pill bg-${colorClass} me-1 mb-2 button-click-category user-select-none ${isSelected}" data-action="category" data-category="${category}" tabindex="0">${category}</span>
       `;
     }
     if (categoryPageSize < listCategories.length) {
       badges += `
-        <span class="badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark">...+${Math.min(listCategories.length - categoryPageSize, 5)}</span>
+        <span class="badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark" data-action="categoryMore" tabindex="0">...+${Math.min(listCategories.length - categoryPageSize, 5)}</span>
       `;
     }
     DOM.containerCategory.innerHTML = badges;
   }
 }
 
+export function filterAndRender(searchTerm, category, categoryPageSize) {
+  loadData(categoryPageSize || 5, category, searchTerm);
+}
+
 export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImages) {
+  const user = getCurrentUser();
+  if (!user) {
+    handleAlert(Alert.WARNING, "Please sign in to save notes", DurationLength.MEDIUM);
+    return;
+  }
+
   const id = idNote;
   const Note = e.target.Note.value;
   const example = tinymce.get('editor').getContent();
@@ -165,7 +218,8 @@ export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImage
     Note: Note,
     example: example,
     timestamp: new Date(),
-    category: category
+    category: category,
+    userId: user.uid
   };
 
   try {
@@ -180,22 +234,29 @@ export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImage
     if (onCleanImages) onCleanImages();
   } catch (e) {
     handleAlert(Alert.DANGER, "Error adding document: " + e.message, DurationLength.LONG);
-    listItemTemp.push({
+    const backup = JSON.parse(localStorage.getItem('NotesBackups') || '[]');
+    backup.push({
+      id: 'local-' + Date.now(),
       Note: Note,
       example: example,
-      timestamp: new Date()
+      timestamp: new Date(),
+      category: category,
+      isPinned: false
     });
-    listItem = [...listItemTemp];
-    backUpdata();
+    localStorage.setItem('NotesBackups', JSON.stringify(backup));
   } finally {
     DOM.loadingOverlay.style.display = 'none';
     DOM.btnCloseModal.click();
   }
 }
 
-export async function deleteNote(NoteId, switchCheckChecked) {
+export async function deleteNote(NoteId) {
+  const user = getCurrentUser();
+  if (!user) {
+    handleAlert(Alert.WARNING, "Please sign in to delete notes", DurationLength.MEDIUM);
+    return;
+  }
   try {
-    if (switchCheckChecked.checked) return;
     DOM.loadingOverlay.style.display = '';
     const db = getDb();
     await deleteDoc(doc(db, `Notes/${NoteId}`));
@@ -210,7 +271,15 @@ export async function deleteNote(NoteId, switchCheckChecked) {
 }
 
 export async function togglePin(NoteId) {
+  const user = getCurrentUser();
+  if (!user) {
+    handleAlert(Alert.WARNING, "Please sign in to pin notes", DurationLength.MEDIUM);
+    return;
+  }
   const note = listItem.find(item => item.id === NoteId);
+  if (!note) return;
+
+  const previousState = note.isPinned;
   note.isPinned = !note.isPinned;
   const isPinned = note.isPinned;
 
@@ -219,41 +288,44 @@ export async function togglePin(NoteId) {
     const db = getDb();
     await updateDoc(doc(db, `Notes/${NoteId}`), { isPinned: note.isPinned });
     handleAlert(Alert.INFO, `Note ${isPinned ? 'pinned' : 'unpinned'} successfully`, DurationLength.SHORT);
-    loadData(5, null);
+    filterAndRender(null, null, 5);
+    backupData();
   } catch (e) {
+    note.isPinned = previousState;
     handleAlert(Alert.DANGER, "Error pinning note: " + e.message, DurationLength.LONG);
   } finally {
-    backUpdata();
     DOM.loadingOverlay.style.display = 'none';
   }
 }
 
 export function handleInputSearch(value) {
-  DOM.labelSwitch.textContent = "Notes";
-  DOM.switchCheckChecked.checked = false;
-  listItem = listItemTemp.filter(item =>
-    item.Note.toLowerCase().includes(value) ||
-    item.otherExample.toLowerCase().includes(value)
-  );
-  loadData(5, null);
+  filterAndRender(value, null, 5);
 }
 
 export function handleCategoryClick(clickedCategory, currentCategorySelected) {
   let newCategory = currentCategorySelected;
+  
+  document.querySelectorAll('.button-click-category').forEach(el => {
+    el.classList.remove('selected');
+  });
+  
   if (newCategory === clickedCategory) {
     newCategory = null;
   } else {
     newCategory = clickedCategory;
+    const selectedEl = document.querySelector(`.button-click-category[data-category="${clickedCategory}"]`);
+    if (selectedEl) {
+      selectedEl.classList.add('selected');
+    }
   }
-  listItem = [...listItemTemp];
-  loadData(5, newCategory);
+  filterAndRender(null, newCategory, 5);
   DOM.scrollToTopBtn.click();
   return newCategory;
 }
 
 export function expandCategoryPageSize(categoryPageSize) {
   categoryPageSize += 5;
-  LoadCategory(categoryPageSize, null);
+  loadCategory(categoryPageSize, null);
   DOM.containerCategory.scrollTo({
     top: DOM.containerCategory.scrollHeight,
     behavior: 'smooth'

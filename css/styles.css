@@ -1,5 +1,20 @@
+/* ============ ACCESSIBILITY: SCROLLBAR ============ */
 .container-word::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+}
+
+.container-word::-webkit-scrollbar-track {
+    background: var(--card-background-color, #fff);
+    border-radius: 4px;
+}
+
+.container-word::-webkit-scrollbar-thumb {
+    background: var(--input-border-color, #ced4da);
+    border-radius: 4px;
+}
+
+.container-word::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color, #6c757d);
 }
 
 .loading-overlay {
@@ -16,6 +31,72 @@
     gap: 10px;
 }
 
+/* ============ ACCORDION STYLING ============ */
+.accordion-item {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: var(--accordion-bg, #fff);
+    border: 1px solid var(--accordion-border, #e9ecef);
+}
+
+.accordion-button {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+    background-color: var(--accordion-bg, #fff);
+    color: var(--accordion-text, #000);
+}
+
+.accordion-button:not(.collapsed) {
+    border-radius: 8px 8px 0 0 !important;
+    background-color: var(--accordion-hover, #f8f9fa);
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.accordion-body {
+    padding: 12px 14px;
+}
+
+.accordion-body .form-label {
+    font-weight: 500;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.accordion-body .form-control {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
+    border-color: var(--input-border-color);
+}
+
+.accordion-body .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.accordion-body .form-control::placeholder {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+body.dark-theme .accordion-button::after {
+    filter: invert(1);
+}
+
+/* ============ THEME: LIGHT ============ */
 body.light-theme {
     --background-color: #ffffff;
     --text-color: #000000;
@@ -34,8 +115,15 @@ body.light-theme {
     --info-color: #17a2b8;
     --light-color: #f8f9fa;
     --dark-color: #343a40;
+    --accordion-bg: #ffffff;
+    --accordion-text: #000000;
+    --accordion-border: #e9ecef;
+    --accordion-hover: #f8f9fa;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
+/* ============ THEME: DARK ============ */
 body.dark-theme {
     --background-color: #343a40;
     --text-color: #ffffff;
@@ -54,6 +142,103 @@ body.dark-theme {
     --info-color: #17a2b8;
     --light-color: #f8f9fa;
     --dark-color: #343a40;
+    --accordion-bg: #3d4449;
+    --accordion-text: #e0e0e0;
+    --accordion-border: #5a6268;
+    --accordion-hover: #4a5258;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme .accordion-button {
+    background-color: #3d4449;
+    color: #e0e0e0;
+}
+
+body.dark-theme .accordion-button:not(.collapsed) {
+    background-color: #4a5258;
+    color: #ffffff;
+}
+
+body.dark-theme .accordion-button:focus {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.4);
+}
+
+/* ============ ACCESSIBILITY: FOCUS VISIBLE ============ */
+.btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.button-click-category:focus-visible,
+.button-click-category-more:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.accordion-button:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ============ ACCESSIBILITY: REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .card:nth-child(1),
+    .card:nth-child(2),
+    .card:nth-child(3),
+    .card:nth-child(4),
+    .card:nth-child(5),
+    .card:nth-child(6),
+    .card:nth-child(7),
+    .card:nth-child(8),
+    .card:nth-child(9),
+    .card:nth-child(10) {
+        animation-delay: 0ms !important;
+    }
+}
+
+/* ============ BASE STYLES ============ */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+input[type="text"], textarea {
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
+    border: 1px solid var(--input-border-color);
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.2s ease;
+}
+
+.card {
+    background-color: var(--card-background-color);
+    color: var(--card-text-color);
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-title {
+    color: var(--text-color);
+    background-color: var(--card-background-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .card-title.dark-theme {
@@ -66,34 +251,15 @@ body.dark-theme {
     background-color: #ffffff;
 }
 
-body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-
-input[type="text"], textarea {
-    background-color: var(--input-background-color);
-    color: var(--input-text-color);
-    border: 1px solid var(--input-border-color);
-}
-
-.card {
-    background-color: var(--card-background-color);
-    color: var(--card-text-color);
-}
-
-.card-title {
-    color: var(--text-color);
-    background-color: var(--card-background-color);
-}
-
 [id^="readMore-"] {
     color: var(--text-color);
+    transition: color 0.4s ease;
 }
 
 .modal-content {
     background-color: var(--modal-background-color);
     color: var(--modal-text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .btn-primary {
@@ -108,7 +274,7 @@ input[type="text"], textarea {
 
 .btn-success {
     background-color: var(--success-color);
-    border-color: var (--success-color);
+    border-color: var(--success-color);
 }
 
 .btn-danger {
@@ -134,4 +300,222 @@ input[type="text"], textarea {
 .btn-dark {
     background-color: var(--dark-color);
     border-color: var(--dark-color);
+}
+
+/* ============ ANIMATIONS ============ */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3); }
+    50% { opacity: 1; transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Card animations */
+.card {
+    animation: fadeInUp 0.3s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.02s; }
+.card:nth-child(2) { animation-delay: 0.04s; }
+.card:nth-child(3) { animation-delay: 0.06s; }
+.card:nth-child(4) { animation-delay: 0.08s; }
+.card:nth-child(5) { animation-delay: 0.1s; }
+.card:nth-child(6) { animation-delay: 0.12s; }
+.card:nth-child(7) { animation-delay: 0.14s; }
+.card:nth-child(8) { animation-delay: 0.16s; }
+.card:nth-child(9) { animation-delay: 0.18s; }
+.card:nth-child(10) { animation-delay: 0.2s; }
+
+.card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-1px);
+}
+
+/* Alert animations */
+.alert-warning, .alert-info, .alert-danger {
+    animation: fadeInDown 0.3s ease forwards;
+}
+
+/* Modal animations */
+.modal.fade .modal-dialog {
+    animation: scaleIn 0.25s ease forwards;
+}
+
+/* Button hover effects */
+.btn {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+/* Category badge animations */
+.button-click-category {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.button-click-category:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+.button-click-category:active {
+    transform: scale(0.95);
+}
+
+.button-click-category.selected {
+    animation: pulse 0.5s ease;
+}
+
+.button-click-category-more {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.button-click-category-more:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+.button-click-category-more:active {
+    transform: scale(0.95);
+}
+
+/* Scroll to top button */
+#scrollToTopBtn {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#scrollToTopBtn:hover {
+    animation: bounceIn 0.4s ease;
+}
+
+/* Loading overlay spinner animation */
+.loading-overlay .spinner-grow {
+    animation: spin 1s linear infinite, pulse 1.5s ease-in-out infinite;
+}
+
+/* Theme switcher animation */
+#theme-switcher {
+    transition: transform 0.3s ease;
+}
+
+#theme-switcher:hover {
+    transform: rotate(30deg) scale(1.1);
+}
+
+#theme-switcher:active {
+    transform: rotate(0deg) scale(0.9);
+}
+
+/* Settings icon animation */
+#setting-env {
+    transition: transform 0.3s ease;
+}
+
+#setting-env:hover {
+    transform: rotate(90deg);
+}
+
+/* Clean images button */
+#btn-clean-images {
+    transition: transform 0.2s ease;
+}
+
+#btn-clean-images:hover {
+    transform: scale(1.1);
+}
+
+#btn-clean-images:active {
+    transform: scale(0.95);
+}
+
+/* ============ CONFIG WARNING OVERLAY ============ */
+.config-warning-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000;
+    animation: fadeIn 0.3s ease;
+}
+
+.config-warning-card {
+    background: var(--card-background-color);
+    color: var(--card-text-color);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 360px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.3s ease;
+}
+
+.config-warning-card h5 {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.config-warning-card p {
+    margin-bottom: 16px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.config-warning-card .btn {
+    margin: 0 4px;
+}
+
+/* ============ SKELETON LOADING ============ */
+.skeleton {
+    background: linear-gradient(90deg, var(--card-background-color) 25%, var(--light-color) 50%, var(--card-background-color) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
 }

@@ -25,6 +25,19 @@ function handleAddToNoteSelection(text){
             }
         });
     });
+    chrome.runtime.sendMessage({
+        action: 'checkAuthStatus'
+    }, function(response) {
+        if (chrome.runtime.lastError) return;
+        if (response && !response.authenticated) {
+            chrome.notifications.create({
+                type: 'basic',
+                iconUrl: './images/default.png',
+                title: 'Note Extension',
+                message: 'Please sign in to save notes. Open the extension to sign in.'
+            });
+        }
+    });
 }
 
 chrome.runtime.onInstalled.addListener(function () {

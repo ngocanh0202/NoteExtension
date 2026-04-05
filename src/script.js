@@ -1,9 +1,9 @@
 import { DOM, initDOM } from './config/dom.js';
 import { initTheme, toggleTheme } from './ui/theme.js';
-import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv } from './managers/firebase.js';
-import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCategoryClick, expandCategoryPageSize, getNoteById, stripHtmlAdvancedToCopy, togglePin, getListItem } from './managers/notes.js';
+import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv, isFirebaseConfigured, isCloudinaryConfigured, signIn, signOutUser, onAuthChange, getCurrentUser } from './managers/firebase.js';
+import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCategoryClick, expandCategoryPageSize, getNoteById, stripHtmlAdvancedToCopy, togglePin, getListItem, filterAndRender } from './managers/notes.js';
 import { handleCleanImagesCloudinary, handleUploadImageUrl } from './managers/cloudinary.js';
-import { handleLoadEnv, handleBackEnv, populateSettings, switchEnvAction, removeEnvAction, handleLoadLogEnvs } from './managers/env.js';
+import { handleLoadEnv, populateSettings, switchEnvAction, removeEnvAction, handleLoadLogEnvs, expandCloudinarySection } from './managers/env.js';
 import { handleAlert, Alert, DurationLength } from './ui/alert.js';
 
 initDOM();
@@ -29,9 +29,78 @@ initTheme((editor) => {
   setupTinyMCEPasteHandler(editor);
 });
 
-await initFirebase(localVarCloudinaryConfig, dataEnv, onNotesRendered);
+await initFirebase(localVarCloudinaryConfig, dataEnv, null);
 
 populateSettings(getConfigEnv(), localVarCloudinaryConfig);
+
+if (!isFirebaseConfigured()) {
+  DOM.firebaseConfigWarning.style.display = 'flex';
+}
+
+const btnConfigureFirebase = document.getElementById('btn-configure-firebase');
+if (btnConfigureFirebase) {
+  btnConfigureFirebase.addEventListener('click', () => {
+    DOM.firebaseConfigWarning.style.display = 'none';
+    const settingsModal = new bootstrap.Modal(document.getElementById('settingEnv'));
+    settingsModal.show();
+  });
+}
+
+function updateAuthUI(user) {
+  console.log('Auth state changed:', user ? 'logged in' : 'logged out', user?.email);
+  if (user) {
+    DOM.authWarningOverlay.style.display = 'none';
+    const email = user.email || '';
+    const displayName = email.split('@')[0];
+    DOM.authUserDisplay.textContent = displayName;
+    DOM.authActionText.textContent = 'Logout';
+    onNotesRendered().catch(err => console.error('Error loading notes:', err));
+  } else {
+    DOM.authWarningOverlay.style.display = 'flex';
+    DOM.authUserDisplay.textContent = '';
+    DOM.authActionText.textContent = 'Login';
+    DOM.containerWords.innerHTML = '';
+  }
+}
+
+onAuthChange(updateAuthUI);
+
+DOM.btnAuth.addEventListener('click', async () => {
+  const user = getCurrentUser();
+  if (user) {
+    try {
+      await signOutUser();
+    } catch (error) {
+      handleAlert(Alert.DANGER, 'Sign out failed: ' + error.message, DurationLength.SHORT);
+    }
+  } else {
+    try {
+      await signIn();
+    } catch (error) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        handleAlert(Alert.INFO, 'Sign in cancelled', DurationLength.SHORT);
+      } else if (error.code === 'auth/popup-blocked') {
+        handleAlert(Alert.DANGER, 'Popup was blocked. Please allow popups for this extension and try again.', DurationLength.LONG);
+      } else {
+        handleAlert(Alert.DANGER, 'Sign in failed: ' + error.message, DurationLength.LONG);
+      }
+    }
+  }
+});
+
+DOM.btnAuthSignInOverlay.addEventListener('click', async () => {
+  try {
+    await signIn();
+  } catch (error) {
+    if (error.code === 'auth/popup-closed-by-user') {
+      handleAlert(Alert.INFO, 'Sign in cancelled', DurationLength.SHORT);
+    } else if (error.code === 'auth/popup-blocked') {
+      handleAlert(Alert.DANGER, 'Popup was blocked. Please allow popups for this extension and try again.', DurationLength.LONG);
+    } else {
+      handleAlert(Alert.DANGER, 'Sign in failed: ' + error.message, DurationLength.LONG);
+    }
+  }
+});
 
 DOM.themeSwitcher.addEventListener('click', () => toggleTheme((editor) => {
   setupTinyMCEPasteHandler(editor);
@@ -56,7 +125,6 @@ DOM.btnCleanImagesCloudinary.addEventListener('click', async () => {
   });
   DOM.btnCleanImagesCloudinary.disabled = false;
 });
-DOM.btnBackEnv.addEventListener('click', handleBackEnvWrapper);
 
 DOM.createNote.addEventListener('click', (e) => {
   if (e.target !== e.currentTarget) {
@@ -81,35 +149,37 @@ async function handleSubmit(e) {
 }
 
 async function handleContainerEventClick(e) {
-  const id = e.target.id;
-  if (id.includes('edit')) {
-    const NoteId = id.split('-')[1];
-    const note = getNoteById(NoteId);
+  const actionEl = e.target.closest('[data-action]');
+  if (!actionEl) return;
+
+  const action = actionEl.dataset.action;
+  const noteId = actionEl.dataset.id;
+
+  if (action === 'edit') {
+    const note = getNoteById(noteId);
+    if (!note) return;
     document.querySelector('#Note').value = note.Note;
     tinymce.get('editor').setContent(note.example);
     document.querySelector('#category').value = note.category || '';
     isClickNewButton = false;
-    currentNoteId = NoteId;
+    currentNoteId = noteId;
     DOM.btnOpenModal.click();
   }
-  else if (id.includes('delete')) {
-    currentNoteId = id.split('-')[1];
+  else if (action === 'delete') {
+    currentNoteId = noteId;
     isClickNewButton = true;
     DOM.btnModalConfirm.click();
     DOM.btnDelete.addEventListener('click', handleDeleteNote, { once: true });
   }
-  else if (id.includes('copy')) {
-    const NoteId = id.split('-')[1];
-    onClickCopy(NoteId);
+  else if (action === 'copy') {
+    onClickCopy(noteId);
   }
-  else if (id.includes('pin')) {
-    const NoteId = id.split('-')[1];
-    await togglePin(NoteId);
+  else if (action === 'pin') {
+    await togglePin(noteId);
   }
-  else if (id.includes('readMore')) {
-    const NoteId = id.split('-')[1];
-    const exampleWrapper = document.querySelector(`#example-${NoteId}`);
-    const readMoreButton = document.querySelector(`#readMore-${NoteId}`);
+  else if (action === 'readMore') {
+    const exampleWrapper = document.querySelector(`#example-${noteId}`);
+    const readMoreButton = document.querySelector(`#readMore-${noteId}`);
     exampleWrapper.classList.toggle("expanded");
     if (exampleWrapper.classList.contains("expanded")) {
       readMoreButton.textContent = 'less';
@@ -122,28 +192,32 @@ async function handleContainerEventClick(e) {
 
 async function handleDeleteNote() {
   if (currentNoteId) {
-    await deleteNote(currentNoteId, DOM.switchCheckChecked);
+    await deleteNote(currentNoteId);
     currentNoteId = null;
   }
 }
 
 function handleClickInContainer(e) {
-  const target = e.target;
-  if (target.matches('.button-click-category')) {
-    const clickedCategory = target.textContent.trim();
+  const actionEl = e.target.closest('[data-action]');
+  if (!actionEl) return;
+
+  const action = actionEl.dataset.action;
+
+  if (action === 'category') {
+    const clickedCategory = actionEl.dataset.category;
     currentCategorySelected = handleCategoryClick(clickedCategory, currentCategorySelected);
   }
-  else if (target.matches('.button-click-category-more')) {
+  else if (action === 'categoryMore') {
     categoryPageSize = expandCategoryPageSize(categoryPageSize);
   }
-  else if (target.matches('.btn-move-env') || target.closest('.btn-move-env')) {
-    const envKey = target.closest('.card').querySelector('.card-title h5').textContent;
+  else if (action === 'switchEnv') {
+    const envKey = actionEl.dataset.envKey;
     switchEnvAction(envKey, dataEnv, localVarCloudinaryConfig, () => {
       handleLoadEnvWrapper();
     });
   }
-  else if (target.matches('.btn-delete-env') || target.closest('.btn-delete-env')) {
-    const envKey = target.closest('.card').querySelector('.card-title h5').textContent;
+  else if (action === 'deleteEnv') {
+    const envKey = actionEl.dataset.envKey;
     DOM.btnDelete.envKeyToDelete = envKey;
     DOM.btnDelete.addEventListener('click', handleDeleteEnvConfirm, { once: true });
   }
@@ -186,13 +260,15 @@ async function handleLoadEnvWrapper() {
   await handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered);
 }
 
-async function handleBackEnvWrapper() {
-  await handleBackEnv(localVarCloudinaryConfig, onNotesRendered);
-}
-
 function AutoUpdateEditorContent() {
   chrome.storage.local.get(['selectedText', 'addToNote', 'category', 'title'], function(result) {
     if (result.addToNote && result.selectedText) {
+      const user = getCurrentUser();
+      if (!user) {
+        handleAlert(Alert.WARNING, 'Please sign in to save notes from context menu', DurationLength.MEDIUM);
+        chrome.storage.local.remove(['selectedText', 'addToNote']);
+        return;
+      }
       try {
         if (tinymce.get('editor')) {
           tinymce.get('editor').setContent(result.selectedText);
@@ -218,13 +294,20 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
   AutoUpdateEditorContent();
 }
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.action === 'autoUpdateEditor') {
-    AutoUpdateEditorContent();
-    sendResponse({ success: true });
-    return true;
-  }
-});
+if (typeof chrome !== 'undefined' && chrome.runtime) {
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action === 'autoUpdateEditor') {
+      AutoUpdateEditorContent();
+      sendResponse({ success: true });
+      return true;
+    }
+    if (request.action === 'checkAuthStatus') {
+      const user = getCurrentUser();
+      sendResponse({ authenticated: !!user });
+      return true;
+    }
+  });
+}
 
 function setupTinyMCEPasteHandler(editor) {
   editor.on('paste', async function(e) {
@@ -249,9 +332,11 @@ function setupTinyMCEPasteHandler(editor) {
         if (!cloudName || !uploadPreset || !api_key) {
           const content = editor.getContent();
           const updatedContent = content.replace(progressText,
-            '***Please configure Cloudinary settings to have best performance***'
+            '***Cloudinary not configured. Please configure in Settings.***'
           );
           editor.setContent(updatedContent);
+          handleAlert(Alert.WARNING, 'Cloudinary not configured. Opening settings...', DurationLength.LONG);
+          expandCloudinarySection();
           return;
         }
 

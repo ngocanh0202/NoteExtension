@@ -1,5 +1,5 @@
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { getDb, getConfigCloudinary } from './firebase.js';
+import { collection, addDoc, getDocs, deleteDoc, doc, query, where } from "firebase/firestore";
+import { getDb, getConfigCloudinary, getCurrentUser } from './firebase.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 
 export async function generateCloudinarySignature(params, apiSecret) {
@@ -18,15 +18,35 @@ export async function generateCloudinarySignature(params, apiSecret) {
 
 export async function handleUploadImageUrl(data) {
   const db = getDb();
-  await addDoc(collection(db, "note-images"), data);
+  const user = getCurrentUser();
+  if (!db) {
+    console.error('Firestore not initialized when uploading image URL');
+    return;
+  }
+  const docData = { ...data };
+  if (user) {
+    docData.userId = user.uid;
+  }
+  await addDoc(collection(db, "note-images"), docData);
 }
 
 export async function handleCleanImagesCloudinary(listItem, setLoading) {
   const db = getDb();
+  if (!db) {
+    console.error('Firestore not initialized when cleaning images');
+    return;
+  }
   const configCloudinary = getConfigCloudinary();
+  const user = getCurrentUser();
 
   let listImage = [];
-  const querySnapshotImages = await getDocs(collection(db, "note-images"));
+  let q;
+  if (user) {
+    q = query(collection(db, "note-images"), where("userId", "==", user.uid));
+  } else {
+    q = collection(db, "note-images");
+  }
+  const querySnapshotImages = await getDocs(q);
   querySnapshotImages.forEach((d) => {
     const data = d.data();
     listImage.push({

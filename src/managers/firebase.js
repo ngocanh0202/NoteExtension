@@ -1,16 +1,19 @@
 import { initializeApp, deleteApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { handleTextEnv, validateEnvVars } from '../utils.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 import { DOM } from '../config/dom.js';
 
 let app = null;
 let db = null;
+let auth = null;
 let configEnv = {};
 let configCloudinary = {};
 
 export function getDb() { return db; }
 export function getApp() { return app; }
+export function getAuthInstance() { return auth; }
 export function getConfigEnv() { return { ...configEnv }; }
 export function getConfigCloudinary() { return { ...configCloudinary }; }
 export function setConfigCloudinary(cfg) { configCloudinary = cfg; }
@@ -26,6 +29,7 @@ function setupFirebase() {
   };
   app = initializeApp(firebaseConfig);
   db = getFirestore(app);
+  auth = getAuth(app);
 }
 
 function validateFirebaseSetup() {
@@ -35,32 +39,54 @@ function validateFirebaseSetup() {
 }
 
 async function loadEnv(localVarCloudinaryConfig) {
-  try {
-    const response = await fetch('/env');
-    const text = await response.text();
-    let tempConfigEnv = handleTextEnv(text, false);
-    configEnv = {
-      APIKEY: tempConfigEnv.APIKEY,
-      AUTHDOMAIN: tempConfigEnv.AUTHDOMAIN,
-      PROJECTID: tempConfigEnv.PROJECTID,
-      STORAGEBUCKET: tempConfigEnv.STORAGEBUCKET,
-      MESSAGINGSENDERID: tempConfigEnv.MESSAGINGSENDERID,
-      APPID: tempConfigEnv.APPID
-    };
-
-    if (localVarCloudinaryConfig && Object.keys(localVarCloudinaryConfig).length > 0) {
-      configCloudinary = { ...localVarCloudinaryConfig };
-    } else {
-      configCloudinary = {
-        CLOUDINARY_CLOUDNAME: tempConfigEnv.CLOUDINARY_CLOUDNAME,
-        CLOUDINARY_UPLOADPRESET: tempConfigEnv.CLOUDINARY_UPLOADPRESET,
-        CLOUDINARY_APIKEY: tempConfigEnv.CLOUDINARY_APIKEY,
-        CLOUDINARY_APISECRET: tempConfigEnv.CLOUDINARY_APISECRET,
-      };
-      localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
+  let savedConfigEnv = localStorage.getItem('firebaseConfigEnv');
+  console.log('Loading firebase config from localStorage:', savedConfigEnv ? 'found' : 'not found');
+  
+  if (savedConfigEnv) {
+    try {
+      configEnv = JSON.parse(savedConfigEnv);
+      console.log('Loaded config from localStorage:', configEnv.APIKEY);
+    } catch (e) {
+      console.log('Failed to parse saved config');
     }
-  } catch (error) {
-    throw new Error('Error loading .env file: ' + error.message);
+  }
+  
+  if (!configEnv.APIKEY) {
+    console.log('No local config, trying /env file');
+    try {
+      const response = await fetch('/env');
+      const text = await response.text();
+      let tempConfigEnv = handleTextEnv(text, false);
+      configEnv = {
+        APIKEY: tempConfigEnv.APIKEY,
+        AUTHDOMAIN: tempConfigEnv.AUTHDOMAIN,
+        PROJECTID: tempConfigEnv.PROJECTID,
+        STORAGEBUCKET: tempConfigEnv.STORAGEBUCKET,
+        MESSAGINGSENDERID: tempConfigEnv.MESSAGINGSENDERID,
+        APPID: tempConfigEnv.APPID
+      };
+    } catch (error) {
+      console.log('No env file found');
+    }
+  }
+
+  console.log('Final configEnv.APIKEY:', configEnv.APIKEY);
+
+  if (localVarCloudinaryConfig && Object.keys(localVarCloudinaryConfig).length > 0) {
+    configCloudinary = { ...localVarCloudinaryConfig };
+  } else {
+    let savedCloudinary = localStorage.getItem('envCloudinary');
+    if (savedCloudinary) {
+      configCloudinary = JSON.parse(savedCloudinary);
+    } else if (configEnv.CLOUDINARY_CLOUDNAME) {
+      configCloudinary = {
+        CLOUDINARY_CLOUDNAME: configEnv.CLOUDINARY_CLOUDNAME,
+        CLOUDINARY_UPLOADPRESET: configEnv.CLOUDINARY_UPLOADPRESET,
+        CLOUDINARY_APIKEY: configEnv.CLOUDINARY_APIKEY,
+        CLOUDINARY_APISECRET: configEnv.CLOUDINARY_APISECRET,
+      };
+    }
+    localStorage.setItem('envCloudinary', JSON.stringify(configCloudinary));
   }
 }
 
@@ -82,6 +108,9 @@ export async function resetFirebaseApp(newConfig, isLoadInitWeb, localVarCloudin
     validateEnvVars(configEnv);
     setupFirebase();
     validateFirebaseSetup();
+    
+    localStorage.setItem('firebaseConfigEnv', JSON.stringify(configEnv));
+    console.log('Saved config to localStorage:', configEnv.APIKEY);
 
     let existingEnvData = dataEnv.find(item => handleTextEnv(item, true)?.APIKEY === configEnv.APIKEY);
     let isExisted = !!existingEnvData;
@@ -113,4 +142,30 @@ export async function initFirebase(localVarCloudinaryConfig, dataEnv, onNotesRen
   } catch (error) {
     handleAlert(Alert.DANGER, error.message, DurationLength.LONG);
   }
+}
+
+export function isFirebaseConfigured() {
+  return !!(configEnv.APIKEY && configEnv.AUTHDOMAIN && configEnv.PROJECTID);
+}
+
+export function isCloudinaryConfigured() {
+  return !!(configCloudinary.CLOUDINARY_CLOUDNAME && configCloudinary.CLOUDINARY_UPLOADPRESET && configCloudinary.CLOUDINARY_APIKEY);
+}
+
+export async function signIn() {
+  const provider = new GoogleAuthProvider();
+  return await signInWithPopup(auth, provider);
+}
+
+export async function signOutUser() {
+  return await signOut(auth);
+}
+
+export function getCurrentUser() {
+  return auth?.currentUser || null;
+}
+
+export function onAuthChange(callback) {
+  if (!auth) return () => {};
+  return onAuthStateChanged(auth, callback);
 }

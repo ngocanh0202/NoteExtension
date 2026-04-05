@@ -83,21 +83,6 @@ export async function handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryCo
     handleAlert(Alert.DANGER, `Failed to update configuration: ${error.message}`, DurationLength.LONG);
   } finally {
     DOM.loadingOverlay.style.display = 'none';
-    DOM.switchCheckChecked.checked = false;
-  }
-}
-
-export async function handleBackEnv(localVarCloudinaryConfig, onNotesRendered) {
-  try {
-    DOM.switchCheckChecked.checked = false;
-    DOM.labelSwitch.textContent = "Notes";
-    await resetFirebaseApp(null, false, localVarCloudinaryConfig, [], onNotesRendered);
-    populateSettings({}, localVarCloudinaryConfig);
-    DOM.btnCloseModalEnv.click();
-    handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
-    DOM.btnCloseBackModalEnv.click();
-  } catch (e) {
-    handleAlert(Alert.DANGER, `Failed to reset Firebase: ${e.message}`, DurationLength.LONG);
   }
 }
 
@@ -111,8 +96,6 @@ export function switchEnvAction(envKey, dataEnv, localVarCloudinaryConfig, onSav
     const envObj = handleTextEnv(selectedEnv, true);
     populateSettings(envObj, localVarCloudinaryConfig);
     onSaveEnvClick();
-    DOM.switchCheckChecked.checked = false;
-    DOM.labelSwitch.textContent = "Notes";
   }
 }
 
@@ -150,11 +133,11 @@ export function handleLoadLogEnvs(dataEnv) {
           <h5 class="mb-0 me-2">${envObj.APIKEY}</h5>
         </div>
         <div class="btn-group">
-          <button type="button" id="switchEnv-${envObj.APIKEY}" class="btn btn-primary btn-move-env">
-            <img id="switchEnvIcon-${envObj.APIKEY}" class="btn-move-env" src="/icons/move-right.svg" alt="">
+          <button type="button" data-action="switchEnv" data-env-key="${envObj.APIKEY}" class="btn btn-primary btn-move-env">
+            <img src="/icons/move-right.svg" alt="">
           </button>
-          <button type="button" id="deleteEnv-${envObj.APIKEY}" class="btn btn-danger btn-delete-env">
-            <img id="deleteEnvIcon-${envObj.APIKEY}" class="btn-delete-env" src="/icons/trash.svg" alt="">
+          <button type="button" data-action="deleteEnv" data-env-key="${envObj.APIKEY}" class="btn btn-danger btn-delete-env">
+            <img src="/icons/trash.svg" alt="">
           </button>
         </div>`;
       const divContent = document.createElement('div');
@@ -171,11 +154,16 @@ export function handleLoadLogEnvs(dataEnv) {
   } else {
     DOM.containerWords.textContent = 'No environment variables found.';
   }
-  const buttonSetDefault = document.createElement('button');
-  buttonSetDefault.className = 'btn btn-secondary mt-2 position-fixed bottom-0 start-0 mb-2 ms-2';
-  buttonSetDefault.textContent = 'Set as Default';
-  buttonSetDefault.addEventListener('click', () => {
-    document.getElementById('btn-open-modal-confirm-env').click();
-  });
-  DOM.containerWords.appendChild(buttonSetDefault);
+}
+
+export function expandCloudinarySection() {
+  const cloudinarySection = document.getElementById('cloudinarySection');
+  if (cloudinarySection && !cloudinarySection.classList.contains('show')) {
+    const collapseInstance = new bootstrap.Collapse(cloudinarySection, { show: true });
+  }
+  const settingsModal = document.getElementById('settingEnv');
+  if (settingsModal && !settingsModal.classList.contains('show')) {
+    const modalInstance = new bootstrap.Modal(settingsModal);
+    modalInstance.show();
+  }
 }

@@ -86,16 +86,56 @@
         .container-category::-webkit-scrollbar {
             display: none;
         }
+        .auth-warning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        }
+        .auth-warning-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            max-width: 320px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .auth-warning-card h5 {
+            margin-bottom: 12px;
+            color: #333;
+        }
+        .auth-warning-card p {
+            color: #666;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .auth-warning-card .btn {
+            min-width: 180px;
+        }
+        #auth-user-display {
+            font-size: 11px;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        #auth-action-text {
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div style="width: 600px; height: 500px;">
         <div class="p-2">
-            <div class="d-flex justify-content-between align-items-center my-2">
-                <div class="form-check form-switch form-check-reverse">
-                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked">
-                    <label class="form-check-label" for="switchCheckChecked">Notes</label>
-                </div>
+            <div class="d-flex justify-content-end align-items-center my-2">
                 <div>
                     <i class="bi bi-trash"></i>
                     <button class="btn btn-success rounded-circle" id="btn-clean-images">
@@ -104,6 +144,10 @@
                     <a class="btn btn-primary rounded-circle" id="btn-open-modal" data-bs-toggle="modal" href="#createNote" role="button">+</a>
                     <button class="btn rounded-circle border-light" id="theme-switcher">
                         <img src="/icons/brightness-high-fill.svg" alt="">
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill me-1" id="btn-auth">
+                        <span id="auth-user-display" class="me-1 small"></span>
+                        <span id="auth-action-text">Login</span>
                     </button>
                     <button class="btn btn-warning rounded-circle" id="setting-env" data-bs-toggle="modal" href="#settingEnv" role="button">
                         <img src="/icons/setting.svg" alt="">
@@ -155,7 +199,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn-close-modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="upserd-Note-form">
+                        <form id="upsert-Note-form">
                             <input type="hidden" name="id" id="doc-id" value="">
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -220,6 +264,17 @@
                                             <label class="form-label small">App ID</label>
                                             <input type="text" class="form-control form-control-sm" id="env-firebase-appid" placeholder="1:123456789:web:abcdef">
                                         </div>
+                                        <hr class="my-2">
+                                        <div class="text-muted" style="font-size: 11px;">
+                                            <strong>How to get Firebase config:</strong>
+                                            <ol class="mb-0 ps-2">
+                                                <li>Go to <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a></li>
+                                                <li>Select your project (or create a new one)</li>
+                                                <li>Click <strong>⚙️ Settings</strong> → <strong>Project settings</strong></li>
+                                                <li>Scroll to <strong>Your apps</strong> → Select Web app</li>
+                                                <li>Copy values from the <strong>firebaseConfig</strong> object</li>
+                                            </ol>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -248,12 +303,23 @@
                                             <label class="form-label small">API Secret</label>
                                             <input type="password" class="form-control form-control-sm" id="env-cloudinary-apisecret" placeholder="•••••••••••••••">
                                         </div>
+                                        <hr class="my-2">
+                                        <div class="text-muted" style="font-size: 11px;">
+                                            <strong>How to get Cloudinary config:</strong>
+                                            <ol class="mb-0 ps-2">
+                                                <li>Sign up at <a href="https://cloudinary.com/" target="_blank">Cloudinary</a></li>
+                                                <li>Dashboard: copy <strong>Cloud Name</strong>, <strong>API Key</strong>, <strong>API Secret</strong></li>
+                                                <li>Go to <strong>Settings</strong> → <strong>Upload</strong> tab</li>
+                                                <li>Scroll to <strong>Upload presets</strong> → <strong>Add upload preset</strong></li>
+                                                <li>Set <strong>Signing Mode</strong> to <strong>Unsigned</strong></li>
+                                                <li>Save and copy the <strong>Preset Name</strong></li>
+                                            </ol>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary mt-2" id="btn-save-env">Save</button>
-                        <a class="btn btn-warning mt-2" id="btn-open-modal-confirm-env" data-bs-toggle="modal" href="#confirmBackEnvModal" role="button">Set Default?</a>
                     </div>
                   </div>
                 </div>
@@ -273,20 +339,6 @@
                   </div>
                 </div>
             </div>
-            <!-- confirm back env -->
-            <div class="modal fade" id="confirmBackEnvModal" tabindex="-1" role="dialog" aria-labelledby="confirmBackEnvModalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="confirmBackEnvModalTitle">Are you want to set default environment variables?</h5>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-close-back-modal-confirm" aria-label="Close">Close</button>
-                      <button type="button" class="btn btn-danger" id="btn-back-confirm">Yes</button>
-                    </div>
-                  </div>
-                </div>
-            </div>
             <!-- alert -->
             <div class="alert alert-warning fade-custom position-fixed top-0 start-50 translate-middle-x mt-2" style="z-index: 10000000;" role="alert" id="alert-warning">
                 <strong>Warning!</strong> You have unsaved changes.
@@ -296,6 +348,22 @@
             </div>
             <div class="alert alert-danger fade-custom position-fixed top-0 start-50 translate-middle-x mt-2" style="z-index: 10000000;" role="alert" id="alert-danger">
                 <strong>Error!</strong> There was a problem saving your changes.
+            </div>
+            <!-- Firebase config warning -->
+            <div class="config-warning-overlay" id="firebaseConfigWarning" style="display: none;">
+                <div class="config-warning-card">
+                    <h5>Firebase Configuration Required</h5>
+                    <p>Please configure your Firebase settings to start using Notes.</p>
+                    <button class="btn btn-primary" id="btn-configure-firebase">Configure Now</button>
+                </div>
+            </div>
+            <!-- Auth warning overlay -->
+            <div class="auth-warning-overlay" id="authWarningOverlay" style="display: none;">
+                <div class="auth-warning-card">
+                    <h5>Sign In Required</h5>
+                    <p>Please sign in with your Google account to access your notes.</p>
+                    <button class="btn btn-primary" id="btn-auth-sign-in-overlay">Sign In with Google</button>
+                </div>
             </div>
             <!-- button scroll top -->
             <button 
