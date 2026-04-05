@@ -1,6 +1,6 @@
 import {handleTextEnv} from "./utils.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+(function() {
     const btnRefresh = document.getElementById("btn-refresh");
     const switchCheckChecked = document.getElementById("switchCheckChecked");
     const btnConfirmDelete = document.querySelector('#btn-delete-confirm');
@@ -128,6 +128,5 @@ document.addEventListener("DOMContentLoaded", () => {
           console.warn('Environment not found:', envKey);
         }
     }
-  }
-);
+})();
 

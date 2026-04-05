@@ -43,6 +43,8 @@ const DurationLength = {
   LONG: 3000
 }
 let currentAlert = null;
+let categoryPageSize = 5;
+let currentCategorySelected = null;
 function handleAlert(type, message, duration) {
   if (currentAlert) {
     clearTimeout(currentAlert);
@@ -414,8 +416,6 @@ await initFirebase();
   var listCategories = [];
   var isClickNewButton = true;
   let currentNoteId = null;
-  let currentCategorySelected = null;
-  let categoryPageSize = 5;
 
   const createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
   const searchInput = document.querySelector('#search');
@@ -506,8 +506,9 @@ await initFirebase();
 
     LoadCategory();
 
+    let html = '';
     listItem.forEach(item => {
-      containerWords.innerHTML += `
+      html += `
       <div class="card mb-2">
         <div class="card-body">
           <div class="card-title d-flex align-items-center justify-content-between sticky-top" style="z-index:1;">
@@ -548,6 +549,7 @@ await initFirebase();
       </div>
       `;
     });
+    containerWords.innerHTML = html;
     changeIconCustomTheme(darkTheme);
     let exampleWrappers = document.querySelectorAll('.example-wrapper');
     exampleWrappers.forEach(exampleDiv => {
@@ -618,48 +620,49 @@ await initFirebase();
       );
       if (unusedImages.length && configCloudinary.CLOUDINARY_APISECRET) {
         loadingOverlay.style.display = '';
-        for (const img of unusedImages) {
-          try {
-            const urlParts = img.url.split('/');
-            const uploadIndex = urlParts.findIndex(part => part === 'upload');
-            if (uploadIndex === -1) continue;
-            
-            const pathAfterUpload = urlParts.slice(uploadIndex + 1);
-            const lastPart = pathAfterUpload[pathAfterUpload.length - 1];
-            const publicId = lastPart.split('.')[0];
-            const timestamp = Math.floor(Date.now() / 1000);
-            
-            const params = {
-              public_id: publicId,
-              timestamp: timestamp,
-              invalidate: true
-            };
-            
-            const signature = await generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
+        try {
+          for (const img of unusedImages) {
+            try {
+              const urlParts = img.url.split('/');
+              const uploadIndex = urlParts.findIndex(part => part === 'upload');
+              if (uploadIndex === -1) continue;
+              
+              const pathAfterUpload = urlParts.slice(uploadIndex + 1);
+              const lastPart = pathAfterUpload[pathAfterUpload.length - 1];
+              const publicId = lastPart.split('.')[0];
+              const timestamp = Math.floor(Date.now() / 1000);
+              
+              const params = {
+                public_id: publicId,
+                timestamp: timestamp,
+                invalidate: true
+              };
+              
+              const signature = await generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
 
-            const response = await fetch(`https://api.cloudinary.com/v1_1/${configCloudinary.CLOUDINARY_CLOUDNAME}/image/destroy`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                ...params,
-                api_key: configCloudinary.CLOUDINARY_APIKEY,
-                signature: signature
-              })
-            });
-            
-            const data = await response.json();
-            if (data.result !== 'ok') {
-              handleAlert(Alert.DANGER, 'Failed to delete image from Cloudinary', DurationLength.LONG);
-            } else {
-              await deleteDoc(doc(db, `note-images/${img.id}`));
-              handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
+              const response = await fetch(`https://api.cloudinary.com/v1_1/${configCloudinary.CLOUDINARY_CLOUDNAME}/image/destroy`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  ...params,
+                  api_key: configCloudinary.CLOUDINARY_APIKEY,
+                  signature: signature
+                })
+              });
+              
+              const data = await response.json();
+              if (data.result !== 'ok') {
+                handleAlert(Alert.DANGER, 'Failed to delete image from Cloudinary', DurationLength.LONG);
+              } else {
+                await deleteDoc(doc(db, `note-images/${img.id}`));
+                handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
+              }
+            } catch (error) {
+              handleAlert(Alert.DANGER, 'Error: ' + error.message, DurationLength.LONG);
             }
-          } catch (error) {
-            handleAlert(Alert.DANGER, 'Error: ' + error.message, DurationLength.LONG);
           }
-          finally {
-            loadingOverlay.style.display = 'none';
-          }
+        } finally {
+          loadingOverlay.style.display = 'none';
         }
       }
   }
@@ -694,7 +697,7 @@ await initFirebase();
       btnCleanImagesCloudinary.click();
     } catch (e) {
       handleAlert(Alert.DANGER, "Error adding document: "+ e.message, DurationLength.LONG);
-      listItemTemp = listItemTemp.push({
+      listItemTemp.push({
         Note: Note,
         example: example,
         timestamp: new Date()
@@ -746,6 +749,7 @@ await initFirebase();
       } else {
         currentCategorySelected = clickedCategory;
       }
+      listItem = [...listItemTemp];
       loadData();
       scrollToTopBtn.click();
     }
@@ -775,7 +779,7 @@ await initFirebase();
       currentNoteId = id.split('-')[1];
       isClickNewButton = true;
       btnModalConfirm.click();
-      btnDelete.addEventListener('click', handleDeleteNote);
+      btnDelete.addEventListener('click', handleDeleteNote, { once: true });
     }
     else if (id.includes('copy')) {
       const NoteId = id.split('-')[1];

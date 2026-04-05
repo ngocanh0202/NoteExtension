@@ -24674,6 +24674,8 @@ var DurationLength = {
   LONG: 3000
 };
 var currentAlert = null;
+var categoryPageSize = 5;
+var currentCategorySelected = null;
 function handleAlert(type, message, duration) {
   if (currentAlert) {
     clearTimeout(currentAlert);
@@ -25262,8 +25264,6 @@ var listItemTemp = [];
 var listCategories = [];
 var isClickNewButton = true;
 var currentNoteId = null;
-var currentCategorySelected = null;
-var categoryPageSize = 5;
 var createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
 var searchInput = document.querySelector('#search');
 var containerWords = document.querySelector('.container-word');
@@ -25348,7 +25348,7 @@ function LoadCategory() {
 }
 var loadData = /*#__PURE__*/function () {
   var _ref15 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-    var exampleWrappers;
+    var html, exampleWrappers;
     return _regeneratorRuntime().wrap(function _callee9$(_context10) {
       while (1) switch (_context10.prev = _context10.next) {
         case 0:
@@ -25365,9 +25365,11 @@ var loadData = /*#__PURE__*/function () {
             return b.timestamp - a.timestamp;
           });
           LoadCategory();
+          html = '';
           listItem.forEach(function (item) {
-            containerWords.innerHTML += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
+            html += "\n      <div class=\"card mb-2\">\n        <div class=\"card-body\">\n          <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n            <div class=\"d-flex align-items-center\">\n              <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n              <button type=\"button\" id=\"pin-").concat(item.id, "\" class=\"btn\">\n                <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n              </button>\n            </div>\n            <div class=\"btn-group\">\n              <button type=\"button\" id=\"edit-").concat(item.id, "\" class=\"btn btn-edit\">\n                <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n              </button>\n              <button type=\"button\" id=\"delete-").concat(item.id, "\" class=\"btn btn-delete\">\n                <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n              </button>\n            </div>\n          </div>\n\n          <div class=\"d-flex align-items-center justify-content-between mt-2\">\n            <div class=\"d-flex gap-2\">\n              <p class=\"card-text font-monospace fst-italic small mb-0\">\n                ").concat(item.timestamp.toDate().toLocaleString(), "\n              </p>\n              ").concat(item.category ? "<span class=\"badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary\">".concat(item.category, "</span>") : '', "\n            </div>\n            <button type=\"button\" id=\"copy-").concat(item.id, "\" class=\"btn btn-copy\">\n              <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n            </button>\n          </div>\n        <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n          ").concat(item.example, "\n        </div>\n        <button type=\"button\" id=\"readMore-").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n          more...\n        </button>\n        </div>\n      </div>\n      ");
           });
+          containerWords.innerHTML = html;
           changeIconCustomTheme(darkTheme);
           exampleWrappers = document.querySelectorAll('.example-wrapper');
           exampleWrappers.forEach(function (exampleDiv) {
@@ -25376,7 +25378,7 @@ var loadData = /*#__PURE__*/function () {
               readMoreBtn.style.display = "inline-block";
             }
           });
-        case 7:
+        case 9:
         case "end":
           return _context10.stop();
       }
@@ -25486,30 +25488,31 @@ function _handleCleanImagesCloudinary() {
             });
           });
           if (!(unusedImages.length && configCloudinary.CLOUDINARY_APISECRET)) {
-            _context17.next = 59;
+            _context17.next = 60;
             break;
           }
           loadingOverlay.style.display = '';
+          _context17.prev = 10;
           _iterator = _createForOfIteratorHelper(unusedImages);
-          _context17.prev = 11;
+          _context17.prev = 12;
           _iterator.s();
-        case 13:
+        case 14:
           if ((_step = _iterator.n()).done) {
-            _context17.next = 51;
+            _context17.next = 49;
             break;
           }
           img = _step.value;
-          _context17.prev = 15;
+          _context17.prev = 16;
           urlParts = img.url.split('/');
           uploadIndex = urlParts.findIndex(function (part) {
             return part === 'upload';
           });
           if (!(uploadIndex === -1)) {
-            _context17.next = 20;
+            _context17.next = 21;
             break;
           }
-          return _context17.abrupt("continue", 49);
-        case 20:
+          return _context17.abrupt("continue", 47);
+        case 21:
           pathAfterUpload = urlParts.slice(uploadIndex + 1);
           lastPart = pathAfterUpload[pathAfterUpload.length - 1];
           publicId = lastPart.split('.')[0];
@@ -25519,11 +25522,11 @@ function _handleCleanImagesCloudinary() {
             timestamp: timestamp,
             invalidate: true
           };
-          _context17.next = 27;
+          _context17.next = 28;
           return generateCloudinarySignature(params, configCloudinary.CLOUDINARY_APISECRET);
-        case 27:
+        case 28:
           signature = _context17.sent;
-          _context17.next = 30;
+          _context17.next = 31;
           return fetch("https://api.cloudinary.com/v1_1/".concat(configCloudinary.CLOUDINARY_CLOUDNAME, "/image/destroy"), {
             method: 'POST',
             headers: {
@@ -25534,54 +25537,54 @@ function _handleCleanImagesCloudinary() {
               signature: signature
             }))
           });
-        case 30:
+        case 31:
           response = _context17.sent;
-          _context17.next = 33;
+          _context17.next = 34;
           return response.json();
-        case 33:
+        case 34:
           data = _context17.sent;
           if (!(data.result !== 'ok')) {
-            _context17.next = 38;
+            _context17.next = 39;
             break;
           }
           handleAlert(Alert.DANGER, 'Failed to delete image from Cloudinary', DurationLength.LONG);
+          _context17.next = 42;
+          break;
+        case 39:
           _context17.next = 41;
-          break;
-        case 38:
-          _context17.next = 40;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "note-images/".concat(img.id)));
-        case 40:
-          handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
         case 41:
-          _context17.next = 46;
+          handleAlert(Alert.INFO, 'Image deleted from Cloudinary successfully', DurationLength.MEDIUM);
+        case 42:
+          _context17.next = 47;
           break;
-        case 43:
-          _context17.prev = 43;
-          _context17.t0 = _context17["catch"](15);
+        case 44:
+          _context17.prev = 44;
+          _context17.t0 = _context17["catch"](16);
           handleAlert(Alert.DANGER, 'Error: ' + _context17.t0.message, DurationLength.LONG);
-        case 46:
-          _context17.prev = 46;
-          loadingOverlay.style.display = 'none';
-          return _context17.finish(46);
+        case 47:
+          _context17.next = 14;
+          break;
         case 49:
-          _context17.next = 13;
+          _context17.next = 54;
           break;
         case 51:
-          _context17.next = 56;
-          break;
-        case 53:
-          _context17.prev = 53;
-          _context17.t1 = _context17["catch"](11);
+          _context17.prev = 51;
+          _context17.t1 = _context17["catch"](12);
           _iterator.e(_context17.t1);
-        case 56:
-          _context17.prev = 56;
+        case 54:
+          _context17.prev = 54;
           _iterator.f();
-          return _context17.finish(56);
-        case 59:
+          return _context17.finish(54);
+        case 57:
+          _context17.prev = 57;
+          loadingOverlay.style.display = 'none';
+          return _context17.finish(57);
+        case 60:
         case "end":
           return _context17.stop();
       }
-    }, _callee16, null, [[11, 53, 56, 59], [15, 43, 46, 49]]);
+    }, _callee16, null, [[10,, 57, 60], [12, 51, 54, 57], [16, 44]]);
   }));
   return _handleCleanImagesCloudinary.apply(this, arguments);
 }
@@ -25652,7 +25655,7 @@ function _handleUpsertNote() {
           _context19.prev = 21;
           _context19.t0 = _context19["catch"](6);
           handleAlert(Alert.DANGER, "Error adding document: " + _context19.t0.message, DurationLength.LONG);
-          listItemTemp = listItemTemp.push({
+          listItemTemp.push({
             Note: Note,
             example: example,
             timestamp: new Date()
@@ -25706,6 +25709,7 @@ function handleClickInContainer(e) {
     } else {
       currentCategorySelected = clickedCategory;
     }
+    listItem = _toConsumableArray(listItemTemp);
     loadData();
     scrollToTopBtn.click();
   } else if (target.matches('.button-click-category-more')) {
@@ -25751,7 +25755,9 @@ function _handleContainerEventClick() {
           currentNoteId = id.split('-')[1];
           isClickNewButton = true;
           btnModalConfirm.click();
-          btnDelete.addEventListener('click', _handleDeleteNote);
+          btnDelete.addEventListener('click', _handleDeleteNote, {
+            once: true
+          });
           _context20.next = 47;
           break;
         case 19:
