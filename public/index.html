@@ -186,19 +186,72 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn-close-modal-setting" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <textarea class="form-control" id="env-variables" rows="15" placeholder="Enter environment variables... 
-apiKey: &quot;your_api_key_here&quot;,
-authDomain: &quot;your_project.firebaseapp.com&quot;,
-projectId: &quot;your_project_id&quot;,
-storageBucket: &quot;our_project.appspot.com&quot;,
-messagingSenderId: &quot;123456789&quot;,
-appId: &quot;1:123456789:web:abcdef123456&quot;,
-# Cloudinary (for image uploads and deletion)
-cloudinary_cloudname: &quot;your_cloud_name&quot;,
-cloudinary_uploadpreset: &quot;your_unsigned_preset&quot;,
-cloudinary_apikey: &quot;your_api_key&quot;,
-cloudinary_apisecret: &quot;your_api_secret&quot;,
-cloudinary_folder: &quot;images&quot;,"></textarea>
+                        <div class="accordion" id="envAccordion">
+                            <!-- Firebase Section -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#firebaseSection">
+                                        Firebase Config
+                                    </button>
+                                </h2>
+                                <div id="firebaseSection" class="accordion-collapse collapse show" data-bs-parent="#envAccordion">
+                                    <div class="accordion-body">
+                                        <div class="mb-2">
+                                            <label class="form-label small">API Key</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-firebase-apikey" placeholder="AIzaSy...">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Auth Domain</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-firebase-authdomain" placeholder="your-project.firebaseapp.com">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Project ID</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-firebase-projectid" placeholder="your-project-id">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Storage Bucket</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-firebase-storagebucket" placeholder="your-project.appspot.com">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Messaging Sender ID</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-firebase-senderid" placeholder="123456789">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">App ID</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-firebase-appid" placeholder="1:123456789:web:abcdef">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Cloudinary Section -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cloudinarySection">
+                                        Cloudinary Config
+                                    </button>
+                                </h2>
+                                <div id="cloudinarySection" class="accordion-collapse collapse" data-bs-parent="#envAccordion">
+                                    <div class="accordion-body">
+                                        <div class="mb-2">
+                                            <label class="form-label small">Cloud Name</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-cloudinary-cloudname" placeholder="your-cloud-name">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Upload Preset</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-cloudinary-uploadpreset" placeholder="your-unsigned-preset">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">API Key</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-cloudinary-apikey" placeholder="123456789012345">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">API Secret</label>
+                                            <input type="password" class="form-control form-control-sm" id="env-cloudinary-apisecret" placeholder="•••••••••••••••">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-primary mt-2" id="btn-save-env">Save</button>
                         <a class="btn btn-warning mt-2" id="btn-open-modal-confirm-env" data-bs-toggle="modal" href="#confirmBackEnvModal" role="button">Set Default?</a>
                     </div>

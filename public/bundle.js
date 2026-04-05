@@ -24599,7 +24599,6 @@ var DOM = {
   alertInfo: null,
   alertDanger: null,
   themeSwitcher: null,
-  envVariables: null,
   btnSaveEnv: null,
   btnCloseModalEnv: null,
   btnBackEnv: null,
@@ -24620,14 +24619,25 @@ var DOM = {
   btnDelete: null,
   btnModalConfirm: null,
   btnModalConfirmClose: null,
-  createOrUpdateNoteForm: null
+  createOrUpdateNoteForm: null,
+  // Firebase inputs
+  envFirebaseApikey: null,
+  envFirebaseAuthdomain: null,
+  envFirebaseProjectid: null,
+  envFirebaseStoragebucket: null,
+  envFirebaseSenderid: null,
+  envFirebaseAppid: null,
+  // Cloudinary inputs
+  envCloudinaryCloudname: null,
+  envCloudinaryUploadpreset: null,
+  envCloudinaryApikey: null,
+  envCloudinaryApisecret: null
 };
 function initDOM() {
   DOM.alertWarning = document.querySelector('#alert-warning');
   DOM.alertInfo = document.querySelector('#alert-info');
   DOM.alertDanger = document.querySelector('#alert-danger');
   DOM.themeSwitcher = document.getElementById('theme-switcher');
-  DOM.envVariables = document.querySelector('#env-variables');
   DOM.btnSaveEnv = document.querySelector('#btn-save-env');
   DOM.btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
   DOM.btnBackEnv = document.querySelector('#btn-back-confirm');
@@ -24649,6 +24659,18 @@ function initDOM() {
   DOM.btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
   DOM.btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
   DOM.createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
+  // Firebase inputs
+  DOM.envFirebaseApikey = document.getElementById('env-firebase-apikey');
+  DOM.envFirebaseAuthdomain = document.getElementById('env-firebase-authdomain');
+  DOM.envFirebaseProjectid = document.getElementById('env-firebase-projectid');
+  DOM.envFirebaseStoragebucket = document.getElementById('env-firebase-storagebucket');
+  DOM.envFirebaseSenderid = document.getElementById('env-firebase-senderid');
+  DOM.envFirebaseAppid = document.getElementById('env-firebase-appid');
+  // Cloudinary inputs
+  DOM.envCloudinaryCloudname = document.getElementById('env-cloudinary-cloudname');
+  DOM.envCloudinaryUploadpreset = document.getElementById('env-cloudinary-uploadpreset');
+  DOM.envCloudinaryApikey = document.getElementById('env-cloudinary-apikey');
+  DOM.envCloudinaryApisecret = document.getElementById('env-cloudinary-apisecret');
 }
 
 /***/ }),
@@ -24894,9 +24916,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   handleBackEnv: () => (/* binding */ handleBackEnv),
 /* harmony export */   handleLoadEnv: () => (/* binding */ handleLoadEnv),
 /* harmony export */   handleLoadLogEnvs: () => (/* binding */ handleLoadLogEnvs),
-/* harmony export */   initializeEnvDisplay: () => (/* binding */ initializeEnvDisplay),
+/* harmony export */   populateSettings: () => (/* binding */ populateSettings),
+/* harmony export */   readSettings: () => (/* binding */ readSettings),
 /* harmony export */   removeEnvAction: () => (/* binding */ removeEnvAction),
-/* harmony export */   switchEnvAction: () => (/* binding */ switchEnvAction)
+/* harmony export */   switchEnvAction: () => (/* binding */ switchEnvAction),
+/* harmony export */   validateSettings: () => (/* binding */ validateSettings)
 /* harmony export */ });
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils.js */ "./src/utils.js");
 /* harmony import */ var _firebase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./firebase.js */ "./src/managers/firebase.js");
@@ -24914,112 +24938,117 @@ function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { 
 function _OverloadYield(e, d) { this.v = e, this.k = d; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
 
-function initializeEnvDisplay(dataEnv, localVarCloudinaryConfig) {
-  var configText = Object.entries(localVarCloudinaryConfig).map(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      key = _ref2[0],
-      value = _ref2[1];
-    return "".concat(key, ": \"").concat(value, "\"");
-  }).join(',\n');
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value = (dataEnv[0] ? dataEnv[0] + ',\n' : '') + configText;
+function populateSettings(configEnv, cloudinaryConfig) {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseApikey.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.APIKEY) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseAuthdomain.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.AUTHDOMAIN) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseProjectid.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.PROJECTID) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseStoragebucket.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.STORAGEBUCKET) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseSenderid.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.MESSAGINGSENDERID) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseAppid.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.APPID) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryCloudname.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_CLOUDNAME) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryUploadpreset.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_UPLOADPRESET) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApikey.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_APIKEY) || '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApisecret.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_APISECRET) || '';
 }
-function handleLoadEnv(_x, _x2, _x3, _x4, _x5) {
+function readSettings() {
+  return {
+    configEnv: {
+      APIKEY: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseApikey.value.trim(),
+      AUTHDOMAIN: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseAuthdomain.value.trim(),
+      PROJECTID: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseProjectid.value.trim(),
+      STORAGEBUCKET: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseStoragebucket.value.trim(),
+      MESSAGINGSENDERID: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseSenderid.value.trim(),
+      APPID: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseAppid.value.trim()
+    },
+    cloudinaryConfig: {
+      CLOUDINARY_CLOUDNAME: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryCloudname.value.trim(),
+      CLOUDINARY_UPLOADPRESET: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryUploadpreset.value.trim(),
+      CLOUDINARY_APIKEY: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApikey.value.trim(),
+      CLOUDINARY_APISECRET: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApisecret.value.trim()
+    }
+  };
+}
+function validateSettings(configEnv, cloudinaryConfig) {
+  var missingFirebase = [];
+  if (!configEnv.APIKEY) missingFirebase.push('API Key');
+  if (!configEnv.AUTHDOMAIN) missingFirebase.push('Auth Domain');
+  if (!configEnv.PROJECTID) missingFirebase.push('Project ID');
+  if (!configEnv.STORAGEBUCKET) missingFirebase.push('Storage Bucket');
+  if (!configEnv.MESSAGINGSENDERID) missingFirebase.push('Messaging Sender ID');
+  if (!configEnv.APPID) missingFirebase.push('App ID');
+  var missingCloudinary = [];
+  if (!cloudinaryConfig.CLOUDINARY_CLOUDNAME) missingCloudinary.push('Cloud Name');
+  if (!cloudinaryConfig.CLOUDINARY_UPLOADPRESET) missingCloudinary.push('Upload Preset');
+  if (!cloudinaryConfig.CLOUDINARY_APIKEY) missingCloudinary.push('API Key');
+  if (!cloudinaryConfig.CLOUDINARY_APISECRET) missingCloudinary.push('API Secret');
+  return {
+    missingFirebase: missingFirebase,
+    missingCloudinary: missingCloudinary
+  };
+}
+function handleLoadEnv(_x, _x2, _x3, _x4) {
   return _handleLoadEnv.apply(this, arguments);
 }
 function _handleLoadEnv() {
-  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(dataEnv, localVarCloudinaryConfig, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
-    var envText, _newCloudinaryConfig$, _newCloudinaryConfig$2, _newCloudinaryConfig$3, _newCloudinaryConfig$4, env, configEnv, newCloudinaryConfig, missingCloudinaryKeys, success;
+  _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
+    var _readSettings, configEnv, cloudinaryConfig, validation, success;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'block';
-          envText = _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value.trim();
-          if (envText) {
-            _context.next = 6;
+          _readSettings = readSettings(), configEnv = _readSettings.configEnv, cloudinaryConfig = _readSettings.cloudinaryConfig;
+          validation = validateSettings(configEnv, cloudinaryConfig);
+          if (!(validation.missingFirebase.length > 0)) {
+            _context.next = 7;
             break;
           }
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Please enter environment variables", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.SHORT);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Firebase config: ".concat(validation.missingFirebase.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
           return _context.abrupt("return");
-        case 6:
-          _context.prev = 6;
-          env = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.handleTextEnv)(envText, true);
-          configEnv = {
-            APIKEY: env.APIKEY,
-            AUTHDOMAIN: env.AUTHDOMAIN,
-            PROJECTID: env.PROJECTID,
-            STORAGEBUCKET: env.STORAGEBUCKET,
-            MESSAGINGSENDERID: env.MESSAGINGSENDERID,
-            APPID: env.APPID
-          };
-          newCloudinaryConfig = {
-            CLOUDINARY_CLOUDNAME: env.CLOUDINARY_CLOUDNAME,
-            CLOUDINARY_UPLOADPRESET: env.CLOUDINARY_UPLOADPRESET,
-            CLOUDINARY_APIKEY: env.CLOUDINARY_APIKEY,
-            CLOUDINARY_APISECRET: env.CLOUDINARY_APISECRET
-          };
-          missingCloudinaryKeys = [];
-          if (!((_newCloudinaryConfig$ = newCloudinaryConfig.CLOUDINARY_CLOUDNAME) !== null && _newCloudinaryConfig$ !== void 0 && _newCloudinaryConfig$.trim())) {
-            missingCloudinaryKeys.push('CLOUDINARY_CLOUDNAME');
-          }
-          if (!((_newCloudinaryConfig$2 = newCloudinaryConfig.CLOUDINARY_UPLOADPRESET) !== null && _newCloudinaryConfig$2 !== void 0 && _newCloudinaryConfig$2.trim())) {
-            missingCloudinaryKeys.push('CLOUDINARY_UPLOADPRESET');
-          }
-          if (!((_newCloudinaryConfig$3 = newCloudinaryConfig.CLOUDINARY_APIKEY) !== null && _newCloudinaryConfig$3 !== void 0 && _newCloudinaryConfig$3.trim())) {
-            missingCloudinaryKeys.push('CLOUDINARY_APIKEY');
-          }
-          if (!((_newCloudinaryConfig$4 = newCloudinaryConfig.CLOUDINARY_APISECRET) !== null && _newCloudinaryConfig$4 !== void 0 && _newCloudinaryConfig$4.trim())) {
-            missingCloudinaryKeys.push('CLOUDINARY_APISECRET');
-          }
-          if (missingCloudinaryKeys.length > 0) {
-            (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Cloudinary config: ".concat(missingCloudinaryKeys.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 7:
+          if (validation.missingCloudinary.length > 0) {
+            (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Cloudinary config: ".concat(validation.missingCloudinary.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           } else {
-            localStorage.setItem('envCloudinary', JSON.stringify(newCloudinaryConfig));
+            localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
           }
-          setLocalVarCloudinaryConfig(newCloudinaryConfig);
-          _context.next = 19;
-          return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(configEnv, false, newCloudinaryConfig, dataEnv, onNotesRendered);
-        case 19:
+          _context.prev = 8;
+          setLocalVarCloudinaryConfig(cloudinaryConfig);
+          _context.next = 12;
+          return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(configEnv, false, cloudinaryConfig, dataEnv, onNotesRendered);
+        case 12:
           success = _context.sent;
           if (success) {
             setDataEnv(dataEnv);
             _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
           }
-          _context.next = 26;
+          _context.next = 19;
           break;
-        case 23:
-          _context.prev = 23;
-          _context.t0 = _context["catch"](6);
+        case 16:
+          _context.prev = 16;
+          _context.t0 = _context["catch"](8);
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Failed to update configuration: ".concat(_context.t0.message), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-        case 26:
-          _context.prev = 26;
+        case 19:
+          _context.prev = 19;
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.switchCheckChecked.checked = false;
-          return _context.finish(26);
-        case 30:
+          return _context.finish(19);
+        case 23:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[6, 23, 26, 30]]);
+    }, _callee, null, [[8, 16, 19, 23]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
-function handleBackEnv(_x6, _x7) {
+function handleBackEnv(_x5, _x6) {
   return _handleBackEnv.apply(this, arguments);
 }
 function _handleBackEnv() {
   _handleBackEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(localVarCloudinaryConfig, onNotesRendered) {
-    var configText;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -25029,27 +25058,21 @@ function _handleBackEnv() {
           _context2.next = 5;
           return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(null, false, localVarCloudinaryConfig, [], onNotesRendered);
         case 5:
-          configText = Object.entries(localVarCloudinaryConfig).map(function (_ref5) {
-            var _ref6 = _slicedToArray(_ref5, 2),
-              key = _ref6[0],
-              value = _ref6[1];
-            return "".concat(key, ": \"").concat(value, "\"");
-          }).join(',\n');
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value = ',\n' + configText;
+          populateSettings({}, localVarCloudinaryConfig);
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Reset App successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.SHORT);
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseBackModalEnv.click();
-          _context2.next = 15;
+          _context2.next = 14;
           break;
-        case 12:
-          _context2.prev = 12;
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](0);
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Failed to reset Firebase: ".concat(_context2.t0.message), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-        case 15:
+        case 14:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 12]]);
+    }, _callee2, null, [[0, 11]]);
   }));
   return _handleBackEnv.apply(this, arguments);
 }
@@ -25059,13 +25082,8 @@ function switchEnvAction(envKey, dataEnv, localVarCloudinaryConfig, onSaveEnvCli
     return (envObj === null || envObj === void 0 ? void 0 : envObj.APIKEY) === envKey;
   });
   if (selectedEnv) {
-    var cloudinaryText = Object.entries(localVarCloudinaryConfig).map(function (_ref3) {
-      var _ref4 = _slicedToArray(_ref3, 2),
-        key = _ref4[0],
-        value = _ref4[1];
-      return "".concat(key, ": \"").concat(value, "\"");
-    }).join(',\n');
-    _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envVariables.value = selectedEnv + ',\n' + cloudinaryText;
+    var envObj = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__.handleTextEnv)(selectedEnv, true);
+    populateSettings(envObj, localVarCloudinaryConfig);
     onSaveEnvClick();
     _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.switchCheckChecked.checked = false;
     _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.labelSwitch.textContent = "Notes";
@@ -25337,36 +25355,24 @@ function initFirebase(_x7, _x8, _x9) {
 }
 function _initFirebase() {
   _initFirebase = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(localVarCloudinaryConfig, dataEnv, onNotesRendered) {
-    var envText;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
-          envText = _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.envVariables.value.trim();
-          if (!envText) {
-            _context3.next = 7;
-            break;
-          }
-          _context3.next = 5;
-          return resetFirebaseApp((0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.handleTextEnv)(envText, true), true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
-        case 5:
-          _context3.next = 9;
-          break;
-        case 7:
-          _context3.next = 9;
+          _context3.next = 3;
           return resetFirebaseApp(null, true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
-        case 9:
-          _context3.next = 14;
+        case 3:
+          _context3.next = 8;
           break;
-        case 11:
-          _context3.prev = 11;
+        case 5:
+          _context3.prev = 5;
           _context3.t0 = _context3["catch"](0);
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.DANGER, _context3.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.LONG);
-        case 14:
+        case 8:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 11]]);
+    }, _callee3, null, [[0, 5]]);
   }));
   return _initFirebase.apply(this, arguments);
 }
@@ -25877,7 +25883,7 @@ function _onNotesRendered() {
   setupTinyMCEPasteHandler(editor);
 });
 await (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.initFirebase)(localVarCloudinaryConfig, dataEnv, onNotesRendered);
-(0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.initializeEnvDisplay)(dataEnv, localVarCloudinaryConfig);
+(0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.populateSettings)((0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.getConfigEnv)(), localVarCloudinaryConfig);
 _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.themeSwitcher.addEventListener('click', function () {
   return (0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_1__.toggleTheme)(function (editor) {
     setupTinyMCEPasteHandler(editor);
@@ -26069,14 +26075,12 @@ function handleClickInContainer(e) {
   } else if (target.matches('.btn-move-env') || target.closest('.btn-move-env')) {
     var envKey = target.closest('.card').querySelector('.card-title h5').textContent;
     (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.switchEnvAction)(envKey, dataEnv, localVarCloudinaryConfig, function () {
-      _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnSaveEnv.click();
+      handleLoadEnvWrapper();
     });
   } else if (target.matches('.btn-delete-env') || target.closest('.btn-delete-env')) {
     var _envKey = target.closest('.card').querySelector('.card-title h5').textContent;
-    var btnConfirmDelete = _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete;
-    btnConfirmDelete.removeEventListener('click', handleDeleteEnvConfirm);
-    btnConfirmDelete.envKeyToDelete = _envKey;
-    btnConfirmDelete.addEventListener('click', handleDeleteEnvConfirm, {
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete.envKeyToDelete = _envKey;
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnDelete.addEventListener('click', handleDeleteEnvConfirm, {
       once: true
     });
   }
@@ -26118,7 +26122,7 @@ function _handleLoadEnvWrapper() {
       while (1) switch (_context11.prev = _context11.next) {
         case 0:
           _context11.next = 2;
-          return (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.handleLoadEnv)(dataEnv, localVarCloudinaryConfig, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered);
+          return (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.handleLoadEnv)(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered);
         case 2:
         case "end":
           return _context11.stop();

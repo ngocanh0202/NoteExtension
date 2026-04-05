@@ -109,12 +109,7 @@ export async function resetFirebaseApp(newConfig, isLoadInitWeb, localVarCloudin
 
 export async function initFirebase(localVarCloudinaryConfig, dataEnv, onNotesRendered) {
   try {
-    const envText = DOM.envVariables.value.trim();
-    if (envText) {
-      await resetFirebaseApp(handleTextEnv(envText, true), true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
-    } else {
-      await resetFirebaseApp(null, true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
-    }
+    await resetFirebaseApp(null, true, localVarCloudinaryConfig, dataEnv, onNotesRendered);
   } catch (error) {
     handleAlert(Alert.DANGER, error.message, DurationLength.LONG);
   }

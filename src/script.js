@@ -1,9 +1,9 @@
 import { DOM, initDOM } from './config/dom.js';
 import { initTheme, toggleTheme } from './ui/theme.js';
-import { initFirebase, resetFirebaseApp, getConfigCloudinary, setConfigCloudinary } from './managers/firebase.js';
-import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCategoryClick, expandCategoryPageSize, getNoteById, stripHtmlAdvancedToCopy, togglePin, getListItem, getListItemTemp } from './managers/notes.js';
+import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv } from './managers/firebase.js';
+import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCategoryClick, expandCategoryPageSize, getNoteById, stripHtmlAdvancedToCopy, togglePin, getListItem } from './managers/notes.js';
 import { handleCleanImagesCloudinary, handleUploadImageUrl } from './managers/cloudinary.js';
-import { handleLoadEnv, handleBackEnv, initializeEnvDisplay, switchEnvAction, removeEnvAction, handleLoadLogEnvs } from './managers/env.js';
+import { handleLoadEnv, handleBackEnv, populateSettings, switchEnvAction, removeEnvAction, handleLoadLogEnvs } from './managers/env.js';
 import { handleAlert, Alert, DurationLength } from './ui/alert.js';
 
 initDOM();
@@ -31,7 +31,7 @@ initTheme((editor) => {
 
 await initFirebase(localVarCloudinaryConfig, dataEnv, onNotesRendered);
 
-initializeEnvDisplay(dataEnv, localVarCloudinaryConfig);
+populateSettings(getConfigEnv(), localVarCloudinaryConfig);
 
 DOM.themeSwitcher.addEventListener('click', () => toggleTheme((editor) => {
   setupTinyMCEPasteHandler(editor);
@@ -139,15 +139,13 @@ function handleClickInContainer(e) {
   else if (target.matches('.btn-move-env') || target.closest('.btn-move-env')) {
     const envKey = target.closest('.card').querySelector('.card-title h5').textContent;
     switchEnvAction(envKey, dataEnv, localVarCloudinaryConfig, () => {
-      DOM.btnSaveEnv.click();
+      handleLoadEnvWrapper();
     });
   }
   else if (target.matches('.btn-delete-env') || target.closest('.btn-delete-env')) {
     const envKey = target.closest('.card').querySelector('.card-title h5').textContent;
-    const btnConfirmDelete = DOM.btnDelete;
-    btnConfirmDelete.removeEventListener('click', handleDeleteEnvConfirm);
-    btnConfirmDelete.envKeyToDelete = envKey;
-    btnConfirmDelete.addEventListener('click', handleDeleteEnvConfirm, { once: true });
+    DOM.btnDelete.envKeyToDelete = envKey;
+    DOM.btnDelete.addEventListener('click', handleDeleteEnvConfirm, { once: true });
   }
 }
 
@@ -185,7 +183,7 @@ function scrollToTop() {
 }
 
 async function handleLoadEnvWrapper() {
-  await handleLoadEnv(dataEnv, localVarCloudinaryConfig, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered);
+  await handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered);
 }
 
 async function handleBackEnvWrapper() {

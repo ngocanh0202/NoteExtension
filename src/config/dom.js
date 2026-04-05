@@ -3,7 +3,6 @@ export const DOM = {
   alertInfo: null,
   alertDanger: null,
   themeSwitcher: null,
-  envVariables: null,
   btnSaveEnv: null,
   btnCloseModalEnv: null,
   btnBackEnv: null,
@@ -25,6 +24,18 @@ export const DOM = {
   btnModalConfirm: null,
   btnModalConfirmClose: null,
   createOrUpdateNoteForm: null,
+  // Firebase inputs
+  envFirebaseApikey: null,
+  envFirebaseAuthdomain: null,
+  envFirebaseProjectid: null,
+  envFirebaseStoragebucket: null,
+  envFirebaseSenderid: null,
+  envFirebaseAppid: null,
+  // Cloudinary inputs
+  envCloudinaryCloudname: null,
+  envCloudinaryUploadpreset: null,
+  envCloudinaryApikey: null,
+  envCloudinaryApisecret: null,
 };
 
 export function initDOM() {
@@ -32,7 +43,6 @@ export function initDOM() {
   DOM.alertInfo = document.querySelector('#alert-info');
   DOM.alertDanger = document.querySelector('#alert-danger');
   DOM.themeSwitcher = document.getElementById('theme-switcher');
-  DOM.envVariables = document.querySelector('#env-variables');
   DOM.btnSaveEnv = document.querySelector('#btn-save-env');
   DOM.btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');
   DOM.btnBackEnv = document.querySelector('#btn-back-confirm');
@@ -54,4 +64,16 @@ export function initDOM() {
   DOM.btnModalConfirm = document.querySelector('#btn-open-modal-confirm');
   DOM.btnModalConfirmClose = document.querySelector('#btn-close-modal-confirm');
   DOM.createOrUpdateNoteForm = document.querySelector('#upserd-Note-form');
+  // Firebase inputs
+  DOM.envFirebaseApikey = document.getElementById('env-firebase-apikey');
+  DOM.envFirebaseAuthdomain = document.getElementById('env-firebase-authdomain');
+  DOM.envFirebaseProjectid = document.getElementById('env-firebase-projectid');
+  DOM.envFirebaseStoragebucket = document.getElementById('env-firebase-storagebucket');
+  DOM.envFirebaseSenderid = document.getElementById('env-firebase-senderid');
+  DOM.envFirebaseAppid = document.getElementById('env-firebase-appid');
+  // Cloudinary inputs
+  DOM.envCloudinaryCloudname = document.getElementById('env-cloudinary-cloudname');
+  DOM.envCloudinaryUploadpreset = document.getElementById('env-cloudinary-uploadpreset');
+  DOM.envCloudinaryApikey = document.getElementById('env-cloudinary-apikey');
+  DOM.envCloudinaryApisecret = document.getElementById('env-cloudinary-apisecret');
 }

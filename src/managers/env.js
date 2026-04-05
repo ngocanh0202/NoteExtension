@@ -3,62 +3,78 @@ import { resetFirebaseApp } from './firebase.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 import { DOM } from '../config/dom.js';
 
-export function initializeEnvDisplay(dataEnv, localVarCloudinaryConfig) {
-  let configText = Object.entries(localVarCloudinaryConfig)
-    .map(([key, value]) => `${key}: "${value}"`)
-    .join(',\n');
-  DOM.envVariables.value = (dataEnv[0] ? dataEnv[0] + ',\n' : '') + configText;
+export function populateSettings(configEnv, cloudinaryConfig) {
+  DOM.envFirebaseApikey.value = configEnv?.APIKEY || '';
+  DOM.envFirebaseAuthdomain.value = configEnv?.AUTHDOMAIN || '';
+  DOM.envFirebaseProjectid.value = configEnv?.PROJECTID || '';
+  DOM.envFirebaseStoragebucket.value = configEnv?.STORAGEBUCKET || '';
+  DOM.envFirebaseSenderid.value = configEnv?.MESSAGINGSENDERID || '';
+  DOM.envFirebaseAppid.value = configEnv?.APPID || '';
+
+  DOM.envCloudinaryCloudname.value = cloudinaryConfig?.CLOUDINARY_CLOUDNAME || '';
+  DOM.envCloudinaryUploadpreset.value = cloudinaryConfig?.CLOUDINARY_UPLOADPRESET || '';
+  DOM.envCloudinaryApikey.value = cloudinaryConfig?.CLOUDINARY_APIKEY || '';
+  DOM.envCloudinaryApisecret.value = cloudinaryConfig?.CLOUDINARY_APISECRET || '';
 }
 
-export async function handleLoadEnv(dataEnv, localVarCloudinaryConfig, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
+export function readSettings() {
+  return {
+    configEnv: {
+      APIKEY: DOM.envFirebaseApikey.value.trim(),
+      AUTHDOMAIN: DOM.envFirebaseAuthdomain.value.trim(),
+      PROJECTID: DOM.envFirebaseProjectid.value.trim(),
+      STORAGEBUCKET: DOM.envFirebaseStoragebucket.value.trim(),
+      MESSAGINGSENDERID: DOM.envFirebaseSenderid.value.trim(),
+      APPID: DOM.envFirebaseAppid.value.trim(),
+    },
+    cloudinaryConfig: {
+      CLOUDINARY_CLOUDNAME: DOM.envCloudinaryCloudname.value.trim(),
+      CLOUDINARY_UPLOADPRESET: DOM.envCloudinaryUploadpreset.value.trim(),
+      CLOUDINARY_APIKEY: DOM.envCloudinaryApikey.value.trim(),
+      CLOUDINARY_APISECRET: DOM.envCloudinaryApisecret.value.trim(),
+    }
+  };
+}
+
+export function validateSettings(configEnv, cloudinaryConfig) {
+  const missingFirebase = [];
+  if (!configEnv.APIKEY) missingFirebase.push('API Key');
+  if (!configEnv.AUTHDOMAIN) missingFirebase.push('Auth Domain');
+  if (!configEnv.PROJECTID) missingFirebase.push('Project ID');
+  if (!configEnv.STORAGEBUCKET) missingFirebase.push('Storage Bucket');
+  if (!configEnv.MESSAGINGSENDERID) missingFirebase.push('Messaging Sender ID');
+  if (!configEnv.APPID) missingFirebase.push('App ID');
+
+  const missingCloudinary = [];
+  if (!cloudinaryConfig.CLOUDINARY_CLOUDNAME) missingCloudinary.push('Cloud Name');
+  if (!cloudinaryConfig.CLOUDINARY_UPLOADPRESET) missingCloudinary.push('Upload Preset');
+  if (!cloudinaryConfig.CLOUDINARY_APIKEY) missingCloudinary.push('API Key');
+  if (!cloudinaryConfig.CLOUDINARY_APISECRET) missingCloudinary.push('API Secret');
+
+  return { missingFirebase, missingCloudinary };
+}
+
+export async function handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
   DOM.loadingOverlay.style.display = 'block';
-  const envText = DOM.envVariables.value.trim();
-  if (!envText) {
-    handleAlert(Alert.WARNING, "Please enter environment variables", DurationLength.SHORT);
+
+  const { configEnv, cloudinaryConfig } = readSettings();
+  const validation = validateSettings(configEnv, cloudinaryConfig);
+
+  if (validation.missingFirebase.length > 0) {
+    handleAlert(Alert.WARNING, `Missing Firebase config: ${validation.missingFirebase.join(', ')}`, DurationLength.LONG);
     DOM.loadingOverlay.style.display = 'none';
     return;
   }
 
+  if (validation.missingCloudinary.length > 0) {
+    handleAlert(Alert.WARNING, `Missing Cloudinary config: ${validation.missingCloudinary.join(', ')}`, DurationLength.LONG);
+  } else {
+    localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
+  }
+
   try {
-    const env = handleTextEnv(envText, true);
-    const configEnv = {
-      APIKEY: env.APIKEY,
-      AUTHDOMAIN: env.AUTHDOMAIN,
-      PROJECTID: env.PROJECTID,
-      STORAGEBUCKET: env.STORAGEBUCKET,
-      MESSAGINGSENDERID: env.MESSAGINGSENDERID,
-      APPID: env.APPID
-    };
-
-    const newCloudinaryConfig = {
-      CLOUDINARY_CLOUDNAME: env.CLOUDINARY_CLOUDNAME,
-      CLOUDINARY_UPLOADPRESET: env.CLOUDINARY_UPLOADPRESET,
-      CLOUDINARY_APIKEY: env.CLOUDINARY_APIKEY,
-      CLOUDINARY_APISECRET: env.CLOUDINARY_APISECRET,
-    };
-
-    const missingCloudinaryKeys = [];
-    if (!newCloudinaryConfig.CLOUDINARY_CLOUDNAME?.trim()) {
-      missingCloudinaryKeys.push('CLOUDINARY_CLOUDNAME');
-    }
-    if (!newCloudinaryConfig.CLOUDINARY_UPLOADPRESET?.trim()) {
-      missingCloudinaryKeys.push('CLOUDINARY_UPLOADPRESET');
-    }
-    if (!newCloudinaryConfig.CLOUDINARY_APIKEY?.trim()) {
-      missingCloudinaryKeys.push('CLOUDINARY_APIKEY');
-    }
-    if (!newCloudinaryConfig.CLOUDINARY_APISECRET?.trim()) {
-      missingCloudinaryKeys.push('CLOUDINARY_APISECRET');
-    }
-
-    if (missingCloudinaryKeys.length > 0) {
-      handleAlert(Alert.WARNING, `Missing Cloudinary config: ${missingCloudinaryKeys.join(', ')}`, DurationLength.LONG);
-    } else {
-      localStorage.setItem('envCloudinary', JSON.stringify(newCloudinaryConfig));
-    }
-
-    setLocalVarCloudinaryConfig(newCloudinaryConfig);
-    const success = await resetFirebaseApp(configEnv, false, newCloudinaryConfig, dataEnv, onNotesRendered);
+    setLocalVarCloudinaryConfig(cloudinaryConfig);
+    const success = await resetFirebaseApp(configEnv, false, cloudinaryConfig, dataEnv, onNotesRendered);
     if (success) {
       setDataEnv(dataEnv);
       DOM.btnCloseModalEnv.click();
@@ -76,10 +92,7 @@ export async function handleBackEnv(localVarCloudinaryConfig, onNotesRendered) {
     DOM.switchCheckChecked.checked = false;
     DOM.labelSwitch.textContent = "Notes";
     await resetFirebaseApp(null, false, localVarCloudinaryConfig, [], onNotesRendered);
-    let configText = Object.entries(localVarCloudinaryConfig)
-      .map(([key, value]) => `${key}: "${value}"`)
-      .join(',\n');
-    DOM.envVariables.value = ',\n' + configText;
+    populateSettings({}, localVarCloudinaryConfig);
     DOM.btnCloseModalEnv.click();
     handleAlert(Alert.WARNING, "Reset App successfully", DurationLength.SHORT);
     DOM.btnCloseBackModalEnv.click();
@@ -95,10 +108,8 @@ export function switchEnvAction(envKey, dataEnv, localVarCloudinaryConfig, onSav
   });
 
   if (selectedEnv) {
-    let cloudinaryText = Object.entries(localVarCloudinaryConfig)
-      .map(([key, value]) => `${key}: "${value}"`)
-      .join(',\n');
-    DOM.envVariables.value = selectedEnv + ',\n' + cloudinaryText;
+    const envObj = handleTextEnv(selectedEnv, true);
+    populateSettings(envObj, localVarCloudinaryConfig);
     onSaveEnvClick();
     DOM.switchCheckChecked.checked = false;
     DOM.labelSwitch.textContent = "Notes";
