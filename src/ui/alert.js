@@ -17,36 +17,69 @@ let currentAlert = null;
 export function handleAlert(type, message, duration) {
   if (currentAlert) {
     clearTimeout(currentAlert);
-    if (DOM.alertWarning) DOM.alertWarning.classList.remove('in');
-    if (DOM.alertInfo) DOM.alertInfo.classList.remove('in');
-    if (DOM.alertDanger) DOM.alertDanger.classList.remove('in');
+    if (DOM.alertWarning) {
+      DOM.alertWarning.classList.remove('in');
+      DOM.alertWarning.classList.add('out');
+    }
+    if (DOM.alertInfo) {
+      DOM.alertInfo.classList.remove('in');
+      DOM.alertInfo.classList.add('out');
+    }
+    if (DOM.alertDanger) {
+      DOM.alertDanger.classList.remove('in');
+      DOM.alertDanger.classList.add('out');
+    }
+    setTimeout(() => {
+      if (DOM.alertWarning) DOM.alertWarning.classList.remove('out');
+      if (DOM.alertInfo) DOM.alertInfo.classList.remove('out');
+      if (DOM.alertDanger) DOM.alertDanger.classList.remove('out');
+    }, 300);
   }
 
-  switch (type) {
-    case Alert.WARNING:
-      if (DOM.alertWarning) {
-        DOM.alertWarning.textContent = message;
-        DOM.alertWarning.classList.add('in');
-      }
-      break;
-    case Alert.INFO:
-      if (DOM.alertInfo) {
-        DOM.alertInfo.textContent = message;
-        DOM.alertInfo.classList.add('in');
-      }
-      break;
-    case Alert.DANGER:
-      if (DOM.alertDanger) {
-        DOM.alertDanger.textContent = message;
-        DOM.alertDanger.classList.add('in');
-      }
-      break;
-  }
+  setTimeout(() => {
+    switch (type) {
+      case Alert.WARNING:
+        if (DOM.alertWarning) {
+          DOM.alertWarning.innerHTML = `<strong>Warning!</strong> ${message}`;
+          DOM.alertWarning.classList.remove('out');
+          DOM.alertWarning.classList.add('in');
+        }
+        break;
+      case Alert.INFO:
+        if (DOM.alertInfo) {
+          DOM.alertInfo.innerHTML = `<strong>Info!</strong> ${message}`;
+          DOM.alertInfo.classList.remove('out');
+          DOM.alertInfo.classList.add('in');
+        }
+        break;
+      case Alert.DANGER:
+        if (DOM.alertDanger) {
+          DOM.alertDanger.innerHTML = `<strong>Error!</strong> ${message}`;
+          DOM.alertDanger.classList.remove('out');
+          DOM.alertDanger.classList.add('in');
+        }
+        break;
+    }
+  }, currentAlert ? 300 : 0);
 
   currentAlert = setTimeout(() => {
-    if (DOM.alertWarning) DOM.alertWarning.classList.remove('in');
-    if (DOM.alertInfo) DOM.alertInfo.classList.remove('in');
-    if (DOM.alertDanger) DOM.alertDanger.classList.remove('in');
+    if (DOM.alertWarning) {
+      DOM.alertWarning.classList.remove('in');
+      DOM.alertWarning.classList.add('out');
+    }
+    if (DOM.alertInfo) {
+      DOM.alertInfo.classList.remove('in');
+      DOM.alertInfo.classList.add('out');
+    }
+    if (DOM.alertDanger) {
+      DOM.alertDanger.classList.remove('in');
+      DOM.alertDanger.classList.add('out');
+    }
+    setTimeout(() => {
+      if (DOM.alertWarning) DOM.alertWarning.classList.remove('out');
+      if (DOM.alertInfo) DOM.alertInfo.classList.remove('out');
+      if (DOM.alertDanger) DOM.alertDanger.classList.remove('out');
+    }, 300);
     currentAlert = null;
   }, duration);
 }

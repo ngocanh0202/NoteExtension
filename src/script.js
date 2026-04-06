@@ -243,9 +243,9 @@ function onClickCopy(id) {
 
 function handleContainerScroll() {
   if (DOM.containerWords.scrollTop > 100) {
-    DOM.scrollToTopBtn.style.display = 'block';
+    DOM.scrollToTopBtn.classList.add('visible');
   } else {
-    DOM.scrollToTopBtn.style.display = 'none';
+    DOM.scrollToTopBtn.classList.remove('visible');
   }
 }
 

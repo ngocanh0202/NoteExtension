@@ -1,0 +1,24 @@
+{
+    "name": "Note",
+    "version": "1.0.0",
+    "description": "Note something",
+    "manifest_version": 3,
+    "author": "NA",
+    "action": {
+        "default_icon": "images/default.png",
+        "default_popup": "index.html"
+    },
+    "permissions" : [
+        "contextMenus",
+        "activeTab",
+        "storage"
+    ],
+    "background": {
+        "service_worker": "contextMenusNote.js"
+    },
+    "icons": {
+        "16": "images/default.png",
+        "48": "images/default.png",
+        "128": "images/default.png"
+    }
+}

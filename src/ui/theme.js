@@ -7,16 +7,26 @@ export function isDarkTheme() {
 }
 
 export function applyTinyMCETheme(isDark, onEditorInit) {
+  const bgColor = isDark ? '#343a40' : '#ffffff';
+  const textColor = isDark ? '#ffffff' : '#000000';
+  
   tinymce.init({
     selector: '#editor',
     menubar: false,
     plugins: ['lists', 'table', 'fullscreen'],
     toolbar: 'bold italic underline | forecolor backcolor | fullscreen | align lineheight | checklist numlist bullist | table',
     skin: isDark ? 'oxide-dark' : 'oxide',
+    content_style: `
+      body { 
+        background-color: ${bgColor} !important; 
+        color: ${textColor} !important;
+        font-size: 18px;
+      }
+    `,
     setup: (editor) => {
       editor.on('init', () => {
-        editor.getBody().style.backgroundColor = isDark ? '#343a40' : '#ffffff';
-        editor.getBody().style.color = isDark ? '#ffffff' : '#000000';
+        editor.getBody().style.backgroundColor = bgColor;
+        editor.getBody().style.color = textColor;
         editor.getBody().style.fontSize = '18px';
         if (onEditorInit) onEditorInit(editor);
       });

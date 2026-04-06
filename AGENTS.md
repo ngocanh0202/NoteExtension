@@ -8,7 +8,8 @@ A **Manifest V3 browser extension** (Chrome/Firefox) for creating and managing n
 
 ```
 npm install              # Install deps (firebase + webpack/babel toolchain)
-npx webpack              # Build: src/script.js → public/bundle.js
+npx webpack --config webpack.prod.js   # Build production: src/script.js → public/bundle.js
+npx webpack              # Build development: src/script.js → public/bundle.js (with source maps)
 ```
 
 There are **no test, lint, or typecheck scripts** in package.json. No CI configured.
@@ -19,14 +20,33 @@ There are **no test, lint, or typecheck scripts** in package.json. No CI configu
 src/script.js            # Main entry (webpack entry) → public/bundle.js
 src/utils.js             # Env parsing helpers
 src/scriptEnv.js         # Env-related utilities
-contextMenusNote.js      # Service worker: "Add to Note" right-click context menu
+public/contextMenusNote.js      # Service worker: "Add to Note" right-click context menu
 public/index.html        # Extension popup UI
 public/bundle.js         # Webpack output (DO NOT EDIT)
-manifest.json            # MV3 config, popup = public/index.html, service_worker = contextMenusNote.js
+public/manifest.json     # MV3 config, popup = index.html, service_worker = contextMenusNote.js
 env                      # Firebase + Cloudinary config file (gitignored, NOT .env)
 ```
 
-**Build flow**: `npx webpack` reads `src/script.js` → outputs `public/bundle.js`. The extension loads the bundle via `public/index.html`.
+**Build flow**: `npx webpack --config webpack.prod.js` reads `src/script.js` → outputs `public/bundle.js`. The extension loads the bundle via `public/index.html`.
+
+## Distribution (public/ folder)
+
+After building, the `public/` folder is a **self-contained extension package** that can be loaded directly into Chrome/Firefox:
+
+```
+public/
+├── manifest.json        # MV3 config (required)
+├── index.html           # Extension popup UI
+├── bundle.js            # Webpack output
+├── contextMenusNote.js  # Service worker
+├── css/                 # Styles
+├── Js/                  # Bootstrap + Firebase
+├── icons/               # SVG icons
+├── images/              # Extension icons
+└── tinymce/             # TinyMCE editor
+```
+
+**To install**: Load the `public/` folder as an unpacked extension.
 
 ## Env configuration quirks
 
@@ -56,11 +76,13 @@ env                      # Firebase + Cloudinary config file (gitignored, NOT .e
 2. **Firebase init** → reads `env` file or localStorage config → `resetFirebaseApp()` → `renderNotes()`
 3. **Context menu** → `contextMenusNote.js` stores selected text to `chrome.storage.local` → sends `autoUpdateEditor` message → popup opens and auto-saves note
 4. **Note CRUD** → direct Firestore operations via Firebase v11 SDK (modular API)
+5. **Theme switching** → `src/ui/theme.js` handles light/dark theme with TinyMCE editor theming
 
 ## Gotchas
 
 - `public/bundle.js` and `public/bundle.js.map` are **build artifacts** — never edit directly
-- Webpack is in `development` mode with source maps — no production build config exists
+- There are two webpack configs: `webpack.config.js` (development) and `webpack.prod.js` (production, minified)
 - No `scripts` section in `package.json` — all commands must be run via `npx`
 - Firebase config is validated at runtime, not build time — missing keys cause runtime alerts in the popup
 - The `env` file is fetched via `fetch('/env')` at runtime — this only works because extension pages can load local files
+- After building, copy the `public/` folder to distribute the extension

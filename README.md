@@ -54,20 +54,28 @@ messagingSenderId: "123456789"
 appId: "1:123456789:web:abcdef123456"
 ```
 
-### 4. Install the Extension
+### 4. Build and Install the Extension
+
+```bash
+# Install dependencies
+npm install
+
+# Build the extension (production)
+npx webpack --config webpack.prod.js
+```
 
 #### For Chrome/Chromium-based browsers:
 1. Open `chrome://extensions/` in your browser
 2. Enable **"Developer mode"** (toggle in the top right)
 3. Click **"Load unpacked"**
-4. Select the project folder you downloaded
+4. Select the `public/` folder
 5. The extension should appear in your extensions list
 
 #### For Firefox:
 1. Open `about:debugging` in Firefox
 2. Click **"This Firefox"**
 3. Click **"Load Temporary Add-on"**
-4. Select the `manifest.json` file from the project folder
+4. Select the `public/manifest.json` file
 
 ## 🚀 Usage
 
@@ -76,6 +84,22 @@ appId: "1:123456789:web:abcdef123456"
 3. **Save Automatically**: Your notes are saved automatically as you type
 4. **Manage Notes**: View, edit, or delete notes from the main interface
 5. **Sync Across Devices**: Sign in to access your notes from any device
+6. **Switch Theme**: Click the sun/moon icon to toggle light/dark mode
+
+## 📦 Distribution
+
+After building, the `public/` folder contains a **complete self-contained extension** that can be distributed:
+
+```
+public/
+├── manifest.json
+├── index.html
+├── bundle.js
+├── contextMenusNote.js
+├── css/, Js/, icons/, images/, tinymce/
+```
+
+Simply share this folder - users load it directly as an unpacked extension.
 
 ## 🔧 Configuration
 
@@ -100,11 +124,11 @@ service cloud.firestore {
 
 **Extension not loading:**
 - Make sure Developer mode is enabled
-- Check that all files are present in the project folder
-- Verify the manifest.json file is valid
+- Check that all files are present in the `public/` folder
+- Verify the `public/manifest.json` file is valid
 
 **Firebase connection issues:**
-- Double-check your `env` file configuration
+- Double-check your Firebase configuration in the extension settings
 - Ensure your Firebase project has Firestore enabled
 - Verify your Firebase security rules allow read/write access
 

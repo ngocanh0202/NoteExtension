@@ -65,17 +65,12 @@ export async function renderNotes(categoryPageSize, currentCategorySelected) {
     }
 
     loadData(categoryPageSize, currentCategorySelected);
-    backupData();
   } catch (e) {
     handleAlert(Alert.DANGER, "Error getting documents: " + e.message, DurationLength.LONG);
-    listItem = localStorage.getItem('NotesBackups') ? JSON.parse(localStorage.getItem('NotesBackups')) : [];
+    listItem = [];
   } finally {
     DOM.loadingOverlay.style.display = 'none';
   }
-}
-
-function backupData() {
-  localStorage.setItem('NotesBackups', JSON.stringify(listItem));
 }
 
 function getFilteredItems(searchTerm, category) {
@@ -133,7 +128,7 @@ function renderItems(items, categoryPageSize, currentCategorySelected) {
             <p class="card-text font-monospace fst-italic small mb-0">
               ${formatTimestamp(item.timestamp)}
             </p>
-            ${item.category ? `<span class="badge rounded-pill bg-light font-monospace fst-italic small mb-0 text-dark border border-secondary">${item.category}</span>` : ''}
+            ${item.category ? `<span class="badge rounded-pill ${isDarkTheme() ? 'bg-light text-dark' : 'bg-secondary text-light'} font-monospace fst-italic small mb-0">${item.category}</span>` : ''}
           </div>
           <button type="button" data-action="copy" data-id="${item.id}" class="btn btn-copy">
             <img id="copyIcon-${item.id}" src="" alt="">
@@ -151,7 +146,9 @@ function renderItems(items, categoryPageSize, currentCategorySelected) {
   });
   DOM.containerWords.innerHTML = html;
 
-  changeIconCustomTheme(isDarkTheme());
+  if (items.length > 0) {
+    changeIconCustomTheme(isDarkTheme());
+  }
 
   let exampleWrappers = document.querySelectorAll('.example-wrapper');
   exampleWrappers.forEach(exampleDiv => {
@@ -234,16 +231,6 @@ export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImage
     if (onCleanImages) onCleanImages();
   } catch (e) {
     handleAlert(Alert.DANGER, "Error adding document: " + e.message, DurationLength.LONG);
-    const backup = JSON.parse(localStorage.getItem('NotesBackups') || '[]');
-    backup.push({
-      id: 'local-' + Date.now(),
-      Note: Note,
-      example: example,
-      timestamp: new Date(),
-      category: category,
-      isPinned: false
-    });
-    localStorage.setItem('NotesBackups', JSON.stringify(backup));
   } finally {
     DOM.loadingOverlay.style.display = 'none';
     DOM.btnCloseModal.click();
