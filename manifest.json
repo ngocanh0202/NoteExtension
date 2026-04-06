@@ -5,8 +5,8 @@
     "manifest_version": 3,
     "author": "NA",
     "action": {
-        "default_icon": "./images/default.png",
-        "default_popup": "./public/index.html"
+        "default_icon": "icons/icon.svg",
+        "default_popup": "index.html"
     },
     "permissions" : [
         "contextMenus",
@@ -17,8 +17,9 @@
         "service_worker": "contextMenusNote.js"
     },
     "icons": {
-        "16": "./images/default.png",
-        "48": "./images/default.png",
-        "128": "./images/default.png"
+        "16": "icons/icon.svg",
+        "48": "icons/icon.svg",
+        "128": "icons/icon.svg"
     }
+}
 }
