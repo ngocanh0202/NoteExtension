@@ -5,7 +5,7 @@
     "manifest_version": 3,
     "author": "NA",
     "action": {
-        "default_icon": "icons/icon.svg",
+        "default_icon": "images/default.svg",
         "default_popup": "index.html"
     },
     "permissions" : [
@@ -17,11 +17,11 @@
         "service_worker": "contextMenusNote.js"
     },
     "icons": {
-        "16": "icons/icon.svg",
-        "48": "icons/icon.svg",
-        "128": "icons/icon.svg"
+        "16": "images/default.svg",
+        "48": "images/default.svg",
+        "128": "images/default.svg"
     },
     "content_security_policy": {
-        "extension_pages": "script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' https://apis.google.com https://www.gstatic.com https://www.googleapis.com https://securetoken.googleapis.com; object-src 'self';"
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval' https://apis.google.com https://www.gstatic.com https://www.googleapis.com https://securetoken.googleapis.com; object-src 'self';"
     }
 }
