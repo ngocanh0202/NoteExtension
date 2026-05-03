@@ -3,7 +3,8 @@ import { DOM } from '../config/dom.js';
 export const Alert = {
   WARNING: "alertWarning",
   INFO: "alertInfo",
-  DANGER: "alertDanger"
+  DANGER: "alertDanger",
+  SUCCESS: "alertSuccess"
 };
 
 export const DurationLength = {
@@ -29,10 +30,15 @@ export function handleAlert(type, message, duration) {
       DOM.alertDanger.classList.remove('in');
       DOM.alertDanger.classList.add('out');
     }
+    if (DOM.alertSuccess) {
+      DOM.alertSuccess.classList.remove('in');
+      DOM.alertSuccess.classList.add('out');
+    }
     setTimeout(() => {
       if (DOM.alertWarning) DOM.alertWarning.classList.remove('out');
       if (DOM.alertInfo) DOM.alertInfo.classList.remove('out');
       if (DOM.alertDanger) DOM.alertDanger.classList.remove('out');
+      if (DOM.alertSuccess) DOM.alertSuccess.classList.remove('out');
     }, 300);
   }
 
@@ -59,6 +65,13 @@ export function handleAlert(type, message, duration) {
           DOM.alertDanger.classList.add('in');
         }
         break;
+      case Alert.SUCCESS:
+        if (DOM.alertSuccess) {
+          DOM.alertSuccess.innerHTML = `<strong>Success!</strong> ${message}`;
+          DOM.alertSuccess.classList.remove('out');
+          DOM.alertSuccess.classList.add('in');
+        }
+        break;
     }
   }, currentAlert ? 300 : 0);
 
@@ -75,10 +88,15 @@ export function handleAlert(type, message, duration) {
       DOM.alertDanger.classList.remove('in');
       DOM.alertDanger.classList.add('out');
     }
+    if (DOM.alertSuccess) {
+      DOM.alertSuccess.classList.remove('in');
+      DOM.alertSuccess.classList.add('out');
+    }
     setTimeout(() => {
       if (DOM.alertWarning) DOM.alertWarning.classList.remove('out');
       if (DOM.alertInfo) DOM.alertInfo.classList.remove('out');
       if (DOM.alertDanger) DOM.alertDanger.classList.remove('out');
+      if (DOM.alertSuccess) DOM.alertSuccess.classList.remove('out');
     }, 300);
     currentAlert = null;
   }, duration);

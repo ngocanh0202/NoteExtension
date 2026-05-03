@@ -2,6 +2,7 @@ export const DOM = {
   alertWarning: null,
   alertInfo: null,
   alertDanger: null,
+  alertSuccess: null,
   themeSwitcher: null,
   btnSaveEnv: null,
   btnCloseModalEnv: null,
@@ -42,6 +43,7 @@ export function initDOM() {
   DOM.alertWarning = document.querySelector('#alert-warning');
   DOM.alertInfo = document.querySelector('#alert-info');
   DOM.alertDanger = document.querySelector('#alert-danger');
+  DOM.alertSuccess = document.querySelector('#alert-success');
   DOM.themeSwitcher = document.getElementById('theme-switcher');
   DOM.btnSaveEnv = document.querySelector('#btn-save-env');
   DOM.btnCloseModalEnv = document.querySelector('#btn-close-modal-setting');

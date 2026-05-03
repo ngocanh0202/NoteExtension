@@ -1,6 +1,6 @@
 import { DOM, initDOM } from './config/dom.js';
 import { initTheme, toggleTheme } from './ui/theme.js';
-import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv, isFirebaseConfigured, isCloudinaryConfigured, signIn, signOutUser, onAuthChange, getCurrentUser } from './managers/firebase.js';
+import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv, isFirebaseConfigured, isCloudinaryConfigured, signIn, register, signOutUser, onAuthChange, getCurrentUser } from './managers/firebase.js';
 import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCategoryClick, expandCategoryPageSize, getNoteById, stripHtmlAdvancedToCopy, togglePin, getListItem, filterAndRender } from './managers/notes.js';
 import { handleCleanImagesCloudinary, handleUploadImageUrl } from './managers/cloudinary.js';
 import { handleLoadEnv, populateSettings, switchEnvAction, removeEnvAction, handleLoadLogEnvs, expandCloudinarySection } from './managers/env.js';
@@ -74,33 +74,86 @@ DOM.btnAuth.addEventListener('click', async () => {
       handleAlert(Alert.DANGER, 'Sign out failed: ' + error.message, DurationLength.SHORT);
     }
   } else {
-    try {
-      await signIn();
-    } catch (error) {
-      if (error.code === 'auth/popup-closed-by-user') {
-        handleAlert(Alert.INFO, 'Sign in cancelled', DurationLength.SHORT);
-      } else if (error.code === 'auth/popup-blocked') {
-        handleAlert(Alert.DANGER, 'Popup was blocked. Please allow popups for this extension and try again.', DurationLength.LONG);
-      } else {
-        handleAlert(Alert.DANGER, 'Sign in failed: ' + error.message, DurationLength.LONG);
-      }
-    }
+    const modal = new bootstrap.Modal(document.getElementById('emailLoginModal'));
+    modal.show();
   }
 });
 
-DOM.btnAuthSignInOverlay.addEventListener('click', async () => {
-  try {
-    await signIn();
-  } catch (error) {
-    if (error.code === 'auth/popup-closed-by-user') {
-      handleAlert(Alert.INFO, 'Sign in cancelled', DurationLength.SHORT);
-    } else if (error.code === 'auth/popup-blocked') {
-      handleAlert(Alert.DANGER, 'Popup was blocked. Please allow popups for this extension and try again.', DurationLength.LONG);
-    } else {
-      handleAlert(Alert.DANGER, 'Sign in failed: ' + error.message, DurationLength.LONG);
+const btnAuthEmail = document.getElementById('btn-auth-email');
+if (btnAuthEmail) {
+  btnAuthEmail.addEventListener('click', () => {
+    const modal = new bootstrap.Modal(document.getElementById('emailLoginModal'));
+    modal.show();
+  });
+}
+
+const btnAuthEmailOverlay = document.getElementById('btn-auth-email-overlay');
+if (btnAuthEmailOverlay) {
+  btnAuthEmailOverlay.addEventListener('click', () => {
+    DOM.authWarningOverlay.style.display = 'none';
+    const modal = new bootstrap.Modal(document.getElementById('emailLoginModal'));
+    modal.show();
+  });
+}
+
+const btnEmailLogin = document.getElementById('btn-email-login');
+if (btnEmailLogin) {
+  btnEmailLogin.addEventListener('click', async () => {
+    const email = document.getElementById('email-input').value.trim();
+    const password = document.getElementById('password-input').value;
+    const errorDiv = document.getElementById('email-auth-error');
+    
+    if (!email || !password) {
+      errorDiv.textContent = 'Please enter email and password';
+      errorDiv.classList.remove('d-none');
+      return;
     }
-  }
-});
+    
+    try {
+      await signIn(email, password);
+      bootstrap.Modal.getInstance(document.getElementById('emailLoginModal')).hide();
+      document.getElementById('email-input').value = '';
+      document.getElementById('password-input').value = '';
+      errorDiv.classList.add('d-none');
+    } catch (error) {
+      errorDiv.textContent = error.message;
+      errorDiv.classList.remove('d-none');
+    }
+  });
+}
+
+const btnEmailRegister = document.getElementById('btn-email-register');
+if (btnEmailRegister) {
+  btnEmailRegister.addEventListener('click', async () => {
+    const email = document.getElementById('email-input').value.trim();
+    const password = document.getElementById('password-input').value;
+    const errorDiv = document.getElementById('email-auth-error');
+    
+    if (!email || !password) {
+      errorDiv.textContent = 'Please enter email and password';
+      errorDiv.classList.remove('d-none');
+      return;
+    }
+    
+    if (password.length < 6) {
+      errorDiv.textContent = 'Password must be at least 6 characters';
+      errorDiv.classList.remove('d-none');
+      return;
+    }
+    
+    try {
+      await register(email, password);
+      bootstrap.Modal.getInstance(document.getElementById('emailLoginModal')).hide();
+      document.getElementById('email-input').value = '';
+      document.getElementById('password-input').value = '';
+      errorDiv.classList.add('d-none');
+      handleAlert(Alert.SUCCESS, 'Account created! Please check your email to verify.', DurationLength.LONG);
+    } catch (error) {
+      errorDiv.textContent = error.message;
+      errorDiv.classList.remove('d-none');
+    }
+  });
+}
 
 DOM.themeSwitcher.addEventListener('click', () => toggleTheme((editor) => {
   setupTinyMCEPasteHandler(editor);

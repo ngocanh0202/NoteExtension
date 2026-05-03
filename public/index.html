@@ -149,6 +149,9 @@
                         <span id="auth-user-display" class="me-1 small"></span>
                         <span id="auth-action-text">Login</span>
                     </button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill me-1" id="btn-auth-email" title="Login with Email">
+                        <span>Email Login</span>
+                    </button>
                     <button class="btn btn-warning rounded-circle" id="setting-env" data-bs-toggle="modal" href="#settingEnv" role="button">
                         <img src="./icons/setting.svg" alt="">
                     </button>
@@ -349,6 +352,9 @@
             <div class="alert alert-danger fade-custom position-fixed top-0 start-50 translate-middle-x mt-2" style="z-index: 10000000;" role="alert" id="alert-danger">
                 <strong>Error!</strong> There was a problem saving your changes.
             </div>
+            <div class="alert alert-success fade-custom position-fixed top-0 start-50 translate-middle-x mt-2" style="z-index: 10000000;" role="alert" id="alert-success">
+                <strong>Success!</strong> Operation completed.
+            </div>
             <!-- Firebase config warning -->
             <div class="config-warning-overlay" id="firebaseConfigWarning" style="display: none;">
                 <div class="config-warning-card">
@@ -361,8 +367,36 @@
             <div class="auth-warning-overlay" id="authWarningOverlay" style="display: none;">
                 <div class="auth-warning-card">
                     <h5>Sign In Required</h5>
-                    <p>Please sign in with your Google account to access your notes.</p>
+                    <p>Please sign in to access your notes.</p>
                     <button class="btn btn-primary" id="btn-auth-sign-in-overlay">Sign In with Google</button>
+                    <button class="btn btn-outline-primary" id="btn-auth-email-overlay">Sign In with Email</button>
+                </div>
+            </div>
+            <!-- Email Login Modal -->
+            <div class="modal fade" id="emailLoginModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Email Authentication</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="email-input" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email-input" placeholder="your@email.com">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password-input" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password-input" placeholder="Password">
+                            </div>
+                            <div id="email-auth-error" class="alert alert-danger d-none"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="btn-email-login">Login</button>
+                            <button type="button" class="btn btn-outline-primary" id="btn-email-register">Register</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- button scroll top -->

@@ -1,6 +1,6 @@
 import { initializeApp, deleteApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth/web-extension";
 import { handleTextEnv, validateEnvVars } from '../utils.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 import { DOM } from '../config/dom.js';
@@ -69,9 +69,9 @@ async function loadEnv(localVarCloudinaryConfig) {
       console.log('No env file found');
     }
   }
-
+  
   console.log('Final configEnv.APIKEY:', configEnv.APIKEY);
-
+  
   if (localVarCloudinaryConfig && Object.keys(localVarCloudinaryConfig).length > 0) {
     configCloudinary = { ...localVarCloudinaryConfig };
   } else {
@@ -96,6 +96,10 @@ export async function resetFirebaseApp(newConfig, isLoadInitWeb, localVarCloudin
       await deleteApp(app);
       app = null;
       db = null;
+    }
+    
+    if (auth) {
+      auth = null;
     }
 
     if (newConfig) {
@@ -152,9 +156,34 @@ export function isCloudinaryConfigured() {
   return !!(configCloudinary.CLOUDINARY_CLOUDNAME && configCloudinary.CLOUDINARY_UPLOADPRESET && configCloudinary.CLOUDINARY_APIKEY);
 }
 
-export async function signIn() {
-  const provider = new GoogleAuthProvider();
-  return await signInWithPopup(auth, provider);
+export async function signIn(email, password) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!auth) {
+        setupFirebase();
+      }
+      
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+export async function register(email, password) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!auth) {
+        setupFirebase();
+      }
+      
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
 
 export async function signOutUser() {
