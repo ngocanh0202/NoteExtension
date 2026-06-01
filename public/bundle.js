@@ -25048,22 +25048,23 @@ function _handleLoadEnv() {
           _readSettings = readSettings(), configEnv = _readSettings.configEnv, cloudinaryConfig = _readSettings.cloudinaryConfig, naServerConfig = _readSettings.naServerConfig;
           validation = validateSettings(configEnv, cloudinaryConfig);
           (0,_naserver_js__WEBPACK_IMPORTED_MODULE_4__.saveNAServerNotesConfig)(naServerConfig);
-          if (!(!naServerConfig.enabled && validation.missingFirebase.length > 0)) {
-            _context.next = 8;
+          if (!naServerConfig.enabled) {
+            _context.next = 17;
             break;
           }
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Firebase config: ".concat(validation.missingFirebase.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+          if (!(!naServerConfig.baseUrl || !naServerConfig.token)) {
+            _context.next = 9;
+            break;
+          }
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, 'Missing NAServer config: Base URL, Access Token', _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
           return _context.abrupt("return");
-        case 8:
+        case 9:
           if (validation.missingCloudinary.length > 0) {
             (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Cloudinary config: ".concat(validation.missingCloudinary.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           } else {
             localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
-          }
-          if (!(naServerConfig.enabled && validation.missingFirebase.length > 0)) {
-            _context.next = 17;
-            break;
+            setLocalVarCloudinaryConfig(cloudinaryConfig);
           }
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, "NAServer notes API enabled. Firebase config was not required.", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
@@ -25077,31 +25078,44 @@ function _handleLoadEnv() {
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
           return _context.abrupt("return");
         case 17:
-          _context.prev = 17;
-          setLocalVarCloudinaryConfig(cloudinaryConfig);
-          _context.next = 21;
-          return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(configEnv, false, cloudinaryConfig, dataEnv, onNotesRendered);
+          if (!(!naServerConfig.enabled && validation.missingFirebase.length > 0)) {
+            _context.next = 21;
+            break;
+          }
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Firebase config: ".concat(validation.missingFirebase.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
+          return _context.abrupt("return");
         case 21:
+          if (validation.missingCloudinary.length > 0) {
+            (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Cloudinary config: ".concat(validation.missingCloudinary.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+          } else {
+            localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
+          }
+          _context.prev = 22;
+          setLocalVarCloudinaryConfig(cloudinaryConfig);
+          _context.next = 26;
+          return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(configEnv, false, cloudinaryConfig, dataEnv, onNotesRendered);
+        case 26:
           success = _context.sent;
           if (success) {
             setDataEnv(dataEnv);
             _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
           }
-          _context.next = 28;
+          _context.next = 33;
           break;
-        case 25:
-          _context.prev = 25;
-          _context.t0 = _context["catch"](17);
+        case 30:
+          _context.prev = 30;
+          _context.t0 = _context["catch"](22);
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Failed to update configuration: ".concat(_context.t0.message), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-        case 28:
-          _context.prev = 28;
+        case 33:
+          _context.prev = 33;
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
-          return _context.finish(28);
-        case 31:
+          return _context.finish(33);
+        case 36:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[17, 25, 28, 31]]);
+    }, _callee, null, [[22, 30, 33, 36]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
@@ -25629,11 +25643,15 @@ function loadNAServerNotesConfig() {
   }
 }
 function saveNAServerNotesConfig(config) {
-  localStorage.setItem(NOTES_CONFIG_KEY, JSON.stringify({
+  var normalized = {
     enabled: !!config.enabled,
     baseUrl: (config.baseUrl || '').trim(),
     token: (config.token || '').trim()
-  }));
+  };
+  localStorage.setItem(NOTES_CONFIG_KEY, JSON.stringify(normalized));
+  if (normalized.enabled && normalized.baseUrl && normalized.token) {
+    localStorage.removeItem('firebaseConfigEnv');
+  }
 }
 function isNAServerNotesEnabled() {
   var config = loadNAServerNotesConfig();
@@ -26438,9 +26456,15 @@ function _onNotesRendered() {
 (0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_1__.initTheme)(function (editor) {
   setupTinyMCEPasteHandler(editor);
 });
-await (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.initFirebase)(localVarCloudinaryConfig, dataEnv, null);
+var naserverModeEnabled = (0,_managers_naserver_js__WEBPACK_IMPORTED_MODULE_7__.isNAServerNotesEnabled)();
+if (naserverModeEnabled) {
+  localStorage.removeItem('firebaseConfigEnv');
+  (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.setConfigCloudinary)(localVarCloudinaryConfig);
+} else {
+  await (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.initFirebase)(localVarCloudinaryConfig, dataEnv, null);
+}
 (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.populateSettings)((0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.getConfigEnv)(), localVarCloudinaryConfig);
-if ((0,_managers_naserver_js__WEBPACK_IMPORTED_MODULE_7__.isNAServerNotesEnabled)()) {
+if (naserverModeEnabled) {
   _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.firebaseConfigWarning.style.display = 'none';
   _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.authWarningOverlay.style.display = 'none';
   onNotesRendered()["catch"](function (err) {
@@ -26475,7 +26499,11 @@ function updateAuthUI(user) {
     _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.containerWords.innerHTML = '';
   }
 }
-(0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.onAuthChange)(updateAuthUI);
+if (naserverModeEnabled) {
+  updateAuthUI(null);
+} else {
+  (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.onAuthChange)(updateAuthUI);
+}
 _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.btnAuth.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
   var user, modal;
   return _regeneratorRuntime().wrap(function _callee$(_context) {

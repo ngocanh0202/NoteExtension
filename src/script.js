@@ -1,6 +1,6 @@
 import { DOM, initDOM } from './config/dom.js';
 import { initTheme, toggleTheme } from './ui/theme.js';
-import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv, isFirebaseConfigured, isCloudinaryConfigured, signIn, register, signOutUser, onAuthChange, getCurrentUser } from './managers/firebase.js';
+import { initFirebase, resetFirebaseApp, getConfigCloudinary, getConfigEnv, setConfigCloudinary, isFirebaseConfigured, isCloudinaryConfigured, signIn, register, signOutUser, onAuthChange, getCurrentUser } from './managers/firebase.js';
 import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCategoryClick, expandCategoryPageSize, getNoteById, stripHtmlAdvancedToCopy, togglePin, getListItem, filterAndRender } from './managers/notes.js';
 import { handleCleanImagesCloudinary, handleUploadImageUrl } from './managers/cloudinary.js';
 import { handleLoadEnv, populateSettings, switchEnvAction, removeEnvAction, handleLoadLogEnvs, expandCloudinarySection } from './managers/env.js';
@@ -30,11 +30,17 @@ initTheme((editor) => {
   setupTinyMCEPasteHandler(editor);
 });
 
-await initFirebase(localVarCloudinaryConfig, dataEnv, null);
+const naserverModeEnabled = isNAServerNotesEnabled();
+if (naserverModeEnabled) {
+  localStorage.removeItem('firebaseConfigEnv');
+  setConfigCloudinary(localVarCloudinaryConfig);
+} else {
+  await initFirebase(localVarCloudinaryConfig, dataEnv, null);
+}
 
 populateSettings(getConfigEnv(), localVarCloudinaryConfig);
 
-if (isNAServerNotesEnabled()) {
+if (naserverModeEnabled) {
   DOM.firebaseConfigWarning.style.display = 'none';
   DOM.authWarningOverlay.style.display = 'none';
   onNotesRendered().catch(err => console.error('Error loading NAServer notes:', err));
@@ -68,7 +74,11 @@ function updateAuthUI(user) {
   }
 }
 
-onAuthChange(updateAuthUI);
+if (naserverModeEnabled) {
+  updateAuthUI(null);
+} else {
+  onAuthChange(updateAuthUI);
+}
 
 DOM.btnAuth.addEventListener('click', async () => {
   const user = getCurrentUser();

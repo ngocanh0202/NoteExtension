@@ -72,6 +72,27 @@ export async function handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryCo
   const validation = validateSettings(configEnv, cloudinaryConfig);
   saveNAServerNotesConfig(naServerConfig);
 
+  if (naServerConfig.enabled) {
+    if (!naServerConfig.baseUrl || !naServerConfig.token) {
+      handleAlert(Alert.WARNING, 'Missing NAServer config: Base URL, Access Token', DurationLength.LONG);
+      DOM.loadingOverlay.style.display = 'none';
+      return;
+    }
+
+    if (validation.missingCloudinary.length > 0) {
+      handleAlert(Alert.WARNING, `Missing Cloudinary config: ${validation.missingCloudinary.join(', ')}`, DurationLength.LONG);
+    } else {
+      localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
+      setLocalVarCloudinaryConfig(cloudinaryConfig);
+    }
+
+    handleAlert(Alert.INFO, "NAServer notes API enabled. Firebase config was not required.", DurationLength.MEDIUM);
+    DOM.loadingOverlay.style.display = 'none';
+    if (onNotesRendered) await onNotesRendered();
+    DOM.btnCloseModalEnv.click();
+    return;
+  }
+
   if (!naServerConfig.enabled && validation.missingFirebase.length > 0) {
     handleAlert(Alert.WARNING, `Missing Firebase config: ${validation.missingFirebase.join(', ')}`, DurationLength.LONG);
     DOM.loadingOverlay.style.display = 'none';
@@ -82,13 +103,6 @@ export async function handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryCo
     handleAlert(Alert.WARNING, `Missing Cloudinary config: ${validation.missingCloudinary.join(', ')}`, DurationLength.LONG);
   } else {
     localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
-  }
-  if (naServerConfig.enabled && validation.missingFirebase.length > 0) {
-    handleAlert(Alert.INFO, "NAServer notes API enabled. Firebase config was not required.", DurationLength.MEDIUM);
-    DOM.loadingOverlay.style.display = 'none';
-    if (onNotesRendered) await onNotesRendered();
-    DOM.btnCloseModalEnv.click();
-    return;
   }
 
   try {

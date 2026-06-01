@@ -10,11 +10,15 @@ export function loadNAServerNotesConfig() {
 }
 
 export function saveNAServerNotesConfig(config) {
-  localStorage.setItem(NOTES_CONFIG_KEY, JSON.stringify({
+  const normalized = {
     enabled: !!config.enabled,
     baseUrl: (config.baseUrl || '').trim(),
     token: (config.token || '').trim()
-  }));
+  };
+  localStorage.setItem(NOTES_CONFIG_KEY, JSON.stringify(normalized));
+  if (normalized.enabled && normalized.baseUrl && normalized.token) {
+    localStorage.removeItem('firebaseConfigEnv');
+  }
 }
 
 export function isNAServerNotesEnabled() {
