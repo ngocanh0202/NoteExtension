@@ -5,6 +5,7 @@ import { renderNotes, handleUpsertNote, deleteNote, handleInputSearch, handleCat
 import { handleCleanImagesCloudinary, handleUploadImageUrl } from './managers/cloudinary.js';
 import { handleLoadEnv, populateSettings, switchEnvAction, removeEnvAction, handleLoadLogEnvs, expandCloudinarySection } from './managers/env.js';
 import { handleAlert, Alert, DurationLength } from './ui/alert.js';
+import { isNAServerNotesEnabled } from './managers/naserver.js';
 
 initDOM();
 
@@ -33,7 +34,11 @@ await initFirebase(localVarCloudinaryConfig, dataEnv, null);
 
 populateSettings(getConfigEnv(), localVarCloudinaryConfig);
 
-if (!isFirebaseConfigured()) {
+if (isNAServerNotesEnabled()) {
+  DOM.firebaseConfigWarning.style.display = 'none';
+  DOM.authWarningOverlay.style.display = 'none';
+  onNotesRendered().catch(err => console.error('Error loading NAServer notes:', err));
+} else if (!isFirebaseConfigured()) {
   DOM.firebaseConfigWarning.style.display = 'flex';
 }
 
@@ -48,12 +53,12 @@ if (btnConfigureFirebase) {
 
 function updateAuthUI(user) {
   console.log('Auth state changed:', user ? 'logged in' : 'logged out', user?.email);
-  if (user) {
+  if (user || isNAServerNotesEnabled()) {
     DOM.authWarningOverlay.style.display = 'none';
-    const email = user.email || '';
+    const email = user?.email || 'NAServer';
     const displayName = email.split('@')[0];
     DOM.authUserDisplay.textContent = displayName;
-    DOM.authActionText.textContent = 'Logout';
+    DOM.authActionText.textContent = user ? 'Logout' : 'Login';
     onNotesRendered().catch(err => console.error('Error loading notes:', err));
   } else {
     DOM.authWarningOverlay.style.display = 'flex';

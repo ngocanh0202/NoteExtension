@@ -1,5 +1,6 @@
 import { collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, where } from "firebase/firestore";
 import { getDb, getConfigCloudinary, getCurrentUser } from './firebase.js';
+import { createServerNote, deleteServerNote, isNAServerNotesEnabled, listServerNotes, toggleServerPin, updateServerNote } from './naserver.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 import { changeIconCustomTheme, isDarkTheme } from '../ui/theme.js';
 import { DOM } from '../config/dom.js';
@@ -31,33 +32,48 @@ export async function renderNotes(categoryPageSize, currentCategorySelected) {
 
   try {
     DOM.loadingOverlay.style.display = '';
-    const db = getDb();
-    const user = getCurrentUser();
-    let querySnapshot;
-    if (user) {
-      const q = query(collection(db, "Notes"), where("userId", "==", user.uid));
-      querySnapshot = await getDocs(q);
-    } else {
-      querySnapshot = await getDocs(collection(db, "Notes"));
-    }
-    querySnapshot.forEach((d) => {
-      const data = d.data();
-      let timestamp = data.timestamp;
-      if (timestamp && typeof timestamp.toDate === 'function') {
-        timestamp = timestamp.toDate();
-      } else if (timestamp && typeof timestamp === 'string') {
-        timestamp = new Date(timestamp);
-      }
-      listItem.push({
-        id: d.id,
-        Note: data.Note,
-        example: data.example,
-        isPinned: data?.isPinned,
-        category: data?.category,
-        otherExample: stripHtmlAdvanced(data.example),
-        timestamp: timestamp
+    if (isNAServerNotesEnabled()) {
+      const notes = await listServerNotes();
+      notes.forEach((note) => {
+        listItem.push({
+          id: note.id,
+          Note: note.title,
+          example: note.content,
+          isPinned: note.is_pinned,
+          category: note.category,
+          otherExample: stripHtmlAdvanced(note.content || ''),
+          timestamp: note.updated_at || note.created_at
+        });
       });
-    });
+    } else {
+      const db = getDb();
+      const user = getCurrentUser();
+      let querySnapshot;
+      if (user) {
+        const q = query(collection(db, "Notes"), where("userId", "==", user.uid));
+        querySnapshot = await getDocs(q);
+      } else {
+        querySnapshot = await getDocs(collection(db, "Notes"));
+      }
+      querySnapshot.forEach((d) => {
+        const data = d.data();
+        let timestamp = data.timestamp;
+        if (timestamp && typeof timestamp.toDate === 'function') {
+          timestamp = timestamp.toDate();
+        } else if (timestamp && typeof timestamp === 'string') {
+          timestamp = new Date(timestamp);
+        }
+        listItem.push({
+          id: d.id,
+          Note: data.Note,
+          example: data.example,
+          isPinned: data?.isPinned,
+          category: data?.category,
+          otherExample: stripHtmlAdvanced(data.example),
+          timestamp: timestamp
+        });
+      });
+    }
 
     listCategories = Array.from(new Set(listItem.filter(item => item?.category).map(item => item.category)));
     if (listCategories.includes(currentCategorySelected)) {
@@ -199,8 +215,9 @@ export function filterAndRender(searchTerm, category, categoryPageSize) {
 }
 
 export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImages) {
+  const serverMode = isNAServerNotesEnabled();
   const user = getCurrentUser();
-  if (!user) {
+  if (!serverMode && !user) {
     handleAlert(Alert.WARNING, "Please sign in to save notes", DurationLength.MEDIUM);
     return;
   }
@@ -216,15 +233,28 @@ export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImage
     example: example,
     timestamp: new Date(),
     category: category,
-    userId: user.uid
+    userId: user?.uid
   };
 
   try {
-    const db = getDb();
-    if ((id == '' || id == null || id == undefined) && isClickNewButton) {
-      await addDoc(collection(db, "Notes"), data);
+    if (serverMode) {
+      const serverNote = {
+        title: Note,
+        content: example,
+        category: category || null
+      };
+      if ((id == '' || id == null || id == undefined) && isClickNewButton) {
+        await createServerNote(serverNote);
+      } else {
+        await updateServerNote(id, serverNote);
+      }
     } else {
-      await updateDoc(doc(db, `Notes/${id}`), data);
+      const db = getDb();
+      if ((id == '' || id == null || id == undefined) && isClickNewButton) {
+        await addDoc(collection(db, "Notes"), data);
+      } else {
+        await updateDoc(doc(db, `Notes/${id}`), data);
+      }
     }
     await renderNotes(5, category);
     handleAlert(Alert.INFO, "Note added successfully", DurationLength.MEDIUM);
@@ -238,15 +268,20 @@ export async function handleUpsertNote(e, idNote, isClickNewButton, onCleanImage
 }
 
 export async function deleteNote(NoteId) {
+  const serverMode = isNAServerNotesEnabled();
   const user = getCurrentUser();
-  if (!user) {
+  if (!serverMode && !user) {
     handleAlert(Alert.WARNING, "Please sign in to delete notes", DurationLength.MEDIUM);
     return;
   }
   try {
     DOM.loadingOverlay.style.display = '';
-    const db = getDb();
-    await deleteDoc(doc(db, `Notes/${NoteId}`));
+    if (serverMode) {
+      await deleteServerNote(NoteId);
+    } else {
+      const db = getDb();
+      await deleteDoc(doc(db, `Notes/${NoteId}`));
+    }
     await renderNotes(5, null);
     handleAlert(Alert.WARNING, "Note removed successfully", DurationLength.MEDIUM);
   } catch (e) {
@@ -258,8 +293,9 @@ export async function deleteNote(NoteId) {
 }
 
 export async function togglePin(NoteId) {
+  const serverMode = isNAServerNotesEnabled();
   const user = getCurrentUser();
-  if (!user) {
+  if (!serverMode && !user) {
     handleAlert(Alert.WARNING, "Please sign in to pin notes", DurationLength.MEDIUM);
     return;
   }
@@ -272,11 +308,15 @@ export async function togglePin(NoteId) {
 
   try {
     DOM.loadingOverlay.style.display = '';
-    const db = getDb();
-    await updateDoc(doc(db, `Notes/${NoteId}`), { isPinned: note.isPinned });
+    if (serverMode) {
+      await toggleServerPin(NoteId);
+    } else {
+      const db = getDb();
+      await updateDoc(doc(db, `Notes/${NoteId}`), { isPinned: note.isPinned });
+    }
     handleAlert(Alert.INFO, `Note ${isPinned ? 'pinned' : 'unpinned'} successfully`, DurationLength.SHORT);
     filterAndRender(null, null, 5);
-    backupData();
+    if (typeof backupData === 'function') backupData();
   } catch (e) {
     note.isPinned = previousState;
     handleAlert(Alert.DANGER, "Error pinning note: " + e.message, DurationLength.LONG);

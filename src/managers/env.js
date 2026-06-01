@@ -2,6 +2,7 @@ import { handleTextEnv } from '../utils.js';
 import { resetFirebaseApp } from './firebase.js';
 import { handleAlert, Alert, DurationLength } from '../ui/alert.js';
 import { DOM } from '../config/dom.js';
+import { loadNAServerNotesConfig, saveNAServerNotesConfig } from './naserver.js';
 
 export function populateSettings(configEnv, cloudinaryConfig) {
   DOM.envFirebaseApikey.value = configEnv?.APIKEY || '';
@@ -15,6 +16,11 @@ export function populateSettings(configEnv, cloudinaryConfig) {
   DOM.envCloudinaryUploadpreset.value = cloudinaryConfig?.CLOUDINARY_UPLOADPRESET || '';
   DOM.envCloudinaryApikey.value = cloudinaryConfig?.CLOUDINARY_APIKEY || '';
   DOM.envCloudinaryApisecret.value = cloudinaryConfig?.CLOUDINARY_APISECRET || '';
+
+  const notesConfig = loadNAServerNotesConfig();
+  if (DOM.envNAServerEnabled) DOM.envNAServerEnabled.checked = !!notesConfig.enabled;
+  if (DOM.envNAServerBaseUrl) DOM.envNAServerBaseUrl.value = notesConfig.baseUrl || '';
+  if (DOM.envNAServerToken) DOM.envNAServerToken.value = notesConfig.token || '';
 }
 
 export function readSettings() {
@@ -32,6 +38,11 @@ export function readSettings() {
       CLOUDINARY_UPLOADPRESET: DOM.envCloudinaryUploadpreset.value.trim(),
       CLOUDINARY_APIKEY: DOM.envCloudinaryApikey.value.trim(),
       CLOUDINARY_APISECRET: DOM.envCloudinaryApisecret.value.trim(),
+    },
+    naServerConfig: {
+      enabled: !!DOM.envNAServerEnabled?.checked,
+      baseUrl: DOM.envNAServerBaseUrl?.value.trim() || '',
+      token: DOM.envNAServerToken?.value.trim() || '',
     }
   };
 }
@@ -57,10 +68,11 @@ export function validateSettings(configEnv, cloudinaryConfig) {
 export async function handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
   DOM.loadingOverlay.style.display = 'block';
 
-  const { configEnv, cloudinaryConfig } = readSettings();
+  const { configEnv, cloudinaryConfig, naServerConfig } = readSettings();
   const validation = validateSettings(configEnv, cloudinaryConfig);
+  saveNAServerNotesConfig(naServerConfig);
 
-  if (validation.missingFirebase.length > 0) {
+  if (!naServerConfig.enabled && validation.missingFirebase.length > 0) {
     handleAlert(Alert.WARNING, `Missing Firebase config: ${validation.missingFirebase.join(', ')}`, DurationLength.LONG);
     DOM.loadingOverlay.style.display = 'none';
     return;
@@ -70,6 +82,13 @@ export async function handleLoadEnv(dataEnv, setDataEnv, setLocalVarCloudinaryCo
     handleAlert(Alert.WARNING, `Missing Cloudinary config: ${validation.missingCloudinary.join(', ')}`, DurationLength.LONG);
   } else {
     localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
+  }
+  if (naServerConfig.enabled && validation.missingFirebase.length > 0) {
+    handleAlert(Alert.INFO, "NAServer notes API enabled. Firebase config was not required.", DurationLength.MEDIUM);
+    DOM.loadingOverlay.style.display = 'none';
+    if (onNotesRendered) await onNotesRendered();
+    DOM.btnCloseModalEnv.click();
+    return;
   }
 
   try {

@@ -32,6 +32,9 @@ export const DOM = {
   envCloudinaryUploadpreset: null,
   envCloudinaryApikey: null,
   envCloudinaryApisecret: null,
+  envNAServerEnabled: null,
+  envNAServerBaseUrl: null,
+  envNAServerToken: null,
   btnAuth: null,
   authUserDisplay: null,
   authActionText: null,
@@ -73,6 +76,9 @@ export function initDOM() {
   DOM.envCloudinaryUploadpreset = document.getElementById('env-cloudinary-uploadpreset');
   DOM.envCloudinaryApikey = document.getElementById('env-cloudinary-apikey');
   DOM.envCloudinaryApisecret = document.getElementById('env-cloudinary-apisecret');
+  DOM.envNAServerEnabled = document.getElementById('env-naserver-enabled');
+  DOM.envNAServerBaseUrl = document.getElementById('env-naserver-base-url');
+  DOM.envNAServerToken = document.getElementById('env-naserver-token');
   DOM.btnAuth = document.getElementById('btn-auth');
   DOM.authUserDisplay = document.getElementById('auth-user-display');
   DOM.authActionText = document.getElementById('auth-action-text');

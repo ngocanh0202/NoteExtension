@@ -24628,6 +24628,9 @@ var DOM = {
   envCloudinaryUploadpreset: null,
   envCloudinaryApikey: null,
   envCloudinaryApisecret: null,
+  envNAServerEnabled: null,
+  envNAServerBaseUrl: null,
+  envNAServerToken: null,
   btnAuth: null,
   authUserDisplay: null,
   authActionText: null,
@@ -24668,6 +24671,9 @@ function initDOM() {
   DOM.envCloudinaryUploadpreset = document.getElementById('env-cloudinary-uploadpreset');
   DOM.envCloudinaryApikey = document.getElementById('env-cloudinary-apikey');
   DOM.envCloudinaryApisecret = document.getElementById('env-cloudinary-apisecret');
+  DOM.envNAServerEnabled = document.getElementById('env-naserver-enabled');
+  DOM.envNAServerBaseUrl = document.getElementById('env-naserver-base-url');
+  DOM.envNAServerToken = document.getElementById('env-naserver-token');
   DOM.btnAuth = document.getElementById('btn-auth');
   DOM.authUserDisplay = document.getElementById('auth-user-display');
   DOM.authActionText = document.getElementById('auth-action-text');
@@ -24953,6 +24959,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _firebase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./firebase.js */ "./src/managers/firebase.js");
 /* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
 /* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
+/* harmony import */ var _naserver_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./naserver.js */ "./src/managers/naserver.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
@@ -24969,6 +24976,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 function populateSettings(configEnv, cloudinaryConfig) {
   _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseApikey.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.APIKEY) || '';
   _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseAuthdomain.value = (configEnv === null || configEnv === void 0 ? void 0 : configEnv.AUTHDOMAIN) || '';
@@ -24980,8 +24988,13 @@ function populateSettings(configEnv, cloudinaryConfig) {
   _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryUploadpreset.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_UPLOADPRESET) || '';
   _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApikey.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_APIKEY) || '';
   _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApisecret.value = (cloudinaryConfig === null || cloudinaryConfig === void 0 ? void 0 : cloudinaryConfig.CLOUDINARY_APISECRET) || '';
+  var notesConfig = (0,_naserver_js__WEBPACK_IMPORTED_MODULE_4__.loadNAServerNotesConfig)();
+  if (_config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerEnabled) _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerEnabled.checked = !!notesConfig.enabled;
+  if (_config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerBaseUrl) _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerBaseUrl.value = notesConfig.baseUrl || '';
+  if (_config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerToken) _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerToken.value = notesConfig.token || '';
 }
 function readSettings() {
+  var _DOM$envNAServerEnabl, _DOM$envNAServerBaseU, _DOM$envNAServerToken;
   return {
     configEnv: {
       APIKEY: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envFirebaseApikey.value.trim(),
@@ -24996,6 +25009,11 @@ function readSettings() {
       CLOUDINARY_UPLOADPRESET: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryUploadpreset.value.trim(),
       CLOUDINARY_APIKEY: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApikey.value.trim(),
       CLOUDINARY_APISECRET: _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envCloudinaryApisecret.value.trim()
+    },
+    naServerConfig: {
+      enabled: !!((_DOM$envNAServerEnabl = _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerEnabled) !== null && _DOM$envNAServerEnabl !== void 0 && _DOM$envNAServerEnabl.checked),
+      baseUrl: ((_DOM$envNAServerBaseU = _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerBaseUrl) === null || _DOM$envNAServerBaseU === void 0 ? void 0 : _DOM$envNAServerBaseU.value.trim()) || '',
+      token: ((_DOM$envNAServerToken = _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.envNAServerToken) === null || _DOM$envNAServerToken === void 0 ? void 0 : _DOM$envNAServerToken.value.trim()) || ''
     }
   };
 }
@@ -25022,51 +25040,68 @@ function handleLoadEnv(_x, _x2, _x3, _x4) {
 }
 function _handleLoadEnv() {
   _handleLoadEnv = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(dataEnv, setDataEnv, setLocalVarCloudinaryConfig, onNotesRendered) {
-    var _readSettings, configEnv, cloudinaryConfig, validation, success;
+    var _readSettings, configEnv, cloudinaryConfig, naServerConfig, validation, success;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'block';
-          _readSettings = readSettings(), configEnv = _readSettings.configEnv, cloudinaryConfig = _readSettings.cloudinaryConfig;
+          _readSettings = readSettings(), configEnv = _readSettings.configEnv, cloudinaryConfig = _readSettings.cloudinaryConfig, naServerConfig = _readSettings.naServerConfig;
           validation = validateSettings(configEnv, cloudinaryConfig);
-          if (!(validation.missingFirebase.length > 0)) {
-            _context.next = 7;
+          (0,_naserver_js__WEBPACK_IMPORTED_MODULE_4__.saveNAServerNotesConfig)(naServerConfig);
+          if (!(!naServerConfig.enabled && validation.missingFirebase.length > 0)) {
+            _context.next = 8;
             break;
           }
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Firebase config: ".concat(validation.missingFirebase.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
           return _context.abrupt("return");
-        case 7:
+        case 8:
           if (validation.missingCloudinary.length > 0) {
             (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Missing Cloudinary config: ".concat(validation.missingCloudinary.join(', ')), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
           } else {
             localStorage.setItem('envCloudinary', JSON.stringify(cloudinaryConfig));
           }
-          _context.prev = 8;
+          if (!(naServerConfig.enabled && validation.missingFirebase.length > 0)) {
+            _context.next = 17;
+            break;
+          }
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, "NAServer notes API enabled. Firebase config was not required.", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
+          if (!onNotesRendered) {
+            _context.next = 15;
+            break;
+          }
+          _context.next = 15;
+          return onNotesRendered();
+        case 15:
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
+          return _context.abrupt("return");
+        case 17:
+          _context.prev = 17;
           setLocalVarCloudinaryConfig(cloudinaryConfig);
-          _context.next = 12;
+          _context.next = 21;
           return (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.resetFirebaseApp)(configEnv, false, cloudinaryConfig, dataEnv, onNotesRendered);
-        case 12:
+        case 21:
           success = _context.sent;
           if (success) {
             setDataEnv(dataEnv);
             _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.btnCloseModalEnv.click();
           }
-          _context.next = 19;
+          _context.next = 28;
           break;
-        case 16:
-          _context.prev = 16;
-          _context.t0 = _context["catch"](8);
+        case 25:
+          _context.prev = 25;
+          _context.t0 = _context["catch"](17);
           (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Failed to update configuration: ".concat(_context.t0.message), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-        case 19:
-          _context.prev = 19;
+        case 28:
+          _context.prev = 28;
           _config_dom_js__WEBPACK_IMPORTED_MODULE_3__.DOM.loadingOverlay.style.display = 'none';
-          return _context.finish(19);
-        case 22:
+          return _context.finish(28);
+        case 31:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[8, 16, 19, 22]]);
+    }, _callee, null, [[17, 25, 28, 31]]);
   }));
   return _handleLoadEnv.apply(this, arguments);
 }
@@ -25547,6 +25582,216 @@ function onAuthChange(callback) {
 
 /***/ }),
 
+/***/ "./src/managers/naserver.js":
+/*!**********************************!*\
+  !*** ./src/managers/naserver.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createServerNote: () => (/* binding */ createServerNote),
+/* harmony export */   deleteServerNote: () => (/* binding */ deleteServerNote),
+/* harmony export */   isNAServerNotesEnabled: () => (/* binding */ isNAServerNotesEnabled),
+/* harmony export */   listServerNotes: () => (/* binding */ listServerNotes),
+/* harmony export */   loadNAServerNotesConfig: () => (/* binding */ loadNAServerNotesConfig),
+/* harmony export */   saveNAServerNotesConfig: () => (/* binding */ saveNAServerNotesConfig),
+/* harmony export */   toggleServerPin: () => (/* binding */ toggleServerPin),
+/* harmony export */   updateServerNote: () => (/* binding */ updateServerNote)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regeneratorKeys(e) { var n = Object(e), r = []; for (var t in n) r.unshift(t); return function e() { for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e; return e.done = !0, e; }; }
+function _regeneratorAsync(n, e, r, t, o) { var a = _regeneratorAsyncGen(n, e, r, t, o); return a.next().then(function (n) { return n.done ? n.value : a.next(); }); }
+function _regeneratorAsyncGen(r, e, t, o, n) { return new _regeneratorAsyncIterator(_regenerator().w(r, e, t, o), n || Promise); }
+function _regeneratorAsyncIterator(t, e) { function n(r, o, i, f) { try { var c = t[r](o), u = c.value; return u instanceof _OverloadYield ? e.resolve(u.v).then(function (t) { n("next", t, i, f); }, function (t) { n("throw", t, i, f); }) : e.resolve(u).then(function (t) { c.value = t, i(c); }, function (t) { return n("throw", t, i, f); }); } catch (t) { f(t); } } var r; this.next || (_regeneratorDefine2(_regeneratorAsyncIterator.prototype), _regeneratorDefine2(_regeneratorAsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () { return this; })), _regeneratorDefine2(this, "_invoke", function (t, o, i) { function f() { return new e(function (e, r) { n(t, i, e, r); }); } return r = r ? r.then(f, f) : f(); }, !0); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _OverloadYield(e, d) { this.v = e, this.k = d; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+var NOTES_CONFIG_KEY = 'naServerNotesConfig';
+function loadNAServerNotesConfig() {
+  try {
+    var raw = localStorage.getItem(NOTES_CONFIG_KEY);
+    return raw ? JSON.parse(raw) : {
+      enabled: false,
+      baseUrl: '',
+      token: ''
+    };
+  } catch (_) {
+    return {
+      enabled: false,
+      baseUrl: '',
+      token: ''
+    };
+  }
+}
+function saveNAServerNotesConfig(config) {
+  localStorage.setItem(NOTES_CONFIG_KEY, JSON.stringify({
+    enabled: !!config.enabled,
+    baseUrl: (config.baseUrl || '').trim(),
+    token: (config.token || '').trim()
+  }));
+}
+function isNAServerNotesEnabled() {
+  var config = loadNAServerNotesConfig();
+  return !!(config.enabled && config.baseUrl && config.token);
+}
+function requestNotes(_x) {
+  return _requestNotes.apply(this, arguments);
+}
+function _requestNotes() {
+  _requestNotes = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(path) {
+    var options,
+      config,
+      baseUrl,
+      response,
+      payload,
+      _args = arguments;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+          config = loadNAServerNotesConfig();
+          baseUrl = (config.baseUrl || '').replace(/\/+$/, '');
+          if (!(!baseUrl || !config.token)) {
+            _context.next = 5;
+            break;
+          }
+          throw new Error('NAServer notes config is incomplete');
+        case 5:
+          _context.next = 7;
+          return fetch("".concat(baseUrl).concat(path), {
+            method: options.method || 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: "Bearer ".concat(config.token)
+            },
+            body: options.body ? JSON.stringify(options.body) : undefined
+          });
+        case 7:
+          response = _context.sent;
+          _context.next = 10;
+          return response.json()["catch"](function () {
+            return {};
+          });
+        case 10:
+          payload = _context.sent;
+          if (response.ok) {
+            _context.next = 13;
+            break;
+          }
+          throw new Error(payload.detail || "NAServer request failed with status ".concat(response.status));
+        case 13:
+          return _context.abrupt("return", payload);
+        case 14:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _requestNotes.apply(this, arguments);
+}
+function listServerNotes() {
+  return _listServerNotes.apply(this, arguments);
+}
+function _listServerNotes() {
+  _listServerNotes = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          return _context2.abrupt("return", requestNotes('/api/notes/'));
+        case 1:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return _listServerNotes.apply(this, arguments);
+}
+function createServerNote(_x2) {
+  return _createServerNote.apply(this, arguments);
+}
+function _createServerNote() {
+  _createServerNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(note) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          return _context3.abrupt("return", requestNotes('/api/notes/', {
+            method: 'POST',
+            body: note
+          }));
+        case 1:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return _createServerNote.apply(this, arguments);
+}
+function updateServerNote(_x3, _x4) {
+  return _updateServerNote.apply(this, arguments);
+}
+function _updateServerNote() {
+  _updateServerNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(id, note) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          return _context4.abrupt("return", requestNotes("/api/notes/".concat(encodeURIComponent(id)), {
+            method: 'PUT',
+            body: note
+          }));
+        case 1:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4);
+  }));
+  return _updateServerNote.apply(this, arguments);
+}
+function deleteServerNote(_x5) {
+  return _deleteServerNote.apply(this, arguments);
+}
+function _deleteServerNote() {
+  _deleteServerNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(id) {
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          return _context5.abrupt("return", requestNotes("/api/notes/".concat(encodeURIComponent(id)), {
+            method: 'DELETE'
+          }));
+        case 1:
+        case "end":
+          return _context5.stop();
+      }
+    }, _callee5);
+  }));
+  return _deleteServerNote.apply(this, arguments);
+}
+function toggleServerPin(_x6) {
+  return _toggleServerPin.apply(this, arguments);
+}
+function _toggleServerPin() {
+  _toggleServerPin = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6(id) {
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          return _context6.abrupt("return", requestNotes("/api/notes/".concat(encodeURIComponent(id), "/pin"), {
+            method: 'POST'
+          }));
+        case 1:
+        case "end":
+          return _context6.stop();
+      }
+    }, _callee6);
+  }));
+  return _toggleServerPin.apply(this, arguments);
+}
+
+/***/ }),
+
 /***/ "./src/managers/notes.js":
 /*!*******************************!*\
   !*** ./src/managers/notes.js ***!
@@ -25571,9 +25816,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
 /* harmony import */ var _firebase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./firebase.js */ "./src/managers/firebase.js");
-/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
-/* harmony import */ var _ui_theme_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/theme.js */ "./src/ui/theme.js");
-/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
+/* harmony import */ var _naserver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./naserver.js */ "./src/managers/naserver.js");
+/* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/alert.js */ "./src/ui/alert.js");
+/* harmony import */ var _ui_theme_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/theme.js */ "./src/ui/theme.js");
+/* harmony import */ var _config_dom_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../config/dom.js */ "./src/config/dom.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
@@ -25592,6 +25838,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
 
 
 
@@ -25624,33 +25871,55 @@ function renderNotes(_x, _x2) {
 }
 function _renderNotes() {
   _renderNotes = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(categoryPageSize, currentCategorySelected) {
-    var db, user, querySnapshot, q;
+    var notes, db, user, querySnapshot, q;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerWords.innerHTML = '';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerWords.innerHTML = '';
           listItem = [];
           _context.prev = 2;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = '';
+          if (!(0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.isNAServerNotesEnabled)()) {
+            _context.next = 11;
+            break;
+          }
+          _context.next = 7;
+          return (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.listServerNotes)();
+        case 7:
+          notes = _context.sent;
+          notes.forEach(function (note) {
+            listItem.push({
+              id: note.id,
+              Note: note.title,
+              example: note.content,
+              isPinned: note.is_pinned,
+              category: note.category,
+              otherExample: stripHtmlAdvanced(note.content || ''),
+              timestamp: note.updated_at || note.created_at
+            });
+          });
+          _context.next = 24;
+          break;
+        case 11:
           db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
           user = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentUser)();
           if (!user) {
-            _context.next = 13;
+            _context.next = 20;
             break;
           }
           q = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.query)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "Notes"), (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.where)("userId", "==", user.uid));
-          _context.next = 10;
+          _context.next = 17;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDocs)(q);
-        case 10:
+        case 17:
           querySnapshot = _context.sent;
-          _context.next = 16;
+          _context.next = 23;
           break;
-        case 13:
-          _context.next = 15;
+        case 20:
+          _context.next = 22;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDocs)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "Notes"));
-        case 15:
+        case 22:
           querySnapshot = _context.sent;
-        case 16:
+        case 23:
           querySnapshot.forEach(function (d) {
             var data = d.data();
             var timestamp = data.timestamp;
@@ -25669,6 +25938,7 @@ function _renderNotes() {
               timestamp: timestamp
             });
           });
+        case 24:
           listCategories = Array.from(new Set(listItem.filter(function (item) {
             return item === null || item === void 0 ? void 0 : item.category;
           }).map(function (item) {
@@ -25680,22 +25950,22 @@ function _renderNotes() {
             })));
           }
           loadData(categoryPageSize, currentCategorySelected);
-          _context.next = 26;
+          _context.next = 33;
           break;
-        case 22:
-          _context.prev = 22;
-          _context.t0 = _context["catch"](2);
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error getting documents: " + _context.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-          listItem = [];
-        case 26:
-          _context.prev = 26;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
-          return _context.finish(26);
         case 29:
+          _context.prev = 29;
+          _context.t0 = _context["catch"](2);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.DANGER, "Error getting documents: " + _context.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.LONG);
+          listItem = [];
+        case 33:
+          _context.prev = 33;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = 'none';
+          return _context.finish(33);
+        case 36:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[2, 22, 26, 29]]);
+    }, _callee, null, [[2, 29, 33, 36]]);
   }));
   return _renderNotes.apply(this, arguments);
 }
@@ -25715,7 +25985,7 @@ function getFilteredItems(searchTerm, category) {
   return items;
 }
 function renderItems(items, categoryPageSize, currentCategorySelected) {
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerWords.innerHTML = '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerWords.innerHTML = '';
   loadCategory(categoryPageSize, currentCategorySelected);
   items.sort(function (a, b) {
     if (a.isPinned && !b.isPinned) return -1;
@@ -25724,11 +25994,11 @@ function renderItems(items, categoryPageSize, currentCategorySelected) {
   });
   var html = '';
   items.forEach(function (item) {
-    html += "\n    <div class=\"card mb-2\">\n      <div class=\"card-body\">\n        <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n          <div class=\"d-flex align-items-center\">\n            <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n            <button type=\"button\" data-action=\"pin\" data-id=\"").concat(item.id, "\" class=\"btn\">\n              <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n            </button>\n          </div>\n          <div class=\"btn-group\">\n            <button type=\"button\" data-action=\"edit\" data-id=\"").concat(item.id, "\" class=\"btn btn-edit\">\n              <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n            </button>\n            <button type=\"button\" data-action=\"delete\" data-id=\"").concat(item.id, "\" class=\"btn btn-delete\">\n              <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n            </button>\n          </div>\n        </div>\n\n        <div class=\"d-flex align-items-center justify-content-between mt-2\">\n          <div class=\"d-flex gap-2\">\n            <p class=\"card-text font-monospace fst-italic small mb-0\">\n              ").concat(formatTimestamp(item.timestamp), "\n            </p>\n            ").concat(item.category ? "<span class=\"badge rounded-pill ".concat((0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_3__.isDarkTheme)() ? 'bg-light text-dark' : 'bg-secondary text-light', " font-monospace fst-italic small mb-0\">").concat(item.category, "</span>") : '', "\n          </div>\n          <button type=\"button\" data-action=\"copy\" data-id=\"").concat(item.id, "\" class=\"btn btn-copy\">\n            <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n          </button>\n        </div>\n      <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n        ").concat(item.example, "\n      </div>\n      <button type=\"button\" data-action=\"readMore\" data-id=\"").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n        more...\n      </button>\n      </div>\n    </div>\n    ");
+    html += "\n    <div class=\"card mb-2\">\n      <div class=\"card-body\">\n        <div class=\"card-title d-flex align-items-center justify-content-between sticky-top\" style=\"z-index:1;\">\n          <div class=\"d-flex align-items-center\">\n            <h5 class=\"mb-0 me-2\">".concat(item.Note, "</h5>\n            <button type=\"button\" data-action=\"pin\" data-id=\"").concat(item.id, "\" class=\"btn\">\n              <img id=\"pinIcon-").concat(item.id, "\" src=\"").concat(item.isPinned ? '/icons/pinned.svg' : '/icons/pin.svg', "\" alt=\"\">\n            </button>\n          </div>\n          <div class=\"btn-group\">\n            <button type=\"button\" data-action=\"edit\" data-id=\"").concat(item.id, "\" class=\"btn btn-edit\">\n              <img id=\"editIcon-").concat(item.id, "\" src=\"/icons/pencil-square.svg\" alt=\"\">\n            </button>\n            <button type=\"button\" data-action=\"delete\" data-id=\"").concat(item.id, "\" class=\"btn btn-delete\">\n              <img id=\"deleteIcon-").concat(item.id, "\" src=\"/icons/trash.svg\" alt=\"\">\n            </button>\n          </div>\n        </div>\n\n        <div class=\"d-flex align-items-center justify-content-between mt-2\">\n          <div class=\"d-flex gap-2\">\n            <p class=\"card-text font-monospace fst-italic small mb-0\">\n              ").concat(formatTimestamp(item.timestamp), "\n            </p>\n            ").concat(item.category ? "<span class=\"badge rounded-pill ".concat((0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_4__.isDarkTheme)() ? 'bg-light text-dark' : 'bg-secondary text-light', " font-monospace fst-italic small mb-0\">").concat(item.category, "</span>") : '', "\n          </div>\n          <button type=\"button\" data-action=\"copy\" data-id=\"").concat(item.id, "\" class=\"btn btn-copy\">\n            <img id=\"copyIcon-").concat(item.id, "\" src=\"\" alt=\"\">\n          </button>\n        </div>\n      <div class=\"example-wrapper\" id=\"example-").concat(item.id, "\">\n        ").concat(item.example, "\n      </div>\n      <button type=\"button\" data-action=\"readMore\" data-id=\"").concat(item.id, "\" class=\"btn btn-link fw-bold btn-sm\" style=\"display: none;\">\n        more...\n      </button>\n      </div>\n    </div>\n    ");
   });
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerWords.innerHTML = html;
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerWords.innerHTML = html;
   if (items.length > 0) {
-    (0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_3__.changeIconCustomTheme)((0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_3__.isDarkTheme)());
+    (0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_4__.changeIconCustomTheme)((0,_ui_theme_js__WEBPACK_IMPORTED_MODULE_4__.isDarkTheme)());
   }
   var exampleWrappers = document.querySelectorAll('.example-wrapper');
   exampleWrappers.forEach(function (exampleDiv) {
@@ -25743,8 +26013,8 @@ function loadData(categoryPageSize, currentCategorySelected, searchTerm) {
   renderItems(items, categoryPageSize, currentCategorySelected);
 }
 function loadCategory(categoryPageSize, currentCategorySelected) {
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.categoriesList.innerHTML = '';
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.innerHTML = '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.categoriesList.innerHTML = '';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerCategory.innerHTML = '';
   var COLOR = ['primary', 'secondary', 'success', 'danger', 'dark'];
   if (listCategories.length > 0) {
     var sortedCategories = _toConsumableArray(listCategories);
@@ -25756,7 +26026,7 @@ function loadCategory(categoryPageSize, currentCategorySelected) {
     var badges = '';
     for (var i = 0; i < categoryPageSize && i < sortedCategories.length; i++) {
       var category = sortedCategories[i];
-      _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.categoriesList.innerHTML += "<option value=\"".concat(category, "\">").concat(category, "</option>");
+      _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.categoriesList.innerHTML += "<option value=\"".concat(category, "\">").concat(category, "</option>");
       var colorClass = COLOR[i % COLOR.length];
       var isSelected = currentCategorySelected === category ? 'selected' : '';
       badges += "\n        <span class=\"badge rounded-pill bg-".concat(colorClass, " me-1 mb-2 button-click-category user-select-none ").concat(isSelected, "\" data-action=\"category\" data-category=\"").concat(category, "\" tabindex=\"0\">").concat(category, "</span>\n      ");
@@ -25764,7 +26034,7 @@ function loadCategory(categoryPageSize, currentCategorySelected) {
     if (categoryPageSize < listCategories.length) {
       badges += "\n        <span class=\"badge rounded-pill bg-light me-1 mb-2 button-click-category-more user-select-none text-dark\" data-action=\"categoryMore\" tabindex=\"0\">...+".concat(Math.min(listCategories.length - categoryPageSize, 5), "</span>\n      ");
     }
-    _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.innerHTML = badges;
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerCategory.innerHTML = badges;
   }
 }
 function filterAndRender(searchTerm, category, categoryPageSize) {
@@ -25775,66 +26045,92 @@ function handleUpsertNote(_x3, _x4, _x5, _x6) {
 }
 function _handleUpsertNote() {
   _handleUpsertNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e, idNote, isClickNewButton, onCleanImages) {
-    var user, id, Note, example, category, data, db;
+    var serverMode, user, id, Note, example, category, data, serverNote, db;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
+          serverMode = (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.isNAServerNotesEnabled)();
           user = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentUser)();
-          if (user) {
-            _context2.next = 4;
+          if (!(!serverMode && !user)) {
+            _context2.next = 5;
             break;
           }
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Please sign in to save notes", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.WARNING, "Please sign in to save notes", _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.MEDIUM);
           return _context2.abrupt("return");
-        case 4:
+        case 5:
           id = idNote;
           Note = e.target.Note.value;
           example = tinymce.get('editor').getContent();
           category = e.target.category.value.trim();
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = '';
           data = {
             Note: Note,
             example: example,
             timestamp: new Date(),
             category: category,
-            userId: user.uid
+            userId: user === null || user === void 0 ? void 0 : user.uid
           };
-          _context2.prev = 10;
-          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
-          if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
-            _context2.next = 17;
+          _context2.prev = 11;
+          if (!serverMode) {
+            _context2.next = 23;
             break;
           }
-          _context2.next = 15;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "Notes"), data);
-        case 15:
-          _context2.next = 19;
-          break;
+          serverNote = {
+            title: Note,
+            content: example,
+            category: category || null
+          };
+          if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
+            _context2.next = 19;
+            break;
+          }
+          _context2.next = 17;
+          return (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.createServerNote)(serverNote);
         case 17:
-          _context2.next = 19;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(id)), data);
+          _context2.next = 21;
+          break;
         case 19:
           _context2.next = 21;
-          return renderNotes(5, category);
+          return (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.updateServerNote)(id, serverNote);
         case 21:
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, "Note added successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
-          if (onCleanImages) onCleanImages();
-          _context2.next = 28;
+          _context2.next = 31;
           break;
-        case 25:
-          _context2.prev = 25;
-          _context2.t0 = _context2["catch"](10);
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error adding document: " + _context2.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-        case 28:
-          _context2.prev = 28;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.btnCloseModal.click();
-          return _context2.finish(28);
-        case 32:
+        case 23:
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          if (!((id == '' || id == null || id == undefined) && isClickNewButton)) {
+            _context2.next = 29;
+            break;
+          }
+          _context2.next = 27;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.collection)(db, "Notes"), data);
+        case 27:
+          _context2.next = 31;
+          break;
+        case 29:
+          _context2.next = 31;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(id)), data);
+        case 31:
+          _context2.next = 33;
+          return renderNotes(5, category);
+        case 33:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.INFO, "Note added successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.MEDIUM);
+          if (onCleanImages) onCleanImages();
+          _context2.next = 40;
+          break;
+        case 37:
+          _context2.prev = 37;
+          _context2.t0 = _context2["catch"](11);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.DANGER, "Error adding document: " + _context2.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.LONG);
+        case 40:
+          _context2.prev = 40;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = 'none';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.btnCloseModal.click();
+          return _context2.finish(40);
+        case 44:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[10, 25, 28, 32]]);
+    }, _callee2, null, [[11, 37, 40, 44]]);
   }));
   return _handleUpsertNote.apply(this, arguments);
 }
@@ -25843,44 +26139,55 @@ function deleteNote(_x7) {
 }
 function _deleteNote() {
   _deleteNote = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(NoteId) {
-    var user, db;
+    var serverMode, user, db;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
+          serverMode = (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.isNAServerNotesEnabled)();
           user = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentUser)();
-          if (user) {
-            _context3.next = 4;
+          if (!(!serverMode && !user)) {
+            _context3.next = 5;
             break;
           }
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Please sign in to delete notes", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.WARNING, "Please sign in to delete notes", _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.MEDIUM);
           return _context3.abrupt("return");
-        case 4:
-          _context3.prev = 4;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
-          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
-          _context3.next = 9;
-          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(NoteId)));
-        case 9:
-          _context3.next = 11;
-          return renderNotes(5, null);
-        case 11:
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Note removed successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
-          _context3.next = 17;
+        case 5:
+          _context3.prev = 5;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = '';
+          if (!serverMode) {
+            _context3.next = 12;
+            break;
+          }
+          _context3.next = 10;
+          return (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.deleteServerNote)(NoteId);
+        case 10:
+          _context3.next = 15;
           break;
-        case 14:
-          _context3.prev = 14;
-          _context3.t0 = _context3["catch"](4);
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error removing document: " + _context3.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
+        case 12:
+          db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
+          _context3.next = 15;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(NoteId)));
+        case 15:
+          _context3.next = 17;
+          return renderNotes(5, null);
         case 17:
-          _context3.prev = 17;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.btnModalConfirmClose.click();
-          return _context3.finish(17);
-        case 21:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.WARNING, "Note removed successfully", _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.MEDIUM);
+          _context3.next = 23;
+          break;
+        case 20:
+          _context3.prev = 20;
+          _context3.t0 = _context3["catch"](5);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.DANGER, "Error removing document: " + _context3.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.LONG);
+        case 23:
+          _context3.prev = 23;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = 'none';
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.btnModalConfirmClose.click();
+          return _context3.finish(23);
+        case 27:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[4, 14, 17, 21]]);
+    }, _callee3, null, [[5, 20, 23, 27]]);
   }));
   return _deleteNote.apply(this, arguments);
 }
@@ -25889,57 +26196,68 @@ function togglePin(_x8) {
 }
 function _togglePin() {
   _togglePin = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(NoteId) {
-    var user, note, previousState, isPinned, db;
+    var serverMode, user, note, previousState, isPinned, db;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
+          serverMode = (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.isNAServerNotesEnabled)();
           user = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentUser)();
-          if (user) {
-            _context4.next = 4;
+          if (!(!serverMode && !user)) {
+            _context4.next = 5;
             break;
           }
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.WARNING, "Please sign in to pin notes", _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.MEDIUM);
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.WARNING, "Please sign in to pin notes", _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.MEDIUM);
           return _context4.abrupt("return");
-        case 4:
+        case 5:
           note = listItem.find(function (item) {
             return item.id === NoteId;
           });
           if (note) {
-            _context4.next = 7;
+            _context4.next = 8;
             break;
           }
           return _context4.abrupt("return");
-        case 7:
+        case 8:
           previousState = note.isPinned;
           note.isPinned = !note.isPinned;
           isPinned = note.isPinned;
-          _context4.prev = 10;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = '';
+          _context4.prev = 11;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = '';
+          if (!serverMode) {
+            _context4.next = 18;
+            break;
+          }
+          _context4.next = 16;
+          return (0,_naserver_js__WEBPACK_IMPORTED_MODULE_2__.toggleServerPin)(NoteId);
+        case 16:
+          _context4.next = 21;
+          break;
+        case 18:
           db = (0,_firebase_js__WEBPACK_IMPORTED_MODULE_1__.getDb)();
-          _context4.next = 15;
+          _context4.next = 21;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.updateDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc)(db, "Notes/".concat(NoteId)), {
             isPinned: note.isPinned
           });
-        case 15:
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.SHORT);
+        case 21:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.INFO, "Note ".concat(isPinned ? 'pinned' : 'unpinned', " successfully"), _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.SHORT);
           filterAndRender(null, null, 5);
-          backupData();
-          _context4.next = 24;
+          if (typeof backupData === 'function') backupData();
+          _context4.next = 30;
           break;
-        case 20:
-          _context4.prev = 20;
-          _context4.t0 = _context4["catch"](10);
+        case 26:
+          _context4.prev = 26;
+          _context4.t0 = _context4["catch"](11);
           note.isPinned = previousState;
-          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.Alert.DANGER, "Error pinning note: " + _context4.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_2__.DurationLength.LONG);
-        case 24:
-          _context4.prev = 24;
-          _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.loadingOverlay.style.display = 'none';
-          return _context4.finish(24);
-        case 27:
+          (0,_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.handleAlert)(_ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.Alert.DANGER, "Error pinning note: " + _context4.t0.message, _ui_alert_js__WEBPACK_IMPORTED_MODULE_3__.DurationLength.LONG);
+        case 30:
+          _context4.prev = 30;
+          _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.loadingOverlay.style.display = 'none';
+          return _context4.finish(30);
+        case 33:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[10, 20, 24, 27]]);
+    }, _callee4, null, [[11, 26, 30, 33]]);
   }));
   return _togglePin.apply(this, arguments);
 }
@@ -25961,14 +26279,14 @@ function handleCategoryClick(clickedCategory, currentCategorySelected) {
     }
   }
   filterAndRender(null, newCategory, 5);
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.scrollToTopBtn.click();
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.scrollToTopBtn.click();
   return newCategory;
 }
 function expandCategoryPageSize(categoryPageSize) {
   categoryPageSize += 5;
   loadCategory(categoryPageSize, null);
-  _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.scrollTo({
-    top: _config_dom_js__WEBPACK_IMPORTED_MODULE_4__.DOM.containerCategory.scrollHeight,
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerCategory.scrollTo({
+    top: _config_dom_js__WEBPACK_IMPORTED_MODULE_5__.DOM.containerCategory.scrollHeight,
     behavior: 'smooth'
   });
   return categoryPageSize;
@@ -26064,6 +26382,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _managers_cloudinary_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./managers/cloudinary.js */ "./src/managers/cloudinary.js");
 /* harmony import */ var _managers_env_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./managers/env.js */ "./src/managers/env.js");
 /* harmony import */ var _ui_alert_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/alert.js */ "./src/ui/alert.js");
+/* harmony import */ var _managers_naserver_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./managers/naserver.js */ "./src/managers/naserver.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; var r = _regenerator(), e = r.m(_regeneratorRuntime), t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor; function n(r) { var e = "function" == typeof r && r.constructor; return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name)); } var o = { "throw": 1, "return": 2, "break": 3, "continue": 3 }; function a(r) { var e, t; return function (n) { e || (e = { stop: function stop() { return t(n.a, 2); }, "catch": function _catch() { return n.v; }, abrupt: function abrupt(r, e) { return t(n.a, o[r], e); }, delegateYield: function delegateYield(r, o, a) { return e.resultName = o, t(n.d, _regeneratorValues(r), a); }, finish: function finish(r) { return t(n.f, r); } }, t = function t(r, _t, o) { n.p = e.prev, n.n = e.next; try { return r(_t, o); } finally { e.next = n.n; } }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n; try { return r.call(this, e); } finally { n.p = e.prev, n.n = e.next; } }; } return (_regeneratorRuntime = function _regeneratorRuntime() { return { wrap: function wrap(e, t, n, o) { return r.w(a(e), t, n, o && o.reverse()); }, isGeneratorFunction: n, mark: r.m, awrap: function awrap(r, e) { return new _OverloadYield(r, e); }, AsyncIterator: _regeneratorAsyncIterator, async: function async(r, e, t, o, u) { return (n(e) ? _regeneratorAsyncGen : _regeneratorAsync)(a(r), e, t, o, u); }, keys: _regeneratorKeys, values: _regeneratorValues }; })(); }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
@@ -26076,6 +26395,7 @@ function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { 
 function _OverloadYield(e, d) { this.v = e, this.k = d; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -26120,7 +26440,13 @@ function _onNotesRendered() {
 });
 await (0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.initFirebase)(localVarCloudinaryConfig, dataEnv, null);
 (0,_managers_env_js__WEBPACK_IMPORTED_MODULE_5__.populateSettings)((0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.getConfigEnv)(), localVarCloudinaryConfig);
-if (!(0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.isFirebaseConfigured)()) {
+if ((0,_managers_naserver_js__WEBPACK_IMPORTED_MODULE_7__.isNAServerNotesEnabled)()) {
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.firebaseConfigWarning.style.display = 'none';
+  _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.authWarningOverlay.style.display = 'none';
+  onNotesRendered()["catch"](function (err) {
+    return console.error('Error loading NAServer notes:', err);
+  });
+} else if (!(0,_managers_firebase_js__WEBPACK_IMPORTED_MODULE_2__.isFirebaseConfigured)()) {
   _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.firebaseConfigWarning.style.display = 'flex';
 }
 var btnConfigureFirebase = document.getElementById('btn-configure-firebase');
@@ -26133,12 +26459,12 @@ if (btnConfigureFirebase) {
 }
 function updateAuthUI(user) {
   console.log('Auth state changed:', user ? 'logged in' : 'logged out', user === null || user === void 0 ? void 0 : user.email);
-  if (user) {
+  if (user || (0,_managers_naserver_js__WEBPACK_IMPORTED_MODULE_7__.isNAServerNotesEnabled)()) {
     _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.authWarningOverlay.style.display = 'none';
-    var email = user.email || '';
+    var email = (user === null || user === void 0 ? void 0 : user.email) || 'NAServer';
     var displayName = email.split('@')[0];
     _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.authUserDisplay.textContent = displayName;
-    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.authActionText.textContent = 'Logout';
+    _config_dom_js__WEBPACK_IMPORTED_MODULE_0__.DOM.authActionText.textContent = user ? 'Logout' : 'Login';
     onNotesRendered()["catch"](function (err) {
       return console.error('Error loading notes:', err);
     });

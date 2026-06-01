@@ -321,6 +321,29 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#naServerSection">
+                                        NAServer Notes API
+                                    </button>
+                                </h2>
+                                <div id="naServerSection" class="accordion-collapse collapse" data-bs-parent="#envAccordion">
+                                    <div class="accordion-body">
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="env-naserver-enabled">
+                                            <label class="form-check-label small" for="env-naserver-enabled">Use NAServer instead of Firebase for notes</label>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">API Base URL</label>
+                                            <input type="text" class="form-control form-control-sm" id="env-naserver-base-url" placeholder="http://localhost:8000">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Access Token</label>
+                                            <input type="password" class="form-control form-control-sm" id="env-naserver-token" placeholder="Bearer token from /api/notes/auth/login">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <button type="button" class="btn btn-primary mt-2" id="btn-save-env">Save</button>
                     </div>
